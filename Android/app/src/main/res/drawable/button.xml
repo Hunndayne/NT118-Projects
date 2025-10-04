@@ -13,7 +13,7 @@
     <!-- Trạng thái mặc định -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#D3D3D3"/> <!-- Xám nhạt -->
+            <solid android:color="@color/lightblue"/> <!-- Xám nhạt -->
             <corners android:radius="25dp"/>
             <stroke android:width="1dp" android:color="#AAAAAA"/>
         </shape>
