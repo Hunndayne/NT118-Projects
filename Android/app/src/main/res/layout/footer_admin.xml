@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/footerAdmin"
+    android:layout_width="match_parent"
+    android:layout_height="74dp"
+    android:layout_gravity="bottom"
+    android:orientation="horizontal"
+    android:paddingHorizontal="24dp"
+    android:gravity="center"
+    android:background="@android:color/white"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="22dp" >
+
+    <!-- Dashboard -->
+    <LinearLayout
+        android:id="@+id/btnDashboard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+    <ImageView
+        android:id="@+id/icDashboard"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_dashboard"
+        android:contentDescription="Dashboard"
+        android:tint="@color/black"/>
+
+    <TextView
+        android:id="@+id/tvDashboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dashboard"
+        android:textSize="11sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="2dp"/>
+    </LinearLayout>
+
+    <!-- Courses -->
+    <LinearLayout
+    android:id="@+id/btnCourses"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/icCourses"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_courses"
+        android:contentDescription="Courses"
+        android:tint="@color/black"/>
+
+    <TextView
+    android:id="@+id/tvCourses"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Courses"
+    android:textSize="11sp"
+    android:textColor="@color/black"
+    android:layout_marginTop="2dp"/>
+    </LinearLayout>
+
+    <!-- Lessons -->
+    <LinearLayout
+    android:id="@+id/btnLessons"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/icLessons"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_lesson"
+        android:contentDescription="Lessons"
+        android:tint="@color/black"/>
+
+    <TextView
+    android:id="@+id/tvLessons"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Lessons"
+    android:textSize="11sp"
+    android:textColor="@color/black"
+    android:layout_marginTop="2dp"/>
+    </LinearLayout>
+
+    <!-- Assignments -->
+    <LinearLayout
+        android:id="@+id/btnAssignments"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+    <ImageView
+        android:id="@+id/icAssignments"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_assignment"
+        android:contentDescription="Assignments"
+        android:tint="@color/black"/>
+
+    <TextView
+        android:id="@+id/tvAssignments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Assignments"
+        android:textSize="11sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="2dp"/>
+    </LinearLayout>
+
+    <!-- Reports -->
+    <LinearLayout
+        android:id="@+id/btnReports"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+    <ImageView
+        android:id="@+id/icReports"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_report"
+        android:contentDescription="Reports"
+        android:tint="@color/black"/>
+
+    <TextView
+        android:id="@+id/tvReports"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reports"
+        android:textSize="11sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="2dp"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,14 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Nền trắng với bo góc nhẹ -->
+    <item android:top="4dp" android:bottom="4dp">
+        <shape android:shape="rectangle">
+            <!-- Màu nền -->
+            <solid android:color="@color/white" />
+            <!-- Bo góc nhẹ -->
+            <corners android:radius="4dp" />
+            <!-- Viền mờ nhẹ để tạo khối -->
+            <stroke android:color="#E6E6E6" android:width="0.8dp" />
+        </shape>
+    </item>
+
+</layer-list>
