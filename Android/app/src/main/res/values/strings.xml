@@ -8,6 +8,41 @@
     <string name="EngGo">Go with English, grow with EngGO</string>
     <string name="fg">Forgotten your username or password?</string>
     <string name="loginb">Login using your account on:</string>
+    <string name="back_text"><u>Back</u></string>
+
+    <string name="title_profile">PROFILE</string>
+    <string name="hint_search">Search...</string>
+
+    <string name="label_student_role">Student</string>
+    <string name="user_name">Huynh Ngoc Ngan Tuyen</string>
+    <string name="label_user_details">User details</string>
+    <string name="label_online_users">Online users:</string>
+    <string name="label_email_address">Email address:</string>
+    <string name="email_value" translatable="false">23521753@gm.uit.edu.vn</string>
+    <string name="email_visibility">(Visible to other course participants)</string>
+    <string name="label_country">Country:</string>
+    <string name="country_value">Viet Nam</string>
+    <string name="label_city_town">City/town:</string>
+    <string name="city_town_value">Thu Duc</string>
+
+    <string name="online_user_1">Cap Huu Tu</string>
+    <string name="online_user_2">Nguyen Thai Quang</string>
+    <string name="online_user_3">Nguyen Thai Bao Chau</string>
+    <string name="online_user_4">Tran Thanh Hung</string>
+
+    <string name="label_courses_details">Courses details</string>
+    <string name="course_1_name" translatable="false">TOEIC SPEAKING WRITING TB115</string>
+    <string name="course_2_name" translatable="false">TOEIC READING LISTENING TA143GD</string>
+    <string name="label_login_activity">Login activity</string>
+    <string name="last_access_site_label">Last access to site:</string>
+    <string name="last_access_site_value" translatable="false">Wednesday, 24 September 2025, 2:06 PM (14 secs)</string>
+
+    <string name="button_message">Message</string>
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_courses">Courses</string>
+    <string name="nav_lessons">Lessons</string>
+    <string name="nav_assignments">Assignments</string>
+    <string name="nav_reports">Reports</string>
 
 
 </resources>
