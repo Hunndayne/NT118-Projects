@@ -1,4 +1,5 @@
 <resources>
+    //login
     <string name="app_name">EngGo</string>
     <string name="sign_in">Login</string>
     <string name="username">Username: </string>
@@ -9,7 +10,7 @@
     <string name="fg">Forgotten your username or password?</string>
     <string name="loginb">Login using your account on:</string>
     <string name="back_text"><u>Back</u></string>
-
+    //profie
     <string name="title_profile">PROFILE</string>
     <string name="hint_search">Search...</string>
 
@@ -43,7 +44,29 @@
     <string name="nav_lessons">Lessons</string>
     <string name="nav_assignments">Assignments</string>
     <string name="nav_reports">Reports</string>
+    //useraccount
+    <string name="header_user_account">User account</string>
 
     <string name="calendar">Calendar</string>
 
+    <string-array name="user_account_options">
+        <item>Edit profile</item>
+        <item>Change password</item>
+        <item>Preferred language</item>
+        <item>Forum preferences</item>
+        <item>Calendar preference</item>
+        <item>Message preferences</item>
+        <item>Notification preferences</item>
+        <item>Linked logins</item>
+    </string-array>
+    //editin4
+    <string name="label_first_name">First name</string>
+    <string name="label_last_name">Last name</string>
+    <string name="label_email_visibility">Email visibility</string>
+    <string name="label_select_country">Select a country</string>
+    <string name="label_timezone">Timezone</string>
+    <string name="label_description">Description</string>
+    <string name="label_interests">Interests</string>
+    <string name="label_phone_number">Phone number</string>
+    <string name="button_update_profile">Update Profile</string>
 </resources>
