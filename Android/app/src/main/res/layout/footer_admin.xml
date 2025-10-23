@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/footerAdmin"
     android:layout_width="match_parent"
     android:layout_height="74dp"
@@ -12,7 +13,7 @@
     android:paddingStart="12dp"
     android:paddingEnd="12dp"
     android:paddingTop="4dp"
-    android:paddingBottom="22dp" >
+    android:paddingBottom="22dp">
 
     <!-- Dashboard -->
     <LinearLayout
@@ -23,13 +24,13 @@
         android:orientation="vertical"
         android:gravity="center">
 
-    <ImageView
-        android:id="@+id/icDashboard"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:src="@drawable/ic_dashboard"
-        android:contentDescription="Dashboard"
-        android:tint="@color/black"/>
+        <ImageView
+            android:id="@+id/icDashboard"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_dashboard"
+            android:contentDescription="Dashboard"
+            app:tint="@color/black" />
 
     <TextView
         android:id="@+id/tvDashboard"
@@ -56,7 +57,7 @@
         android:layout_height="28dp"
         android:src="@drawable/ic_courses"
         android:contentDescription="Courses"
-        android:tint="@color/black"/>
+        app:tint="@color/black" />
 
     <TextView
     android:id="@+id/tvCourses"
@@ -83,7 +84,7 @@
         android:layout_height="28dp"
         android:src="@drawable/ic_lesson"
         android:contentDescription="Lessons"
-        android:tint="@color/black"/>
+        app:tint="@color/black" />
 
     <TextView
     android:id="@+id/tvLessons"
@@ -110,7 +111,7 @@
         android:layout_height="28dp"
         android:src="@drawable/ic_assignment"
         android:contentDescription="Assignments"
-        android:tint="@color/black"/>
+        app:tint="@color/black" />
 
     <TextView
         android:id="@+id/tvAssignments"
@@ -137,7 +138,7 @@
         android:layout_height="28dp"
         android:src="@drawable/ic_report"
         android:contentDescription="Reports"
-        android:tint="@color/black"/>
+        app:tint="@color/black" />
 
     <TextView
         android:id="@+id/tvReports"
