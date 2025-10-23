@@ -8,74 +8,94 @@
     tools:context=".UserAccount">
 
     <LinearLayout
-        android:id="@+id/headerAdmin"
+        android:id="@+id/headerStudent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="54dp"
+        android:paddingHorizontal="12dp"
+        android:elevation="4dp"
         android:layout_marginTop="34dp"
         android:background="@drawable/bg_header"
-        android:elevation="4dp"
-        android:paddingHorizontal="12dp"
-        android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:context=".YourActivity">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/imgLogo"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:contentDescription="Logo"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo"
+            android:contentDescription="Logo EngGo"
+            android:layout_marginEnd="0dp" />
 
-        <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="0dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="8dp"
+        <View
+            android:layout_width="1dp"
+            android:layout_height="24dp"
             android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_search"
-            android:drawableStart="@drawable/ic_search"
-            android:hint="@string/hint_search"
-            android:inputType="text"
-            android:paddingStart="12dp"
-            android:textSize="14sp"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:background="@color/black" />
 
         <ImageButton
             android:id="@+id/btnNotification"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:background="@android:color/transparent"
-            android:contentDescription="Notifications"
             android:src="@drawable/ic_notification"
-            tools:ignore="HardcodedText,ImageContrastCheck,TouchTargetSizeCheck" />
+            android:contentDescription="Notifications"
+            app:tint="@color/dimgrey"
+            android:layout_marginEnd="8dp"/>
 
         <ImageButton
-            android:id="@+id/btnSettings"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginEnd="8dp"
+            android:id="@+id/btnThemeSwitch"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:background="@android:color/transparent"
-            android:contentDescription="Settings"
-            android:src="@drawable/ic_setting"
-            tools:ignore="TouchTargetSizeCheck,ImageContrastCheck" />
+            android:src="@drawable/ic_theme"
+            android:contentDescription="Toggle Theme"
+            app:tint="@color/dimgrey" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <ImageView
-            android:id="@+id/imgAvatarHeader"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:contentDescription="Avatar"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_account_admin"
-            tools:ignore="ImageContrastCheck" />
+            <TextView
+                android:id="@+id/tvStudentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tuyen, Huynh Ngoc Ngan"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:layout_marginEnd="4dp"/>
+
+            <ImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_account_student"
+                android:padding="0dp"
+                app:tint="@color/dimgrey"
+                android:contentDescription="Avatar" />
+
+            <ImageView
+                android:id="@+id/imgDropdown"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_arrow_drop_down"
+                android:contentDescription="Dropdown arrow"
+                app:tint="@color/dimgrey" />
+
+        </LinearLayout>
     </LinearLayout>
-
     <LinearLayout
-        android:id="@+id/footerAdmin"
+        android:id="@+id/footerStudent"
         android:layout_width="match_parent"
         android:layout_height="74dp"
         android:orientation="horizontal"
@@ -91,115 +111,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            android:id="@+id/btnDashboard"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:id="@+id/icDashboard"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_dashboard"
-                android:contentDescription="@string/nav_dashboard"
-                app:tint="@color/black" />
-
-            <TextView
-                android:id="@+id/tvDashboard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_dashboard"
-                android:textSize="11sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnCourses"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:id="@+id/icCourses"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_courses"
-                android:contentDescription="@string/nav_courses"
-                app:tint="@color/black" />
-
-            <TextView
-                android:id="@+id/tvCourses"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_courses"
-                android:textSize="11sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnLessons"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:id="@+id/icLessons"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_lesson"
-                android:contentDescription="@string/nav_lessons"
-                app:tint="@color/black" />
-
-            <TextView
-                android:id="@+id/tvLessons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_lessons"
-                android:textSize="11sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnAssignments"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:id="@+id/icAssignments"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_assignment"
-                android:contentDescription="@string/nav_assignments"
-                app:tint="@color/black" />
-
-            <TextView
-                android:id="@+id/tvAssignments"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_assignments"
-                android:textSize="11sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnReports"
+            android:id="@+id/btnHome"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -207,33 +119,112 @@
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/icReports"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_report"
-                android:contentDescription="@string/nav_reports"
+                android:id="@+id/icHome"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_home"
+                android:contentDescription="Home"
                 app:tint="@color/black" />
 
             <TextView
-                android:id="@+id/tvReports"
+                android:id="@+id/tvHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/nav_reports"
+                android:text="Home"
+                android:textSize="11sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnMyCourse"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/icMyCourse"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_courses"
+                android:contentDescription="My Course"
+                app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/tvMyCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Course"
+                android:textSize="11sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/icSearch"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_search"
+                android:contentDescription="Search"
+                app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/tvSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search"
+                android:textSize="11sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/btnMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/icMenu"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_menu"
+                android:contentDescription="Menu"
+                app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/tvMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Menu"
                 android:textSize="11sp"
                 android:textColor="@color/black"
                 android:layout_marginTop="2dp"/>
         </LinearLayout>
-    </LinearLayout>
 
+    </LinearLayout>
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingHorizontal="16dp"
         android:paddingTop="8dp"
-        app:layout_constraintBottom_toTopOf="@id/footerAdmin"
+        app:layout_constraintBottom_toTopOf="@id/footerStudent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerAdmin">
+        app:layout_constraintTop_toBottomOf="@id/headerStudent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -265,7 +256,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tvBack">
 
                 <ImageView
-                    android:id="@+id/imgAvatar"
+                    android:id="@+id/imAvatar"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginEnd="12dp"
