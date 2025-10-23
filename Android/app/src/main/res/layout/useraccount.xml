@@ -71,7 +71,7 @@
             android:layout_height="36dp"
             android:contentDescription="Avatar"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_account"
+            android:src="@drawable/ic_account_admin"
             tools:ignore="ImageContrastCheck" />
     </LinearLayout>
 
