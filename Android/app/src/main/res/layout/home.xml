@@ -2,14 +2,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0">
+    android:background="#F0F0F0"
+    tools:context=".HomeActivity">
 
-    <LinearLayout
-        android:id="@+id/headerStudent"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <include
+        android:id="@id/headerStudent"
+        layout="@layout/header_student"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:paddingHorizontal="12dp"
@@ -20,81 +21,11 @@
         android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageView
-            android:id="@+id/imgLogo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/logo"
-            android:contentDescription="Logo EngGo"
-            android:layout_marginEnd="0dp" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="8dp"
-            android:background="@color/black" />
-
-        <ImageButton
-            android:id="@+id/btnNotification"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_notification"
-            android:contentDescription="Notifications"
-            app:tint="@color/dimgrey"
-            android:layout_marginEnd="8dp"/>
-
-        <ImageButton
-            android:id="@+id/btnThemeSwitch"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_theme"
-            android:contentDescription="Toggle Theme"
-            app:tint="@color/dimgrey" />
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/tvStudentName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tuyen, Huynh Ngoc Ngan"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:layout_marginEnd="4dp"/>
-
-            <ImageView
-                android:id="@+id/imgAvatar"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_account_student"
-                android:padding="0dp"
-                app:tint="@color/dimgrey"
-                android:contentDescription="Avatar" />
-
-            <ImageView
-                android:id="@+id/imgDropdown"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:src="@drawable/ic_arrow_drop_down"
-                android:contentDescription="Dropdown arrow"
-                app:tint="@color/dimgrey" />
-
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/footerStudent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <include
+        android:id="@id/footerStudent"
+        layout="@layout/footer_student"
         android:layout_width="match_parent"
         android:layout_height="74dp"
         android:orientation="horizontal"
@@ -107,115 +38,8 @@
         android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
-            android:id="@+id/btnHome"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/icHome"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:src="@drawable/ic_home"
-                android:contentDescription="Home"
-                app:tint="@color/black" />
-
-            <TextView
-                android:id="@+id/tvHome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Home"
-                android:textSize="11sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="2dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnMyCourse"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/icMyCourse"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:src="@drawable/ic_courses"
-                android:contentDescription="My Course"
-                app:tint="@color/black" />
-
-            <TextView
-                android:id="@+id/tvMyCourse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="My Course"
-                android:textSize="11sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="2dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnSearch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/icSearch"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:src="@drawable/ic_search"
-                android:contentDescription="Search"
-                app:tint="@color/black" />
-
-            <TextView
-                android:id="@+id/tvSearch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Search"
-                android:textSize="11sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="2dp" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/btnMenu"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/icMenu"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:src="@drawable/ic_menu"
-                android:contentDescription="Menu"
-                app:tint="@color/black" />
-
-            <TextView
-                android:id="@+id/tvMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Menu"
-                android:textSize="11sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="2dp"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
+        app:layout_constraintEnd_toEndOf="parent"
+        />
     <ScrollView
         android:id="@+id/contentScrollView"
         android:layout_width="match_parent"

@@ -1,21 +1,24 @@
-package com.example.enggo; // Thay bằng package của bạn
+package com.example.enggo;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class UserAccount extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MenuActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Đặt layout cho Activity này là file activity_profile.xml
-        setContentView(R.layout.useraccount);
-
+        setContentView(R.layout.menu);
+        setupHeader();
+        setupFooter();
         // 1. Tìm ListView trong layout bằng ID của nó
         ListView userAccountListView = findViewById(R.id.userAccountListView);
 
@@ -43,12 +46,15 @@ public class UserAccount extends AppCompatActivity {
                 String selectedItem = (String) parent.getItemAtPosition(position);
 
                 // Hiển thị một thông báo nhanh (Toast)
-                Toast.makeText(UserAccount.this, "Bạn đã chọn: " + selectedItem, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MenuActivity.this, "Bạn đã chọn: " + selectedItem, Toast.LENGTH_SHORT).show();
 
                 // Dùng switch-case để xử lý logic cho từng mục
                 switch (position) {
                     case 0: // Edit Profile
                         // Viết code để mở màn hình chỉnh sửa profile ở đây
+                        Intent intent = new Intent(MenuActivity.this, EditInformationActivity.class);
+                        // Khởi chạy Activity mới
+                        startActivity(intent);
                         break;
                     case 1: // Change Password
                         // Viết code để mở màn hình đổi mật khẩu ở đây

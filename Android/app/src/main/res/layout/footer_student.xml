@@ -12,7 +12,8 @@
     android:paddingStart="12dp"
     android:paddingEnd="12dp"
     android:paddingTop="4dp"
-    android:paddingBottom="22dp">
+    android:paddingBottom="22dp"
+    android:elevation="8dp">
 
     <!-- Home -->
     <LinearLayout
