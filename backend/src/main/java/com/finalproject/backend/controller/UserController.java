@@ -16,8 +16,8 @@ public class UserController {
     User createUser(@Valid @RequestBody UserCreationRequest request) {
         return userService.createUser(request);
     }
-    @GetMapping("/users/{id}")
-    User getUser(@PathVariable("id") String id) {
-        return userService.getUser(id);
+    @GetMapping("/users")
+    User getUser(@RequestHeader("X-Auth-Token") String token) {
+        return userService.getUserByToken(token);
     }
 }
