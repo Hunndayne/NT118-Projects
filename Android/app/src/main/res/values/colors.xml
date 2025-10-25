@@ -6,4 +6,8 @@
     <color name="grey">#D3D3D3</color>
     <color name="dimgrey">#828282</color>
     <color name="blue">#C0D5FF</color>
+    <color name="enggo_white">#FFFFFF</color>
+    <color name="enggo_grey_300">#D1D5DB</color>
+    <color name="enggo_grey_600">#4B5563</color>
+
 </resources>
