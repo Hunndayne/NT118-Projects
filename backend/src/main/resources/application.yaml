@@ -5,11 +5,16 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://10.147.17.180:5432/nt118?options=-c%20TimeZone=%2B07
+    url: jdbc:postgresql://10.147.17.180:5432/nt118?TimeZone=UTC
     username: hunn
     password: hunn
+    hikari:
+      data-source-properties:
+        TimeZone: UTC
+
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+
     database-platform: org.hibernate.dialect.PostgreSQLDialect
