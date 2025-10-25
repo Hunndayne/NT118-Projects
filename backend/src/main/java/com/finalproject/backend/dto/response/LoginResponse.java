@@ -8,6 +8,7 @@ import java.time.Instant;
 @Value
 @Builder
 public class LoginResponse {
-    String token;
-    Instant expiresAt;
+	String token;
+	String tokenType;
+	Instant expiresAt;
 }
