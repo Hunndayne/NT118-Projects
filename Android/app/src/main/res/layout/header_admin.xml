@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/headerAdmin"
+    android:layout_width="400dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_height="54dp"
+    android:paddingHorizontal="12dp"
+    android:elevation="4dp"
+    android:layout_marginTop="34dp"
+    android:background="@drawable/bg_header"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+
+        <!-- Logo EngGO -->
+
+    <!-- Search Bar -->
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="Logo"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Thanh ngăn cách -->
+    <View
+        android:layout_width="1dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/black" />
+
+    <!-- Light/Dark mode icon -->
+    <ImageButton
+        android:id="@+id/btnThemeSwitch"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_theme"
+        android:contentDescription="Toggle Theme"
+        app:tint="@color/dimgrey"
+        android:layout_marginEnd="2dp"/>
+
+    <!-- Notification icon -->
+    <ImageButton
+        android:id="@+id/btnNotification"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="2dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Notifications"
+        android:src="@drawable/ic_notification"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnSettings"
+        app:tint="@color/dimgrey"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="168dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/bg_search"
+            android:drawableStart="@drawable/ic_search"
+            android:hint="Search..."
+            android:inputType="text"
+            android:paddingStart="12dp"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnNotification"
+            app:layout_constraintStart_toEndOf="@id/imgLogo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        <!-- Settings icon -->
+        <ImageButton
+            android:id="@+id/btnSettings"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="2dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Settings"
+            android:src="@drawable/ic_setting"
+            app:tint="@color/dimgrey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imgAvatar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Avatar -->
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="Avatar"
+            app:tint="@color/dimgrey"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_account_admin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>

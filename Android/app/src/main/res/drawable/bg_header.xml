@@ -1,0 +1,17 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Bóng đổ nhẹ -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#1A000000" /> <!-- Màu đen mờ 10% -->
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+
+    <!-- Nền trắng bên trên -->
+    <item android:top="1dp" android:bottom="3dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+</layer-list>

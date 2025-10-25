@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/footerStudent"
+    android:layout_width="match_parent"
+    android:layout_height="74dp"
+    android:layout_gravity="bottom"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:background="@android:color/white"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="22dp"
+    android:elevation="8dp">
+
+    <!-- Home -->
+    <LinearLayout
+        android:id="@+id/btnHome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/icHome"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/ic_home"
+            android:contentDescription="Home"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/tvHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:textSize="11sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+
+    <!-- My Course -->
+    <LinearLayout
+        android:id="@+id/btnMyCourse"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/icMyCourse"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/ic_courses"
+            android:contentDescription="My Course"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/tvMyCourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Course"
+            android:textSize="11sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+
+    <!-- Search -->
+    <LinearLayout
+        android:id="@+id/btnSearch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/icSearch"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/ic_search"
+            android:contentDescription="Search"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/tvSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:textSize="11sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/btnMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/icMenu"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/ic_menu"
+            android:contentDescription="Menu"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/tvMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Menu"
+            android:textSize="11sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="2dp"/>
+    </LinearLayout>
+
+
+</LinearLayout>

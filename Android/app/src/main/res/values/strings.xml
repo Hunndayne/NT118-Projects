@@ -1,3 +1,72 @@
 <resources>
+    //login
     <string name="app_name">EngGo</string>
+    <string name="sign_in">Login</string>
+    <string name="username">Username: </string>
+    <string name="password">Password: </string>
+    <string name="fb">Continue with Facebook</string>
+    <string name="gm">Continue with Google</string>
+    <string name="EngGo">Go with English, grow with EngGO</string>
+    <string name="fg">Forgotten your username or password?</string>
+    <string name="loginb">Login using your account on:</string>
+    <string name="back_text"><u>Back</u></string>
+    //profie
+    <string name="title_profile">PROFILE</string>
+    <string name="hint_search">Search...</string>
+
+    <string name="label_student_role">Student</string>
+    <string name="user_name">Huynh Ngoc Ngan Tuyen</string>
+    <string name="label_user_details">User details</string>
+    <string name="label_online_users">Online users:</string>
+    <string name="label_email_address">Email address:</string>
+    <string name="email_value" translatable="false">23521753@gm.uit.edu.vn</string>
+    <string name="email_visibility">(Visible to other course participants)</string>
+    <string name="label_country">Country:</string>
+    <string name="country_value">Viet Nam</string>
+    <string name="label_city_town">City/town:</string>
+    <string name="city_town_value">Thu Duc</string>
+
+    <string name="online_user_1">Cap Huu Tu</string>
+    <string name="online_user_2">Nguyen Thai Quang</string>
+    <string name="online_user_3">Nguyen Thai Bao Chau</string>
+    <string name="online_user_4">Tran Thanh Hung</string>
+
+    <string name="label_courses_details">Courses details</string>
+    <string name="course_1_name" translatable="false">TOEIC SPEAKING WRITING TB115</string>
+    <string name="course_2_name" translatable="false">TOEIC READING LISTENING TA143GD</string>
+    <string name="label_login_activity">Login activity</string>
+    <string name="last_access_site_label">Last access to site:</string>
+    <string name="last_access_site_value" translatable="false">Wednesday, 24 September 2025, 2:06 PM (14 secs)</string>
+
+    <string name="button_message">Message</string>
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_courses">Courses</string>
+    <string name="nav_lessons">Lessons</string>
+    <string name="nav_assignments">Assignments</string>
+    <string name="nav_reports">Reports</string>
+    //useraccount
+    <string name="header_user_account">User account</string>
+
+    <string name="calendar">Calendar</string>
+
+    <string-array name="user_account_options">
+        <item>Edit profile</item>
+        <item>Change password</item>
+        <item>Preferred language</item>
+        <item>Forum preferences</item>
+        <item>Calendar preference</item>
+        <item>Message preferences</item>
+        <item>Notification preferences</item>
+        <item>Linked logins</item>
+    </string-array>
+    //editin4
+    <string name="label_first_name">First name</string>
+    <string name="label_last_name">Last name</string>
+    <string name="label_email_visibility">Email visibility</string>
+    <string name="label_select_country">Select a country</string>
+    <string name="label_timezone">Timezone</string>
+    <string name="label_description">Description</string>
+    <string name="label_interests">Interests</string>
+    <string name="label_phone_number">Phone number</string>
+    <string name="button_update_profile">Update Profile</string>
 </resources>
