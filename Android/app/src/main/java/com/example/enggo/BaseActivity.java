@@ -2,7 +2,6 @@ package com.example.enggo;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton; // Hoặc Button, tùy vào view của bạn
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,8 +9,6 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-
-import com.example.enggo.R; // Đảm bảo import đúng R của project
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -64,7 +61,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void setupHeader() {
         ImageButton btnNotice = findViewById(R.id.btnNotification);
         ImageButton btnTheme = findViewById(R.id.btnThemeSwitch);
-        ImageView imgAvatar = findViewById(R.id.imgAvatar);
+        ImageView imgAvatar = findViewById(R.id.iconAvatar);
         ImageView imgDropdown = findViewById(R.id.imgDropdown);
         btnNotice.setOnClickListener(v -> {
             if (!(this instanceof NotificationActivity)) {

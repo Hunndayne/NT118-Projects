@@ -90,12 +90,12 @@
             android:src="@drawable/ic_setting"
             app:tint="@color/dimgrey"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/imgAvatar"
+            app:layout_constraintEnd_toStartOf="@id/iconAvatar"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Avatar -->
         <ImageView
-            android:id="@+id/imgAvatar"
+            android:id="@+id/iconAvatar"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:contentDescription="Avatar"
