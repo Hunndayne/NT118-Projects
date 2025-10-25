@@ -7,6 +7,7 @@ import com.finalproject.backend.dto.response.UserResponse;
 import com.finalproject.backend.entity.AuthToken;
 import com.finalproject.backend.entity.TokenType;
 import com.finalproject.backend.entity.User;
+import com.finalproject.backend.entity.UserProfile;
 import com.finalproject.backend.repository.AuthTokenRepository;
 import com.finalproject.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,48 +39,74 @@ public class UserService {
 
 	@Transactional
 	public UserResponse createUser(UserCreationRequest request) {
-		String username = request.getUsername().trim();
-		String email = request.getEmail().trim();
-		String fullName = request.getFullName().trim();
-		String phone = Optional.ofNullable(request.getPhone())
-				.map(String::trim)
-				.filter(s -> !s.isEmpty())
-				.orElse(null);
+		String username = trimRequired(request.getUsername(), "username");
+		String emailAddress = trimRequired(request.getEmailAddress(), "emailAddress");
+		String firstName = trimRequired(request.getFirstName(), "firstName");
+		String lastName = trimRequired(request.getLastName(), "lastName");
+		String phoneNumber = trimRequired(request.getPhoneNumber(), "phoneNumber");
+		String fullName = (firstName + " " + lastName).replaceAll("\\s+", " ").trim();
+		String emailVisibility = trimToNull(request.getEmailVisibility());
+		String city = trimToNull(request.getCity());
+		String country = trimToNull(request.getCountry());
+		String timezone = trimToNull(request.getTimezone());
+		String description = trimToNull(request.getDescription());
+		String interest = trimToNull(request.getInterest());
+		String avatarUrl = trimToNull(request.getAvatarUrl());
 
 		if (userRepository.existsByUsernameIgnoreCase(username)) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
 		}
 
-		if (userRepository.existsByEmailIgnoreCase(email)) {
+		if (userRepository.existsByEmailIgnoreCase(emailAddress)) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
 		}
 
-		if (phone != null && userRepository.existsByPhone(phone)) {
+		boolean phoneConflict = userRepository.existsByPhoneNumber(phoneNumber);
+		if (!phoneConflict) {
+			phoneConflict = userRepository.existsByPhone(phoneNumber);
+		}
+		if (phoneConflict) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Phone already exists");
 		}
 
 		User user = User.builder()
 				.username(username)
-				.email(email)
+				.email(emailAddress)
+				.emailAddress(emailAddress)
+				.firstName(firstName)
+				.lastName(lastName)
 				.fullName(fullName)
-				.phone(phone)
+				.emailVisibility(emailVisibility)
+				.city(city)
+				.country(country)
+				.timezone(timezone)
+				.description(description)
+				.interest(interest)
+				.phoneNumber(phoneNumber)
+				.phone(phoneNumber)
 				.passwordHash(passwordEncoder.encode(request.getPassword()))
 				.active(true)
 				.admin(false)
 				.build();
+
+		if (avatarUrl != null) {
+			UserProfile profile = new UserProfile();
+			profile.setAvatarUrl(avatarUrl);
+			profile.setUser(user);
+			user.setProfile(profile);
+		}
+
 		user.setLegacyUserId(generateTemporaryLegacyId());
 
 		User saved = userRepository.save(user);
 
-		if (saved.getLegacyUserId() == null) {
-			saved.setLegacyUserId(saved.getId());
-			saved = userRepository.save(saved);
-		} else if (!saved.getLegacyUserId().equals(saved.getId())) {
+		if (saved.getLegacyUserId() == null || saved.getLegacyUserId() <= 0) {
 			saved.setLegacyUserId(saved.getId());
 			saved = userRepository.save(saved);
 		}
 
-		return toResponse(saved);
+		User hydrated = loadUserWithProfile(saved.getId());
+		return toResponse(hydrated);
 	}
 
 	public UserResponse getUserByToken(String rawToken) {
@@ -98,12 +125,13 @@ public class UserService {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User account is inactive");
 		}
 
-		return toResponse(user);
+		User hydrated = loadUserWithProfile(user.getId());
+		return toResponse(hydrated);
 	}
 
 	@Transactional
 	public LoginResponse login(LoginRequest request) {
-		String username = request.getUsername().trim();
+		String username = trimRequired(request.getUsername(), "username");
 		String rawPassword = request.getPassword();
 
 		authTokenRepository.deleteByExpiresAtBefore(Instant.now());
@@ -150,12 +178,29 @@ public class UserService {
 		if (publicId == null || publicId <= 0) {
 			publicId = user.getId();
 		}
+
+		UserProfile profile = user.getProfile();
+		String avatarUrl = profile != null ? trimToNull(profile.getAvatarUrl()) : null;
+		String emailAddress = Optional.ofNullable(trimToNull(user.getEmailAddress()))
+				.orElseGet(() -> trimToNull(user.getEmail()));
+		String phoneNumber = Optional.ofNullable(trimToNull(user.getPhoneNumber()))
+				.orElseGet(() -> trimToNull(user.getPhone()));
+
 		return UserResponse.builder()
 				.id(publicId)
 				.username(user.getUsername())
-				.email(user.getEmail())
-				.phone(user.getPhone())
-				.fullName(user.getFullName())
+				.firstName(trimToNull(user.getFirstName()))
+				.lastName(trimToNull(user.getLastName()))
+				.fullName(trimToNull(user.getFullName()))
+				.emailAddress(emailAddress)
+				.emailVisibility(trimToNull(user.getEmailVisibility()))
+				.city(trimToNull(user.getCity()))
+				.country(trimToNull(user.getCountry()))
+				.timezone(trimToNull(user.getTimezone()))
+				.description(trimToNull(user.getDescription()))
+				.interest(trimToNull(user.getInterest()))
+				.phoneNumber(phoneNumber)
+				.avatarUrl(avatarUrl)
 				.active(user.isActive())
 				.admin(user.isAdmin())
 				.createdAt(user.getCreatedAt())
@@ -178,10 +223,33 @@ public class UserService {
 
 	private long generateTemporaryLegacyId() {
 		long candidate = -Math.abs(ThreadLocalRandom.current().nextLong(1, Long.MAX_VALUE));
-		// tránh rơi vào 0
 		if (candidate == 0L) {
 			return -1L;
 		}
 		return candidate;
+	}
+
+	private User loadUserWithProfile(Long userId) {
+		return userRepository.findWithProfileById(userId)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+	}
+
+	private String trimRequired(String value, String fieldName) {
+		if (value == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, fieldName + " is required");
+		}
+		String trimmed = value.trim();
+		if (trimmed.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, fieldName + " must not be blank");
+		}
+		return trimmed;
+	}
+
+	private String trimToNull(String value) {
+		if (value == null) {
+			return null;
+		}
+		String trimmed = value.trim();
+		return trimmed.isEmpty() ? null : trimmed;
 	}
 }
