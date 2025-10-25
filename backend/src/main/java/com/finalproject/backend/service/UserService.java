@@ -54,9 +54,11 @@ public class UserService {
         return userrepository.save(user);
     }
 
-    public User getUser(String id) {
-        return userrepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public User getUserByToken(String token) {
+        UserToken userToken = userTokenRepository.findByToken(token)
+                .filter(t -> t.getExpiresAt().isAfter(Instant.now()))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid or expired token"));
+        return userToken.getUser();
     }
 
     @Transactional
