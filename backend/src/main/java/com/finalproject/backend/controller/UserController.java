@@ -4,9 +4,7 @@ import com.finalproject.backend.dto.request.UserCreationRequest;
 import com.finalproject.backend.entity.User;
 import com.finalproject.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -16,5 +14,9 @@ public class UserController {
     @PostMapping("/users")
     User createUser(@RequestBody UserCreationRequest request) {
         return userService.createUser(request);
+    }
+    @GetMapping("/users")
+    User getUser(@PathVariable String id) {
+        return userService.getUser(id);
     }
 }

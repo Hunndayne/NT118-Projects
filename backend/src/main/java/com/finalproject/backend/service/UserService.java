@@ -19,12 +19,16 @@ public class UserService {
         user.setFirstname(request.getFirstname());
         user.setLastname(request.getLastname());
         user.setEmailAddress(request.getEmailAddress());
-        user.setEmailVisibility(request.getEmailVisibility());
         user.setCity(request.getCity());
         user.setCountry(request.getCountry());
         user.setTimezone(request.getTimezone());
         user.setPhoneNumber(request.getPhoneNumber());
 
         return userrepository.save(user);
+    }
+
+    public User getUser(String id) {
+        return userrepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }

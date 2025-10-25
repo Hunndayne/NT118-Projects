@@ -28,7 +28,7 @@ public class User {
     private String country;
     private String timezone;
 
-    @Column(length = 1000) // nếu mô tả có thể dài
+    @Column(length = 1000)
     private String description;
 
     private String interest;
