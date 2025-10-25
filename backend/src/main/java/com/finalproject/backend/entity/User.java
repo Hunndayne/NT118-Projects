@@ -1,10 +1,19 @@
 package com.finalproject.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity
-@Table(name = "Users")
+@Table(
+        name = "Users",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_users_username", columnNames = "username"),
+                @UniqueConstraint(name = "uk_users_email_address", columnNames = "email_address")
+        }
+)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,12 +22,13 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @Column(nullable = false)
     private String username;
     private String password;
     private String firstname;
     private String lastname;
 
-    @Column(name = "email_address")
+    @Column(name = "email_address", nullable = false)
     private String emailAddress;
 
     @Column(name = "email_visibility")
@@ -37,5 +47,11 @@ public class User {
     private String phoneNumber;
 
     private String profileImagePath;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private Set<UserToken> tokens;
 }
 
