@@ -49,13 +49,12 @@
                 android:id="@+id/tvBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_arrow_back_24"
-                android:drawablePadding="2dp"
-                android:paddingVertical="2dp"
                 android:text="@string/back_text"
-                android:textColor="@android:color/black"
                 android:textSize="13sp"
-                android:fontFamily="@font/nunito_extra_bold" />
+                android:textColor="@android:color/black"
+                android:fontFamily="@font/nunito_extra_bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/tvCourseTitle"
@@ -75,7 +74,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="Timeline"
                 app:boxCornerRadiusTopStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
@@ -86,7 +84,6 @@
                     android:id="@+id/actvTimeline"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
                     android:text="Next 6 months"
                     android:textSize="11sp"
                     android:focusable="false"
@@ -276,7 +273,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include
-                android:id="@+id/CalendarCourse"
+                android:id="@id/calendar"
                 layout="@layout/calendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

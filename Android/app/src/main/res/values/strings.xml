@@ -69,4 +69,6 @@
     <string name="label_interests">Interests</string>
     <string name="label_phone_number">Phone number</string>
     <string name="button_update_profile">Update Profile</string>
+
+    <string name="demo_notification_item">ĐONG HOC PHI!</string>
 </resources>

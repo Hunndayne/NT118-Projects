@@ -80,7 +80,7 @@ public class CalendarSetup {
                     container.dayText.setVisibility(View.VISIBLE);
                     LocalDate date = day.getDate();
                     if (events.containsKey(date)) {
-                        container.dayText.setTextColor(ContextCompat.getColor(context, R.color.lightblue));
+                        container.dayText.setTextColor(ContextCompat.getColor(context, R.color.black));
                         container.dayText.setTypeface(null, Typeface.BOLD);
                         container.dotView.setVisibility(View.VISIBLE);
                     } else {
@@ -88,7 +88,7 @@ public class CalendarSetup {
                         container.dotView.setVisibility(View.INVISIBLE);
                         // Set alternating colors for days without events
                         DayOfWeek dayOfWeek = date.getDayOfWeek();
-                        if (dayOfWeek == DayOfWeek.MONDAY || dayOfWeek == DayOfWeek.WEDNESDAY || dayOfWeek == DayOfWeek.FRIDAY) {
+                        if (dayOfWeek == DayOfWeek.TUESDAY || dayOfWeek == DayOfWeek.THURSDAY || dayOfWeek == DayOfWeek.SATURDAY) {
                             container.dayText.setTextColor(ContextCompat.getColor(context, R.color.lightblue));
                         } else {
                             container.dayText.setTextColor(ContextCompat.getColor(context, R.color.black));
@@ -138,31 +138,3 @@ public class CalendarSetup {
         builder.show();
     }
 }
-//Ví dụ sử dụng trong OnCreate MainActivity
-//CalendarView calendarView = findViewById(R.id.calendarView);
-//TextView monthYearText = findViewById(R.id.monthYearText);
-//ImageButton previousMonthButton = findViewById(R.id.previousMonthButton);
-//ImageButton nextMonthButton = findViewById(R.id.nextMonthButton);
-//
-//// Create some sample events
-//Map<LocalDate, List<String>> events = new HashMap<>();
-//        events.put(LocalDate.now(), new ArrayList<String>() {{ add("Meeting"); add("Lunch"); }});
-//        events.put(LocalDate.now().plusDays(2), new ArrayList<String>() {{ add("Dentist"); }});
-//
-//// Setup the calendar
-//CalendarSetup calendarSetup = new CalendarSetup(this, calendarView, monthYearText, events);
-//        calendarSetup.setup();
-//
-//        previousMonthButton.setOnClickListener(v -> {
-//CalendarMonth currentMonth = calendarView.findFirstVisibleMonth();
-//            if (currentMonth != null) {
-//        calendarView.scrollToMonth(currentMonth.getYearMonth().minusMonths(1));
-//        }
-//        });
-//
-//        nextMonthButton.setOnClickListener(v -> {
-//CalendarMonth currentMonth = calendarView.findFirstVisibleMonth();
-//            if (currentMonth != null) {
-//        calendarView.scrollToMonth(currentMonth.getYearMonth().plusMonths(1));
-//        }
-//        });
