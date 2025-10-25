@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="291dp"
-        android:layout_height="348dp"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/logo"
         app:layout_constraintBottom_toTopOf="@id/tvSignIn"

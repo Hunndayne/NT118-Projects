@@ -6,11 +6,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class MenuActivity extends BaseActivity {
 
@@ -58,9 +55,9 @@ public class MenuActivity extends BaseActivity {
                         startActivity(intent);
                         break;
                     case 1: // Change Password
-//                        Intent intent = new Intent(ForgetPasswordActivity.this, EditInformationActivity.class);
-//                        // Khởi chạy Activity mới
-//                        startActivity(intent);
+                        Intent intent1 = new Intent(MenuActivity.this, ChangePasswordActivity.class);
+                        // Khởi chạy Activity mới
+                        startActivity(intent1);
                         break;
                     // ... và các trường hợp khác
                 }

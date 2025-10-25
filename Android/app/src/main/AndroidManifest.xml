@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EngGo">
         <activity
-            android:name=".ClassActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,6 +48,8 @@
             android:exported="false"/>
         <activity
             android:name=".Avatar"
+            android:exported="false"/>
+        <activity android:name=".ChangePasswordActivity"
             android:exported="false"/>
     </application>
 

@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class ForgotPasswordActivity extends AppCompatActivity {
+public class ChangePasswordActivity extends AppCompatActivity {
 
     EditText etEmail, etOtp1, etOtp2, etOtp3, etOtp4, etNewPassword;
     Button btnSendEmail, btnResetPassword;
@@ -19,7 +19,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.foget_password);
+        setContentView(R.layout.forget_password);
 
         etEmail = findViewById(R.id.etEmail);
         etNewPassword = findViewById(R.id.etNewPassword);
@@ -36,7 +36,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String email = etEmail.getText().toString();
-                Toast.makeText(ForgotPasswordActivity.this, "Đang gửi OTP tới: " + email, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChangePasswordActivity.this, "Đang gửi OTP tới: " + email, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -50,7 +50,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
                 String newPassword = etNewPassword.getText().toString();
 
-                Toast.makeText(ForgotPasswordActivity.this, "Đang đổi mật khẩu...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChangePasswordActivity.this, "Đang đổi mật khẩu...", Toast.LENGTH_SHORT).show();
             }
         });
 
