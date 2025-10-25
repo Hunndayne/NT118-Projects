@@ -39,7 +39,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
-    <!-- ===== PHẦN NỘI DUNG CUỘN ===== -->
     <ScrollView
         android:id="@+id/scrollContent"
         android:layout_width="0dp"
@@ -57,7 +56,6 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <!-- Back + Title -->
             <TextView
                 android:id="@+id/tvBack"
                 android:layout_width="wrap_content"
@@ -75,7 +73,6 @@
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
-            <!-- Welcome -->
             <TextView
                 android:id="@+id/tvWelcome"
                 android:layout_width="match_parent"
@@ -97,7 +94,6 @@
                 android:textAlignment="center"
                 tools:ignore="RtlCompat" />
 
-            <!-- 4 Buttons -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -112,10 +108,10 @@
                     android:layout_marginHorizontal="4dp"
                     android:background="@drawable/bg_welcome"
                     android:gravity="center"
+                    android:lines="2"
                     android:minHeight="0dp"
                     android:paddingVertical="4dp"
                     android:singleLine="false"
-                    android:lines="2"
                     android:text="ANNOUNCEMENT"
                     android:textColor="@color/lightblue"
                     android:textSize="11dp"
@@ -170,7 +166,6 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- HEADER ANNOUNCEMENT -->
             <LinearLayout
                 android:id="@+id/headerAnnouncement"
                 android:layout_width="match_parent"
@@ -198,6 +193,8 @@
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/contentAnnouncement"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -206,7 +203,6 @@
                 app:cardUseCompatPadding="false"
                 app:cardBackgroundColor="@android:color/transparent">
 
-                <!-- Đặt background viền ở LinearLayout bên trong -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -214,7 +210,7 @@
                     android:padding="8dp"
                     android:background="@drawable/bg_card_outline">
 
-                <TextView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
@@ -316,7 +312,6 @@
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-            <!-- HEADER LECTURE -->
             <LinearLayout
                 android:id="@+id/headerLecture"
                 android:layout_width="match_parent"
@@ -343,8 +338,9 @@
                     app:tint="@color/black" />
             </LinearLayout>
 
-            <!-- CARDVIEW LECTURE -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/contentLecture"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -353,7 +349,6 @@
                 app:cardUseCompatPadding="false"
                 app:cardBackgroundColor="@android:color/transparent">
 
-                <!-- Đặt background viền ở LinearLayout bên trong -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -461,7 +456,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- HEADER HOMEWORK -->
             <LinearLayout
                 android:id="@+id/headerHomework"
                 android:layout_width="match_parent"
@@ -488,8 +482,9 @@
                     app:tint="@color/black" />
             </LinearLayout>
 
-            <!-- CARDVIEW HOMEWORK -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/contentHomework"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -505,7 +500,6 @@
                     android:padding="12dp"
                     android:background="@drawable/bg_card_outline">
 
-                    <!-- ========== HOMEWORK 1.1 ========== -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -537,7 +531,6 @@
                         android:textSize="14dp"
                         android:layout_marginTop="4dp" />
 
-                    <!-- Phần danh sách thụt vào -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -566,7 +559,6 @@
                         android:textSize="14dp"
                         android:layout_marginBottom="8dp" />
 
-                    <!-- Opened & Due -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -617,7 +609,6 @@
                         android:background="@color/grey"
                         android:layout_marginVertical="8dp" />
 
-                    <!-- ========== HOMEWORK 1.2 ========== -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -643,7 +634,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- HEADER FORUM -->
             <LinearLayout
                 android:id="@+id/headerForum"
                 android:layout_width="match_parent"
@@ -670,8 +660,9 @@
                     app:tint="@color/black" />
             </LinearLayout>
 
-            <!-- CARDVIEW FORUM -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/contentForum"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

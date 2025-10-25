@@ -5,55 +5,66 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(
-        name = "Users",
-        uniqueConstraints = {
-                @UniqueConstraint(name = "uk_users_username", columnNames = "username"),
-                @UniqueConstraint(name = "uk_users_email_address", columnNames = "email_address")
-        }
-)
-@Data
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "users")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
-    @Column(nullable = false)
-    private String username;
-    private String password;
-    private String firstname;
-    private String lastname;
 
-    @Column(name = "email_address", nullable = false)
-    private String emailAddress;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
+	private Long id;
 
-    @Column(name = "email_visibility")
-    private String emailVisibility;
+	@Column(name = "id")
+	private Long legacyUserId;
 
-    private String city;
-    private String country;
-    private String timezone;
+	@Column(nullable = false, columnDefinition = "citext")
+	private String username;
 
-    @Column(length = 1000)
-    private String description;
+	@Column(nullable = false, columnDefinition = "citext")
+	private String email;
 
-    private String interest;
+	@Column(length = 20)
+	private String phone;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+	@Column(name = "password_hash", nullable = false)
+	private String passwordHash;
 
-    private String profileImagePath;
+	@Column(name = "full_name")
+	private String fullName;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @JsonIgnore
-    private Set<UserToken> tokens;
+	@Column(name = "is_active", nullable = false)
+	private boolean active = true;
+
+	@Column(name = "is_admin", nullable = false)
+	private boolean admin = false;
+
+	@Column(name = "created_at", nullable = false, updatable = false)
+	private Instant createdAt;
+
+	@Column(name = "last_login_at")
+	private Instant lastLoginAt;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
+	@Builder.Default
+	private Set<AuthToken> tokens = new HashSet<>();
+
+	@PrePersist
+	void onCreate() {
+		if (createdAt == null) {
+			createdAt = Instant.now();
+		}
+	}
 }
-
