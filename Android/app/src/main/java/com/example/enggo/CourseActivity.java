@@ -37,21 +37,7 @@ public class CourseActivity extends BaseActivity {
         }});
 
         // Setup the calendar
-        CalendarSetup calendarSetup = new CalendarSetup(this, calendarView, monthYearText, events);
+        CalendarSetup calendarSetup = new CalendarSetup(this, calendarView, monthYearText, previousMonthButton, nextMonthButton, events);
         calendarSetup.setup();
-
-        previousMonthButton.setOnClickListener(v -> {
-            CalendarMonth currentMonth = calendarView.findFirstVisibleMonth();
-            if (currentMonth != null) {
-                calendarView.scrollToMonth(currentMonth.getYearMonth().minusMonths(1));
-            }
-        });
-
-        nextMonthButton.setOnClickListener(v -> {
-            CalendarMonth currentMonth = calendarView.findFirstVisibleMonth();
-            if (currentMonth != null) {
-                calendarView.scrollToMonth(currentMonth.getYearMonth().plusMonths(1));
-            }
-        });
     }
 }

@@ -29,13 +29,17 @@ public class CalendarSetup {
     private Context context;
     private CalendarView calendarView;
     private TextView monthYearText;
+    private ImageButton previousMonthButton;
+    private ImageButton nextMonthButton;
     private Map<LocalDate, List<String>> events;
     private LocalDate today = LocalDate.now();
 
-    public CalendarSetup(Context context, CalendarView calendarView, TextView monthYearText, Map<LocalDate, List<String>> events) {
+    public CalendarSetup(Context context, CalendarView calendarView, TextView monthYearText, ImageButton previousMonthButton, ImageButton nextMonthButton, Map<LocalDate, List<String>> events) {
         this.context = context;
         this.calendarView = calendarView;
         this.monthYearText = monthYearText;
+        this.previousMonthButton = previousMonthButton;
+        this.nextMonthButton = nextMonthButton;
         this.events = events;
     }
 

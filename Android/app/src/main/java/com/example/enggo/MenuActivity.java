@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -57,11 +58,18 @@ public class MenuActivity extends BaseActivity {
                         startActivity(intent);
                         break;
                     case 1: // Change Password
-                        // Viết code để mở màn hình đổi mật khẩu ở đây
+//                        Intent intent = new Intent(ForgetPasswordActivity.this, EditInformationActivity.class);
+//                        // Khởi chạy Activity mới
+//                        startActivity(intent);
                         break;
                     // ... và các trường hợp khác
                 }
             }
+        });
+        ImageView imAvatar = findViewById(R.id.imAvatar);
+        imAvatar.setOnClickListener(v -> {
+            Intent intent = new Intent(MenuActivity.this, Avatar.class);
+            startActivity(intent);
         });
     }
 }
