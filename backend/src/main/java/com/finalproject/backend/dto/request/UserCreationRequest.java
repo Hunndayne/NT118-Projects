@@ -14,13 +14,31 @@ public class UserCreationRequest {
 	@NotBlank(message = "password must not be blank")
 	private String password;
 
-	@NotBlank(message = "email must not be blank")
+	@NotBlank(message = "emailAddress must not be blank")
 	@Email
-	private String email;
+	private String emailAddress;
 
-	@NotBlank(message = "fullName must not be blank")
-	private String fullName;
+	@NotBlank(message = "firstName must not be blank")
+	private String firstName;
 
-	@Pattern(regexp = "^$|^\\+?[1-9]\\d{1,14}$", message = "phone must follow E.164 format")
-	private String phone;
+	@NotBlank(message = "lastName must not be blank")
+	private String lastName;
+
+	private String emailVisibility;
+
+	private String city;
+
+	private String country;
+
+	private String timezone;
+
+	private String description;
+
+	private String interest;
+
+	@NotBlank(message = "phoneNumber must not be blank")
+	@Pattern(regexp = "^\\+?[1-9]\\d{1,14}$", message = "phoneNumber must follow E.164 format")
+	private String phoneNumber;
+
+	private String avatarUrl;
 }

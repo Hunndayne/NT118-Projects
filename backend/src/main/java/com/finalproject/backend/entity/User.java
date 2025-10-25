@@ -36,6 +36,29 @@ public class User {
 	@Column(length = 20)
 	private String phone;
 
+	@Column(name = "email_address")
+	private String emailAddress;
+
+	@Column(name = "email_visibility")
+	private String emailVisibility;
+
+	@Column(name = "first_name")
+	private String firstName;
+
+	@Column(name = "last_name")
+	private String lastName;
+
+	private String city;
+
+	private String country;
+
+	private String timezone;
+
+	@Column(length = 1000)
+	private String description;
+
+	private String interest;
+
 	@Column(name = "password_hash", nullable = false)
 	private String passwordHash;
 
@@ -54,12 +77,24 @@ public class User {
 	@Column(name = "last_login_at")
 	private Instant lastLoginAt;
 
+	@Column(name = "phone_number")
+	private String phoneNumber;
+
+	@Column(name = "profile_image_path")
+	private String profileImagePath;
+
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	@Builder.Default
 	private Set<AuthToken> tokens = new HashSet<>();
+
+	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
+	private UserProfile profile;
 
 	@PrePersist
 	void onCreate() {
@@ -68,3 +103,4 @@ public class User {
 		}
 	}
 }
+

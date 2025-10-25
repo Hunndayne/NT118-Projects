@@ -2,6 +2,8 @@ package com.finalproject.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -31,7 +33,8 @@ public class AuthToken {
 	private String tokenHash;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "type", nullable = false)
+	@JdbcTypeCode(SqlTypes.NAMED_ENUM)
+	@Column(name = "type", nullable = false, columnDefinition = "token_type")
 	private TokenType type;
 
 	@Column(name = "revoked", nullable = false)
