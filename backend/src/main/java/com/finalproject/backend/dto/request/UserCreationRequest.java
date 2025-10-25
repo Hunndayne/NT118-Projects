@@ -13,7 +13,6 @@ public class UserCreationRequest {
     private String firstname;
     private String lastname;
     private String emailAddress;
-    private String emailVisibility;
     private String city;
     private String country;
     private String timezone;
