@@ -1,10 +1,9 @@
 package com.example.enggo;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.widget.TextView;
 
-public class Avatar extends BaseActivity {
+public class ChangeAvatarActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

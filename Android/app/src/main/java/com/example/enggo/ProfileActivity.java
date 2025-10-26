@@ -3,6 +3,7 @@ package com.example.enggo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ProfileActivity extends BaseActivity {
@@ -14,8 +15,8 @@ public class ProfileActivity extends BaseActivity {
         // Xử lý nút Back
         TextView tvBack = findViewById(R.id.tvBack);
         tvBack.setOnClickListener(v -> finish());
-
         setupHeader();
         setupFooter();
+        LinearLayout userInfoLayout = findViewById(R.id.userInfoLayout);
     }
 }
