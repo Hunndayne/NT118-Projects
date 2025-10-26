@@ -2,6 +2,7 @@ package com.example.enggo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class HomeAdminActivity extends BaseAdminActivity{
@@ -24,6 +25,11 @@ public class HomeAdminActivity extends BaseAdminActivity{
 
         btnManageAccount.setOnClickListener(v ->{
             Intent intent = new Intent(HomeAdminActivity.this, ManageAccountAdminActivity.class);
+            startActivity(intent);
+        });
+        TextView btnNew = findViewById(R.id.btnAdmin_News);
+        btnNew.setOnClickListener(v -> {
+            Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
         });
     }
