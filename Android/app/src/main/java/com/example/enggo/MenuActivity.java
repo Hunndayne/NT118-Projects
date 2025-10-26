@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -65,7 +66,12 @@ public class MenuActivity extends BaseActivity {
         });
         ImageView imAvatar = findViewById(R.id.imAvatar);
         imAvatar.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuActivity.this, Avatar.class);
+            Intent intent = new Intent(MenuActivity.this, ChangeAvatarActivity.class);
+            startActivity(intent);
+        });
+        LinearLayout userInfoLayout = findViewById(R.id.userInfoLayout);
+        userInfoLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(MenuActivity.this, ProfileActivity.class);
             startActivity(intent);
         });
     }

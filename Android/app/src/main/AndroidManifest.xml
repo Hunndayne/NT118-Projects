@@ -47,9 +47,13 @@
             android:name=".ClassActivity"
             android:exported="false"/>
         <activity
-            android:name=".Avatar"
+            android:name=".ChangeAvatarActivity"
             android:exported="false"/>
-        <activity android:name=".ChangePasswordActivity"
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".SubmitHomeworkActivity"
             android:exported="false"/>
     </application>
 

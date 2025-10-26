@@ -1,7 +1,9 @@
 package com.example.enggo;
 
+import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class EditInformationActivity extends BaseActivity {
@@ -15,5 +17,10 @@ public class EditInformationActivity extends BaseActivity {
         tvBack.setOnClickListener(v -> finish());
         setupHeader();
         setupFooter();
+        LinearLayout userInfoLayout = findViewById(R.id.userInfoLayout);
+        userInfoLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(EditInformationActivity.this, ChangeAvatarActivity.class);
+            startActivity(intent);
+        });
     }
 }

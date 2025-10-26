@@ -1,5 +1,6 @@
 package com.example.enggo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View; // Thêm import này
 import android.widget.LinearLayout; // Thêm import này
@@ -54,6 +55,13 @@ public class ClassActivity extends BaseActivity {
             toggleSection(contentForum, imgArrow4);
         });
 
+        LinearLayout homework = findViewById(R.id.hw1);
+        homework.setOnClickListener(v -> {
+            Intent intent = new Intent(ClassActivity.this, SubmitHomeworkActivity.class);
+            startActivity(intent);
+        });
+
+
         // === KẾT THÚC CODE THÊM MỚI ===
     }
 
@@ -77,4 +85,5 @@ public class ClassActivity extends BaseActivity {
             arrow.animate().rotation(180).setDuration(300).start();
         }
     }
+
 }
