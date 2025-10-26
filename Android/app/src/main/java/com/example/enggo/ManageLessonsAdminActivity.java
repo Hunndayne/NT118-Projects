@@ -45,5 +45,11 @@ public class ManageLessonsAdminActivity extends BaseAdminActivity {
         // 4. Gắn Adapter vào RecyclerView
         lessonsRecyclerView.setAdapter(lessonAdminAdapter);
 
+        Button btnAddLesson = findViewById(R.id.btnAddLesson);
+        btnAddLesson.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AddNewLessonAdminActivity.class);
+            startActivity(intent);
+        });
+
     }
 }
