@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F0F0"
+    tools:context=".EditCourseAdminActivity">
+
+    <include
+        android:id="@id/headerAdmin"
+        layout="@layout/header_admin"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:paddingHorizontal="12dp"
+        android:elevation="4dp"
+        android:layout_marginTop="34dp"
+        android:background="@drawable/bg_header"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <include
+        android:id="@id/footerAdmin"
+        layout="@layout/footer_admin"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@android:color/white"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="22dp"
+        android:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <ScrollView
+        android:id="@+id/contentScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@id/footerAdmin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerAdmin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+            <TextView
+                android:id="@+id/tvAdmin_CourseManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Create course"
+                android:fontFamily="@font/nunito_extra_bold"
+                android:textColor="@android:color/black"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extra_bold"
+                    android:text="Title"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/etCourseTitle_admin"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_edit_text_form"
+                    android:paddingHorizontal="12dp"
+                    android:text="Basic Vietnamese"
+                    android:hint="Course name"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extra_bold"
+                    android:text="Class code"
+                    android:textSize="14sp" />
+                <EditText
+                    android:id="@+id/etClassCode_admin"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_edit_text_form"
+                    android:paddingHorizontal="12dp"
+                    android:text="VI01"
+                    android:hint="Class code"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                >
+
+                <Button
+                    android:id="@+id/buttonParticipantsList_admin"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="View and edit Participants list"
+                    android:textColor="@color/black"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="5dp"
+                    android:backgroundTint="@color/enggo_grey_300"
+                    />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_gravity="right"
+                android:orientation="horizontal"
+
+                android:layout_marginTop="5dp"
+                >
+                <Button
+                    android:id="@+id/buttonCancelCourseCreate_admin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Cancel"
+                    android:textColor="@color/black"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="5dp"
+                    android:backgroundTint="@color/enggo_grey_300"
+                    />
+
+                <Button
+                    android:id="@+id/buttonCreateCourse_admin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:backgroundTint="@android:color/holo_blue_light"
+                    android:text="Create"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
