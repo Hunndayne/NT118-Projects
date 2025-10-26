@@ -1,6 +1,8 @@
 package com.example.enggo;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 public class CreateCourseAdminActivity extends BaseAdminActivity {
     @Override
@@ -10,5 +12,16 @@ public class CreateCourseAdminActivity extends BaseAdminActivity {
 
         setupAdminHeader();
         setupAdminFooter();
+
+        Button btnCancel = findViewById(R.id.buttonCancelCourseCreate_admin);
+        btnCancel.setOnClickListener(v -> {
+            finish();
+        });
+
+        Button btnViewandEdit = findViewById(R.id.buttonParticipantsList_admin);
+        btnViewandEdit.setOnClickListener(v -> {
+            Intent intent = new Intent(CreateCourseAdminActivity.this, CoursesParticipantAdmin.class);
+            startActivity(intent);
+        });
     }
 }
