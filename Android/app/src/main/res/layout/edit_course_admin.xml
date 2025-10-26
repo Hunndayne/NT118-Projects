@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F0F0F0"
-    tools:context=".EditLessonAdminActivity">
+    tools:context=".EditCourseAdminActivity">
 
     <include
         android:id="@id/headerAdmin"
@@ -58,11 +58,11 @@
 
 
             <TextView
-                android:id="@+id/tvAdmin_LessonsManager"
+                android:id="@+id/tvAdmin_CourseManager"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Edit lesson"
+                android:text="Edit course"
                 android:fontFamily="@font/nunito_extra_bold"
                 android:textColor="@android:color/black"
                 android:textSize="32sp"
@@ -84,12 +84,13 @@
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/etLessonTitle"
+                    android:id="@+id/etCourseTitle"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="Assignment 1"
+                    android:text="Basic Vietnamese"
+                    android:hint="Course name"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -106,22 +107,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extra_bold"
-                    android:text="Content"
+                    android:text="Class code"
                     android:textSize="14sp" />
-
                 <EditText
-                    android:id="@+id/etLessonContent"
+                    android:id="@+id/etClassCode"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
-                    android:gravity="top|start"
-                    android:padding="12dp"
-                    android:text="Mu từ nhóm đua trụ hạng thành nhóm đua vô địch"
-                    android:hint="Write something here..."
+                    android:paddingHorizontal="12dp"
+                    android:text="VI01"
+                    android:hint="Class code"
                     android:textSize="14sp" />
             </LinearLayout>
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,46 +127,18 @@
                 android:layout_marginTop="5dp"
                 >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_extra_bold"
-                    android:text="Attachment File"
-                    android:textSize="14sp" />
                 <Button
-                    android:id="@+id/buttonAttachment"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/buttonParticipantsList"
+                    android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:text="Upload a file"
+                    android:text="View and edit Participants list"
                     android:textColor="@color/black"
                     android:textSize="10sp"
-                    android:backgroundTint="@color/enggo_grey_100"
+                    android:layout_marginEnd="5dp"
+                    android:backgroundTint="@color/enggo_grey_300"
                     />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:layout_marginTop="5dp"
-                >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_extra_bold"
-                    android:text="Attachment Link"
-                    android:textSize="14sp" />
-                <EditText
-                    android:id="@+id/etAttachLinkContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_edit_text_form"
-                    android:padding="12dp"
-                    android:text="https://youtu.be/dQw4w9WgXcQ"
-                    android:hint="https://youtu.be/dQw4w9WgXcQ"
-                    android:textSize="14sp" />
-            </LinearLayout>
 
 
             <LinearLayout
@@ -182,7 +151,7 @@
                 android:layout_marginTop="5dp"
                 >
                 <Button
-                    android:id="@+id/buttonCancelLesson"
+                    android:id="@+id/buttonCancelCourse"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Cancel"
@@ -193,7 +162,7 @@
                     />
 
                 <Button
-                    android:id="@+id/buttonSaveLesson"
+                    android:id="@+id/buttonSaveCourse"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:backgroundTint="@android:color/holo_blue_light"
