@@ -98,6 +98,18 @@
                 android:fontFamily="@font/nunito_extra_bold"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
+            <TextView
+                android:id="@+id/btnAdmin_ManageAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:elevation="4dp"
+                android:background="@drawable/bg_nav_button"
+                android:padding="16dp"
+                android:text="Manange Account"
+                android:fontFamily="@font/nunito_extra_bold"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/btnAdmin_Lession"
