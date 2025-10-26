@@ -72,6 +72,20 @@
         <activity
             android:name=".ManageAccountAdminActivity"
             android:exported="false"/>
+        <activity
+            android:name=".ManageLessonsAdminActivity"
+            android:exported="false"/>
+        <activity
+            android:name="EditLessonAdminActivity"
+            android:exported="false"/>
+        <activity
+            android:name="EditCourseAdminActivity"
+            android:exported="false"/>
+        <activity
+            android:name="CreateCourseAdminActivity"
+            android:exported="false"/>
+
+
     </application>
 
 </manifest>

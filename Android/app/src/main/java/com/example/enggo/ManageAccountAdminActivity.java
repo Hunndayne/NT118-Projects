@@ -1,6 +1,7 @@
 package com.example.enggo;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class ManageAccountAdminActivity extends BaseAdminActivity{
     @Override
@@ -11,5 +12,10 @@ public class ManageAccountAdminActivity extends BaseAdminActivity{
         setupAdminHeader();
         setupAdminFooter();
 
+        TextView tvBack = findViewById(R.id.tvBack);
+
+        tvBack.setOnClickListener(v -> {
+            finish();
+        });
     }
 }
