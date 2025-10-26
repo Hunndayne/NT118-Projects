@@ -17,7 +17,7 @@
 
     <!-- Dashboard -->
     <LinearLayout
-        android:id="@+id/btnDashboard"
+        android:id="@+id/btnDashboard_admin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -25,7 +25,7 @@
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/icDashboard"
+            android:id="@+id/icDashboard_admin"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:src="@drawable/ic_dashboard"
@@ -33,7 +33,7 @@
             app:tint="@color/black" />
 
     <TextView
-        android:id="@+id/tvDashboard"
+        android:id="@+id/tvDashboard_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Dashboard"
@@ -44,7 +44,7 @@
 
     <!-- Courses -->
     <LinearLayout
-    android:id="@+id/btnCourses"
+    android:id="@+id/btnCourses_admin"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_weight="1"
@@ -52,7 +52,7 @@
     android:gravity="center">
 
     <ImageView
-        android:id="@+id/icCourses"
+        android:id="@+id/icCourses_admin"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:src="@drawable/ic_courses"
@@ -60,7 +60,7 @@
         app:tint="@color/black" />
 
     <TextView
-    android:id="@+id/tvCourses"
+    android:id="@+id/tvCourses_admin"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="Courses"
@@ -69,63 +69,9 @@
     android:layout_marginTop="2dp"/>
     </LinearLayout>
 
-    <!-- Lessons -->
-    <LinearLayout
-    android:id="@+id/btnLessons"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:orientation="vertical"
-    android:gravity="center">
-
-    <ImageView
-        android:id="@+id/icLessons"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:src="@drawable/ic_lesson"
-        android:contentDescription="Lessons"
-        app:tint="@color/black" />
-
-    <TextView
-    android:id="@+id/tvLessons"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Lessons"
-    android:textSize="11sp"
-    android:textColor="@color/black"
-    android:layout_marginTop="2dp"/>
-    </LinearLayout>
-
-    <!-- Assignments -->
-    <LinearLayout
-        android:id="@+id/btnAssignments"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center">
-
-    <ImageView
-        android:id="@+id/icAssignments"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:src="@drawable/ic_assignment"
-        android:contentDescription="Assignments"
-        app:tint="@color/black" />
-
-    <TextView
-        android:id="@+id/tvAssignments"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Assignments"
-        android:textSize="11sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="2dp"/>
-    </LinearLayout>
-
     <!-- Reports -->
     <LinearLayout
-        android:id="@+id/btnReports"
+        android:id="@+id/btnReports_admin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -133,7 +79,7 @@
         android:gravity="center">
 
     <ImageView
-        android:id="@+id/icReports"
+        android:id="@+id/icReports_admin"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:src="@drawable/ic_report"
@@ -141,7 +87,7 @@
         app:tint="@color/black" />
 
     <TextView
-        android:id="@+id/tvReports"
+        android:id="@+id/tvReports_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Reports"
@@ -149,5 +95,30 @@
         android:textColor="@color/black"
         android:layout_marginTop="2dp"/>
     </LinearLayout>
+<!--Menu-->
+    <LinearLayout
+        android:id="@+id/btnMenu_admin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
 
+        <ImageView
+            android:id="@+id/icMenu_admin"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/ic_menu"
+            android:contentDescription="Menu"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/tvMenu_admin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Menu"
+            android:textSize="11sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="2dp"/>
+    </LinearLayout>
 </LinearLayout>
