@@ -19,6 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".BaseActivity"
             android:exported="false"/>
@@ -54,6 +55,22 @@
             android:exported="false"/>
         <activity
             android:name=".SubmitHomeworkActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".BaseAdminActivity"
+            android:exported="false"/>
+        
+        <activity
+            android:name=".HomeAdminActivity"
+            android:exported="false">
+
+        </activity>
+
+        <activity
+            android:name=".ManageCoursesAdminActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".ManageAccountAdminActivity"
             android:exported="false"/>
     </application>
 
