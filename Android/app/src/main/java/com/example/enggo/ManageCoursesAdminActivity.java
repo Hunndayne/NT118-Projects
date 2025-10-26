@@ -52,12 +52,6 @@ public class ManageCoursesAdminActivity extends BaseAdminActivity {
         // 7. Gắn click cho nút Add Course (giữ nguyên)
         Button btnAddCourse = findViewById(R.id.btnAddCourse);
         btnAddCourse.setOnClickListener(v -> {
-            Intent intent = new Intent(this, EditCourseAdminActivity.class);
-            startActivity(intent);
-        });
-
-        Button btnAddCourses = findViewById(R.id.btnAddCourse);
-        btnAddCourses.setOnClickListener(v -> {
             Intent intent = new Intent(this, CreateCourseAdminActivity.class);
             startActivity(intent);
         });

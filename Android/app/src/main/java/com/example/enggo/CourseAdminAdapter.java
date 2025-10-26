@@ -46,7 +46,7 @@ public class CourseAdminAdapter extends RecyclerView.Adapter<CourseAdminAdapter.
                 int position = getAdapterPosition();
                 String courseName = courseNameList.get(position);
 
-                Intent intent = new Intent(context, EditCourseAdminActivity.class);
+                Intent intent = new Intent(context, CreateCourseAdminActivity.class);
                 // intent.putExtra("COURSE_NAME", courseName); // Gửi tên qua
                 context.startActivity(intent);
             });
