@@ -98,14 +98,11 @@ public abstract class BaseAdminActivity extends AppCompatActivity {
 
         // 3. Nút Reports
         btnReports.setOnClickListener(v -> {
-            // Tạm thời tui comment lại, cọu phải tạo file ManageReportsAdminActivity.java
-            /*
-             if (!(this instanceof ManageReportsAdminActivity)) {
+            if (!(this instanceof ManageReportsAdminActivity)) {
                 Intent intent = new Intent(this, ManageReportsAdminActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
-            */
         });
 
         // 4. Nút Menu

@@ -48,6 +48,11 @@ public class LessonAdminAdapter extends RecyclerView.Adapter<LessonAdminAdapter.
 
                 context.startActivity(intent);
             });
+            itemView.setOnClickListener(v -> {
+               Intent intent = new Intent(context, AssignmentsManagementAdminActivity.class);
+               context.startActivity(intent);
+
+            });
         }
     }
 
