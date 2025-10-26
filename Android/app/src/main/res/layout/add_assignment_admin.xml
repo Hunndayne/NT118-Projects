@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F0F0"
+    tools:context=".AddAssignmentAdminActivity">
+
+    <include
+        android:id="@id/headerAdmin"
+        layout="@layout/header_admin"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:paddingHorizontal="12dp"
+        android:elevation="4dp"
+        android:layout_marginTop="34dp"
+        android:background="@drawable/bg_header"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <include
+        android:id="@id/footerAdmin"
+        layout="@layout/footer_admin"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@android:color/white"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="22dp"
+        android:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <ScrollView
+        android:id="@+id/contentScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@id/footerAdmin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerAdmin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+            <TextView
+                android:id="@+id/tvAdmin_EditAssignment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Edit Assignment"
+                android:fontFamily="@font/nunito_extra_bold"
+                android:textColor="@android:color/black"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extra_bold"
+                    android:text="Title"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/etAddAssignmentTitle_admin"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_edit_text_form"
+                    android:paddingHorizontal="12dp"
+                    android:text="Assignment 1"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extra_bold"
+                    android:text="Content"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/etAddAssignmentContent_admin"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@drawable/bg_edit_text_form"
+                    android:gravity="top|start"
+                    android:padding="12dp"
+                    android:text="Mu từ nhóm đua trụ hạng thành nhóm đua vô địch"
+                    android:hint="Write something here..."
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extra_bold"
+                    android:text="Attachment File"
+                    android:textSize="14sp" />
+                <Button
+                    android:id="@+id/buttonAddAttachment_Assignment_admin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Upload a file"
+                    android:textColor="@color/black"
+                    android:textSize="10sp"
+                    android:backgroundTint="@color/enggo_grey_100"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extra_bold"
+                    android:text="Attachment Link"
+                    android:textSize="14sp" />
+                <EditText
+                    android:id="@+id/etAttachLinkContentAddAssignment_admin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edit_text_form"
+                    android:padding="12dp"
+                    android:text="https://youtu.be/dQw4w9WgXcQ"
+                    android:hint="https://youtu.be/dQw4w9WgXcQ"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_extra_bold"
+                        android:text="Start time"
+                        android:textSize="14sp" />
+                    <!--https://m3.material.io/components/time-pickers/overview-->
+                    <EditText
+                        android:id="@+id/etStartTimeAddAssignment_admin"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_edit_text_form"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:hint="Select start time"
+                        android:paddingHorizontal="12dp"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_extra_bold"
+                        android:text="Due time"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/etDueTimeAddAssignment_admin"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_edit_text_form"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:hint="Select due time"
+                        android:paddingHorizontal="12dp"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_gravity="right"
+                android:orientation="horizontal"
+
+                android:layout_marginTop="5dp"
+                >
+                <Button
+                    android:id="@+id/buttonCancelAddAssignment_admin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Cancel"
+                    android:textColor="@color/black"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="5dp"
+                    android:backgroundTint="@color/enggo_grey_300"
+                    />
+
+                <Button
+                    android:id="@+id/buttonCreateAssignment_admin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:backgroundTint="@android:color/holo_blue_light"
+                    android:text="Create"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
