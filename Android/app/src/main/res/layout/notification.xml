@@ -112,7 +112,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                                    <TextView
+                <TextView
                         android:id="@+id/tvNotification"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -136,7 +136,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <!-- Folder -->
                         <TextView
                             android:id="@+id/tvFolder"
                             android:layout_width="wrap_content"
@@ -151,7 +150,7 @@
                             android:id="@+id/tvTitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="20/11 - GỬI LỜI CHÚC, VẠN ĐIỀU HAY"
+                            android:text="20/11 - GỬI LỜI CHÚC, VẠN ĐIỀU HAY \n Chào các bạn,\n Nhân dịp 20/11, Trung tâm sẽ tổ chức..."
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             app:layout_constraintTop_toBottomOf="@id/tvFolder"
@@ -183,7 +182,7 @@
                             android:id="@+id/tvFileTitle1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="[TA153GD] LỊCH THI GIỮA KHÓA"
+                            android:text="[TA153GD] LỊCH THI GIỮA KHÓA\n Trung tâm thông báo đến học viên lịch thi giữa khóa..."
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             app:layout_constraintTop_toBottomOf="@id/tvFile1"
@@ -215,22 +214,12 @@
                             android:id="@+id/tvFileTitle2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Học viên nghỉ quá 3 buổi"
+                            android:text="Học viên nghỉ quá 3 buổi\n Chào bạn,\n Bạn nhận được thông báo này do bạn đã nghỉ quá..."
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             app:layout_constraintTop_toBottomOf="@id/tvFile2"
                             app:layout_constraintStart_toStartOf="parent"
                             android:layout_marginTop="4dp" />
-
-                        <View
-                            android:id="@+id/divider3"
-                            android:layout_width="0dp"
-                            android:layout_height="1dp"
-                            android:background="@color/grey"
-                            android:layout_marginVertical="8dp"
-                            app:layout_constraintTop_toBottomOf="@id/tvFileTitle2"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 

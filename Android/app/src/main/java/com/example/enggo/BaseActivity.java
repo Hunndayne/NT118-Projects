@@ -42,13 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        btnSearch.setOnClickListener(v -> {
-            if (!(this instanceof SearchActivity)) {
-                Intent intent = new Intent(this, SearchActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-            }
-        });
+
         btnMenu.setOnClickListener(v -> {
             // Tương tự cho ProfileActivity
             if (!(this instanceof MenuActivity)) {
@@ -59,17 +53,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
     }
     protected void setupHeader() {
-        ImageButton btnNotice = findViewById(R.id.btnNotification);
+
         ImageButton btnTheme = findViewById(R.id.btnThemeSwitch);
         ImageView imgAvatar = findViewById(R.id.iconAvatar);
         ImageView imgDropdown = findViewById(R.id.imgDropdown);
-        btnNotice.setOnClickListener(v -> {
-            if (!(this instanceof NotificationActivity)) {
-                Intent intent = new Intent(this, NotificationActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-            }
-        });
+
         btnTheme.setOnClickListener(v -> {
             // Xử lý đổi chế độ nền sáng tối
             int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;

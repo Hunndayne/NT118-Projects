@@ -9,5 +9,7 @@
     <color name="enggo_white">#FFFFFF</color>
     <color name="enggo_grey_300">#D1D5DB</color>
     <color name="enggo_grey_600">#4B5563</color>
+    <color name="blueslogan">#0d71af</color>
+    <color name="bluelogo">#43b9ce</color>
     <color name="enggo_grey_100">#e6e5e5</color>
 </resources>

@@ -52,6 +52,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSignIn"
         app:layout_constraintWidth_percent="0.8"
+        android:textCursorDrawable="@drawable/cursor_color"
         tools:ignore="Autofill,HardcodedText,TextFields,TextContrastCheck,VisualLintTextFieldSize" />
 
     <EditText
@@ -68,6 +69,7 @@
         android:textSize="14sp"
         android:textColorHint="@color/grey"
         android:textColor="@color/black"
+        android:textCursorDrawable="@drawable/cursor_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etUsername"

@@ -3,9 +3,9 @@
     <item android:top="4dp" android:bottom="4dp">
         <shape android:shape="rectangle">
             <!-- Màu nền -->
-            <solid android:color="@color/white" />
+            <solid android:color="@color/grey" />
             <!-- Bo góc nhẹ -->
-            <corners android:radius="4dp" />
+            <corners android:radius="10dp" />
             <!-- Viền mờ nhẹ để tạo khối -->
             <stroke android:color="#E6E6E6" android:width="0.8dp" />
         </shape>

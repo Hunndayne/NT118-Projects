@@ -219,40 +219,117 @@
                     android:layout_height="wrap_content"
                     android:text="@string/label_online_users"
                     android:textStyle="bold"
-                    android:textSize="15sp"
+                    android:textSize="15dp"
                     android:textColor="@android:color/black"
                     android:layout_marginBottom="4dp"
-                    android:layout_marginTop="32dp" />
+                    android:layout_marginTop="2dp" />
 
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/online_user_1" android:textSize="13sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/online_user_2" android:textSize="13sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/online_user_3" android:textSize="13sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/online_user_4" android:textSize="13sp"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvName1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Cap Huu Tu"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/imgChat1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <ImageView
+                        android:id="@+id/imgChat1"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_chat"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tvName1"
+                        app:layout_constraintBottom_toBottomOf="@id/tvName1"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp">
+
+                    <TextView
+                        android:id="@+id/tvName2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Nguyen Tai Quang"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/imgChat2"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <ImageView
+                        android:id="@+id/imgChat2"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_chat"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tvName2"
+                        app:layout_constraintBottom_toBottomOf="@id/tvName2"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp">
+
+                    <TextView
+                        android:id="@+id/tvName3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Nguyen Thai Bao Chau"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/imgChat3"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <ImageView
+                        android:id="@+id/imgChat3"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_chat"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tvName3"
+                        app:layout_constraintBottom_toBottomOf="@id/tvName3"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp">
+
+                    <TextView
+                        android:id="@+id/tvName4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Tran Thanh Hung"
+                        android:textSize="13sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/imgChat4"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <ImageView
+                        android:id="@+id/imgChat4"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_chat"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tvName4"
+                        app:layout_constraintBottom_toBottomOf="@id/tvName4"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </LinearLayout>
 
-            <Button
-
-                android:id="@+id/btnMessage"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_message_button"
-                android:fontFamily="@font/nunito_extra_bold"
-                android:paddingHorizontal="12dp"
-                android:text="@string/button_message"
-                android:textAllCaps="false"
-                android:textColor="@android:color/black"
-                android:textSize="10sp"
-                app:backgroundTint="@null"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/userDetailsBlock"
-                app:layout_constraintTop_toBottomOf="@id/userInfoLayout"
-                tools:ignore="SmallSp,TouchTargetSizeCheck" />
-
-
-            <LinearLayout
+           <LinearLayout
                 android:id="@+id/courseDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -318,7 +395,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/last_access_site_value"
-                        android:textSize="13sp" />
+                        android:paddingStart="3dp"
+                        android:textSize="13dp" />
                 </LinearLayout>
             </LinearLayout>
 

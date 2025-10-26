@@ -7,7 +7,7 @@ public class NotificationActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.noti_chua_xong);
+        setContentView(R.layout.notification);
         setupHeader();
         setupFooter();
     }
