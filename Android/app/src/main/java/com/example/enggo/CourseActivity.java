@@ -1,7 +1,9 @@
 package com.example.enggo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kizitonwose.calendar.core.CalendarMonth;
@@ -39,5 +41,27 @@ public class CourseActivity extends BaseActivity {
         // Setup the calendar
         CalendarSetup calendarSetup = new CalendarSetup(this, calendarView, monthYearText, previousMonthButton, nextMonthButton, events);
         calendarSetup.setup();
+        previousMonthButton.setOnClickListener(v -> {
+            CalendarMonth currentMonth = calendarView.findFirstVisibleMonth();
+            if (currentMonth != null) {
+                calendarView.scrollToMonth(currentMonth.getYearMonth().minusMonths(1));
+            }
+        });
+
+        nextMonthButton.setOnClickListener(v -> {
+            CalendarMonth currentMonth = calendarView.findFirstVisibleMonth();
+            if (currentMonth != null) {
+                calendarView.scrollToMonth(currentMonth.getYearMonth().plusMonths(1));
+            }
+        });
+
+        LinearLayout card1Content = findViewById(R.id.card1Content);
+        LinearLayout card2Content = findViewById(R.id.card2Content);
+
+        card1Content.setOnClickListener(v -> {
+            Intent intent = new Intent(CourseActivity.this, ClassActivity.class);
+            startActivity(intent);
+        });
+
     }
 }
