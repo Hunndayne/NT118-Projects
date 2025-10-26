@@ -24,10 +24,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:contentDescription="Logo"
-        android:src="@drawable/logo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:src="@drawable/logo" />
 
     <!-- Thanh ngăn cách -->
     <View
@@ -56,26 +53,12 @@
         android:background="@android:color/transparent"
         android:contentDescription="Notifications"
         android:src="@drawable/ic_notification"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnSettings"
-        app:tint="@color/dimgrey"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:tint="@color/dimgrey"/>
 
-    <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="168dp"
-            android:layout_height="44dp"
-            android:layout_marginEnd="2dp"
-            android:background="@drawable/bg_search"
-            android:drawableStart="@drawable/ic_search"
-            android:hint="Search..."
-            android:inputType="text"
-            android:paddingStart="12dp"
-            android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btnNotification"
-            app:layout_constraintStart_toEndOf="@id/imgLogo"
-            app:layout_constraintTop_toTopOf="parent" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
 
 
@@ -88,10 +71,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="Settings"
             android:src="@drawable/ic_setting"
-            app:tint="@color/dimgrey"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/iconAvatar"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:tint="@color/dimgrey" />
 
         <!-- Avatar -->
         <ImageView
@@ -101,9 +81,6 @@
             android:contentDescription="Avatar"
             app:tint="@color/dimgrey"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_account_admin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:src="@drawable/ic_account_admin" />
 
     </LinearLayout>
