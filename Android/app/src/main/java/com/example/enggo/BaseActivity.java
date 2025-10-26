@@ -22,7 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void setupFooter() {
         LinearLayout btnHome = findViewById(R.id.btnHome); // Thay bằng ID thực tế
         LinearLayout btnCourse = findViewById(R.id.btnMyCourse);
-        LinearLayout btnSearch = findViewById(R.id.btnSearch);
+        LinearLayout btnNotification = findViewById(R.id.btnNotification);
         LinearLayout btnMenu = findViewById(R.id.btnMenu);
 
         btnHome.setOnClickListener(v -> {
@@ -43,6 +43,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         });
 
+        btnNotification.setOnClickListener(v -> {
+            if (!(this instanceof MenuActivity)) {
+                Intent intent = new Intent(this, NotificationActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
         btnMenu.setOnClickListener(v -> {
             // Tương tự cho ProfileActivity
             if (!(this instanceof MenuActivity)) {
@@ -67,13 +74,5 @@ public abstract class BaseActivity extends AppCompatActivity {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }
         });
-        imgAvatar.setOnClickListener(v -> {
-            if (!(this instanceof ProfileActivity)) {
-                Intent intent = new Intent(this, ProfileActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-            }
-        });
-
     }
 }
