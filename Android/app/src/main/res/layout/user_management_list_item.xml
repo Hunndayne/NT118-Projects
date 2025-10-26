@@ -12,7 +12,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="15dp"
+        android:background="@color/enggo_grey_100"
+        >
 
         <TextView
             android:id="@+id/tvUserName_manageusritem"
@@ -39,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Hoạt động"
+            android:text="Active"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvUserEmail_manageusritem" />
 
@@ -48,7 +50,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
@@ -60,9 +62,11 @@
                 android:paddingEnd="16dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:text="Sửa"
+                android:text="Edit"
                 android:layout_marginEnd="8dp"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:backgroundTint="@color/grey"
+                />
 
             <TextView
                 android:id="@+id/btnDelete_manageusritem"
@@ -73,9 +77,11 @@
                 android:paddingEnd="16dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:text="Xóa"
+                android:text="Delete"
                 android:layout_marginEnd="8dp"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:backgroundTint="@color/grey"
+                />
 
             <TextView
                 android:id="@+id/btnLock_manageusritem"
@@ -86,8 +92,10 @@
                 android:paddingEnd="16dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:text="Khóa"
-                android:textColor="@android:color/black" />
+                android:text="Lock"
+                android:textColor="@android:color/black"
+                android:backgroundTint="@color/grey"
+                />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
