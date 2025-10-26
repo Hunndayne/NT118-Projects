@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import com.example.enggo.HomeAdminActivity;
+import com.example.enggo.ManageCoursesAdminActivity;
 
 
 public abstract class BaseAdminActivity extends AppCompatActivity {
