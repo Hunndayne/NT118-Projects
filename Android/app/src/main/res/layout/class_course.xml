@@ -80,7 +80,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_welcome"
                 android:text="Welcome Tuyen, back to TOIEC READING LISTENING TA53!"
-                android:textColor="@color/lightblue"
+                android:textColor="@color/bluelogo"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="10dp"
                 android:textSize="14dp"
@@ -101,7 +101,7 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
+                <android.widget.Button
                     android:id="@+id/btnAnnouncement"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -113,11 +113,11 @@
                     android:paddingVertical="4dp"
                     android:singleLine="false"
                     android:text="ANNOUNCEMENT"
-                    android:textColor="@color/lightblue"
+                    android:textColor="@color/bluelogo"
                     android:textSize="11dp"
                     android:textStyle="bold" />
 
-                <Button
+                <android.widget.Button
                     android:id="@+id/btnLecture"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -129,11 +129,11 @@
                     android:singleLine="false"
                     android:lines="2"
                     android:text="LECTURE"
-                    android:textColor="@color/lightblue"
+                    android:textColor="@color/bluelogo"
                     android:textSize="11dp"
                     android:textStyle="bold" />
 
-                <Button
+                <android.widget.Button
                     android:id="@+id/btnHomework"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -145,11 +145,11 @@
                     android:singleLine="false"
                     android:lines="2"
                     android:text="HOMEWORK"
-                    android:textColor="@color/lightblue"
+                    android:textColor="@color/bluelogo"
                     android:textSize="11dp"
                     android:textStyle="bold" />
 
-                <Button
+                <android.widget.Button
                     android:id="@+id/btnForum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                     android:singleLine="false"
                     android:lines="2"
                     android:text="FORUM"
-                    android:textColor="@color/lightblue"
+                    android:textColor="@color/bluelogo"
                     android:textSize="11dp"
                     android:textStyle="bold" />
             </LinearLayout>

@@ -54,11 +54,11 @@
         android:weightSum="7">
 
         <TextView android:text="Mon" style="@style/CalendarDayLegend" />
-        <TextView android:text="Tue" style="@style/CalendarDayLegend" android:textColor="@color/lightblue" />
+        <TextView android:text="Tue" style="@style/CalendarDayLegend" android:textColor="@color/blueslogan" />
         <TextView android:text="Wed" style="@style/CalendarDayLegend" />
-        <TextView android:text="Thu" style="@style/CalendarDayLegend" android:textColor="@color/lightblue" />
+        <TextView android:text="Thu" style="@style/CalendarDayLegend" android:textColor="@color/blueslogan" />
         <TextView android:text="Fri" style="@style/CalendarDayLegend" />
-        <TextView android:text="Sat" style="@style/CalendarDayLegend" android:textColor="@color/lightblue" />
+        <TextView android:text="Sat" style="@style/CalendarDayLegend" android:textColor="@color/blueslogan" />
         <TextView android:text="Sun" style="@style/CalendarDayLegend" />
     </LinearLayout>
 

@@ -273,25 +273,29 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_marginTop="24dp"
+                            android:paddingStart="20dp"
                             android:gravity="start">
 
-                            <Button
+                            <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/btnSaveChanges"
-                                android:layout_width="wrap_content"
+                                android:layout_width="140dp"
                                 android:layout_height="wrap_content"
+                                android:background="@drawable/button"
+                                android:paddingHorizontal="24dp"
                                 android:text="Save changes"
-                                android:backgroundTint="#007AFF"
-                                android:textColor="@android:color/white"
-                                android:paddingHorizontal="24dp"/>
+                                android:textColor="@color/white"
+                                android:textSize="12dp" />
 
-                            <Button
+                            <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/btnRemove"
-                                android:layout_width="wrap_content"
+                                android:layout_width="140dp"
                                 android:layout_height="wrap_content"
                                 android:text="Remove"
-                                style="?android:attr/borderlessButtonStyle"
-                                android:textColor="#E53935"
-                                android:layout_marginStart="16dp"/>
+                                android:background="@drawable/button"
+                                android:textColor="#FF0000"
+                                android:textSize="12dp"
+                                android:backgroundTint="@color/white"
+                                android:layout_marginStart="26dp"/>
                         </LinearLayout>
 
                     </LinearLayout>

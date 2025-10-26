@@ -93,7 +93,7 @@ public class CalendarSetup {
                         // Set alternating colors for days without events
                         DayOfWeek dayOfWeek = date.getDayOfWeek();
                         if (dayOfWeek == DayOfWeek.TUESDAY || dayOfWeek == DayOfWeek.THURSDAY || dayOfWeek == DayOfWeek.SATURDAY) {
-                            container.dayText.setTextColor(ContextCompat.getColor(context, R.color.lightblue));
+                            container.dayText.setTextColor(ContextCompat.getColor(context, R.color.blueslogan));
                         } else {
                             container.dayText.setTextColor(ContextCompat.getColor(context, R.color.black));
                         }

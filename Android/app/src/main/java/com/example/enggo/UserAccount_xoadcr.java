@@ -1,4 +1,6 @@
 package com.example.enggo;
 
-public class UserAccount_xoadcr {
+import android.app.Activity;
+
+public class UserAccount_xoadcr extends Activity {
 }

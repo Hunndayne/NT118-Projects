@@ -28,17 +28,6 @@
         android:layout_marginEnd="8dp"
         android:background="@color/black" />
 
-    <!-- Notification icon -->
-    <ImageButton
-        android:id="@+id/btnNotification"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_notification"
-        android:contentDescription="Notifications"
-        app:tint="@color/dimgrey"
-        android:layout_marginEnd="8dp"/>
-
     <!-- Light/Dark mode icon -->
     <ImageButton
         android:id="@+id/btnThemeSwitch"
