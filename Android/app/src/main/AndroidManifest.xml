@@ -102,6 +102,9 @@
         <activity
             android:name=".EditAssignmentAdminActivity"
             android:exported="false"/>
+        <activity
+            android:name=".EditCourseAdminActivity"
+            android:exported="false"/>
 
     </application>
 
