@@ -42,7 +42,7 @@ public class AssignmentsManagementAdminActivity extends BaseAdminActivity {
         assignmentNames.add("Assignment 1");
         assignmentNames.add("Midterm Essay");
         assignmentNames.add("Final Project");
-        assignmentNames.add("Presentation"); // Thêm bao nhiêu cũng được
+        assignmentNames.add("Presentation");
 
         // Khởi tạo Adapter
         assignmentAdminAdapter = new AssignmentAdminAdapter(this, assignmentNames);

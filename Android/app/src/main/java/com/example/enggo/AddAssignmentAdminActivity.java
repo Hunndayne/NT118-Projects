@@ -1,6 +1,7 @@
 package com.example.enggo;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class AddAssignmentAdminActivity extends BaseAdminActivity {
@@ -11,9 +12,9 @@ public class AddAssignmentAdminActivity extends BaseAdminActivity {
         setupAdminHeader();
         setupAdminFooter();
 
-        TextView tvBack = findViewById(R.id.tvBack);
-        tvBack.setOnClickListener(v -> {
-            finish();
-        });
+//        Button btnCancel = findViewById(R.id.btnCancel);
+//        btnCancel.setOnClickListener(v -> {
+//            finish();
+//        });
     }
 }
