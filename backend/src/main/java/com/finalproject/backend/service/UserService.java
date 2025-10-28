@@ -2,6 +2,7 @@ package com.finalproject.backend.service;
 
 import com.finalproject.backend.dto.request.LoginRequest;
 import com.finalproject.backend.dto.request.UserCreationRequest;
+import com.finalproject.backend.dto.request.UserUpdateRequest;
 import com.finalproject.backend.dto.response.LoginResponse;
 import com.finalproject.backend.dto.response.UserResponse;
 import com.finalproject.backend.entity.AuthToken;
@@ -24,6 +25,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.HexFormat;
 import java.util.Optional;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -110,22 +112,140 @@ public class UserService {
 	}
 
 	public UserResponse getUserByToken(String rawToken) {
-		if (rawToken == null || rawToken.isBlank()) {
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing authentication token");
+		User authenticated = resolveAuthenticatedUser(rawToken);
+		return toResponse(authenticated);
+	}
+
+	public UserResponse getUserByIdForAdmin(String rawToken, Long userId) {
+		User adminUser = resolveAuthenticatedUser(rawToken);
+		if (!adminUser.isAdmin()) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
 		}
 
-		String tokenHash = hashToken(rawToken);
-		AuthToken authToken = authTokenRepository.findByTokenHashAndRevokedFalse(tokenHash)
-				.filter(token -> token.getExpiresAt().isAfter(Instant.now()))
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid or expired token"));
+		User targetUser = loadUserWithProfileByIdentifier(userId);
+		return toResponse(targetUser);
+	}
 
-		User user = authToken.getUser();
+	@Transactional
+	public UserResponse updateUser(String rawToken, Long userIdentifier, UserUpdateRequest request) {
+		User actingUser = resolveAuthenticatedUser(rawToken);
+		User targetUser = loadUserWithProfileByIdentifier(userIdentifier);
 
-		if (!user.isActive()) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User account is inactive");
+		boolean actorIsAdmin = actingUser.isAdmin();
+		boolean sameUser = Objects.equals(actingUser.getId(), targetUser.getId());
+		if (!actorIsAdmin && !sameUser) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed to update this user");
 		}
 
-		User hydrated = loadUserWithProfile(user.getId());
+		return applyUserUpdates(actingUser, targetUser, request);
+	}
+
+	@Transactional
+	public UserResponse updateCurrentUser(String rawToken, UserUpdateRequest request) {
+		User actingUser = resolveAuthenticatedUser(rawToken);
+		return applyUserUpdates(actingUser, actingUser, request);
+	}
+
+	private UserResponse applyUserUpdates(User actingUser, User targetUser, UserUpdateRequest request) {
+		boolean actorIsAdmin = actingUser.isAdmin();
+
+		if (request.getUsername() != null && !request.getUsername().equalsIgnoreCase(targetUser.getUsername())) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username cannot be changed");
+		}
+
+		if (request.getEmailAddress() != null) {
+			String emailAddress = trimRequired(request.getEmailAddress(), "emailAddress");
+			userRepository.findByEmailIgnoreCase(emailAddress)
+					.filter(existing -> !Objects.equals(existing.getId(), targetUser.getId()))
+					.ifPresent(existing -> {
+						throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
+					});
+			targetUser.setEmail(emailAddress);
+			targetUser.setEmailAddress(emailAddress);
+		}
+
+		boolean nameChanged = false;
+		if (request.getFirstName() != null) {
+			targetUser.setFirstName(trimRequired(request.getFirstName(), "firstName"));
+			nameChanged = true;
+		}
+
+		if (request.getLastName() != null) {
+			targetUser.setLastName(trimRequired(request.getLastName(), "lastName"));
+			nameChanged = true;
+		}
+
+		if (request.getEmailVisibility() != null) {
+			targetUser.setEmailVisibility(trimToNull(request.getEmailVisibility()));
+		}
+
+		if (request.getCity() != null) {
+			targetUser.setCity(trimToNull(request.getCity()));
+		}
+
+		if (request.getCountry() != null) {
+			targetUser.setCountry(trimToNull(request.getCountry()));
+		}
+
+		if (request.getTimezone() != null) {
+			targetUser.setTimezone(trimToNull(request.getTimezone()));
+		}
+
+		if (request.getDescription() != null) {
+			targetUser.setDescription(trimToNull(request.getDescription()));
+		}
+
+		if (request.getInterest() != null) {
+			targetUser.setInterest(trimToNull(request.getInterest()));
+		}
+
+		if (request.getPhoneNumber() != null) {
+			String phoneNumber = trimRequired(request.getPhoneNumber(), "phoneNumber");
+			if (!phoneNumber.equals(targetUser.getPhoneNumber())) {
+				boolean phoneConflict = userRepository.existsByPhoneNumber(phoneNumber);
+				if (!phoneConflict) {
+					phoneConflict = userRepository.existsByPhone(phoneNumber);
+				}
+				if (phoneConflict) {
+					throw new ResponseStatusException(HttpStatus.CONFLICT, "Phone already exists");
+				}
+				targetUser.setPhoneNumber(phoneNumber);
+				targetUser.setPhone(phoneNumber);
+			}
+		}
+
+		if (request.getAvatarUrl() != null) {
+			String avatarUrl = trimToNull(request.getAvatarUrl());
+			UserProfile profile = targetUser.getProfile();
+			if (profile == null) {
+				profile = new UserProfile();
+				profile.setUser(targetUser);
+				targetUser.setProfile(profile);
+			}
+			profile.setAvatarUrl(avatarUrl);
+		}
+
+		if (request.getPassword() != null) {
+			String rawPassword = request.getPassword();
+			if (rawPassword.isBlank()) {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "password must not be blank");
+			}
+			targetUser.setPasswordHash(passwordEncoder.encode(rawPassword));
+		}
+
+		if (request.getAdmin() != null) {
+			if (!actorIsAdmin) {
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required to change admin flag");
+			}
+			targetUser.setAdmin(Boolean.TRUE.equals(request.getAdmin()));
+		}
+
+		if (nameChanged) {
+			recomputeFullName(targetUser);
+		}
+
+		User saved = userRepository.save(targetUser);
+		User hydrated = loadUserWithProfile(saved.getId());
 		return toResponse(hydrated);
 	}
 
@@ -232,6 +352,41 @@ public class UserService {
 	private User loadUserWithProfile(Long userId) {
 		return userRepository.findWithProfileById(userId)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+	}
+
+	private User loadUserWithProfileByIdentifier(Long identifier) {
+		Optional<User> byId = userRepository.findWithProfileById(identifier);
+		if (byId.isPresent()) {
+			return byId.get();
+		}
+		return userRepository.findWithProfileByLegacyUserId(identifier)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+	}
+
+	private void recomputeFullName(User user) {
+		String first = trimToNull(user.getFirstName());
+		String last = trimToNull(user.getLastName());
+		String combined = ((first != null ? first : "") + " " + (last != null ? last : "")).replaceAll("\\s+", " ").trim();
+		user.setFullName(combined.isEmpty() ? null : combined);
+	}
+
+	private User resolveAuthenticatedUser(String rawToken) {
+		if (rawToken == null || rawToken.isBlank()) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing authentication token");
+		}
+
+		String tokenHash = hashToken(rawToken);
+		AuthToken authToken = authTokenRepository.findByTokenHashAndRevokedFalse(tokenHash)
+				.filter(token -> token.getExpiresAt().isAfter(Instant.now()))
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid or expired token"));
+
+		User user = authToken.getUser();
+
+		if (!user.isActive()) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User account is inactive");
+		}
+
+		return loadUserWithProfile(user.getId());
 	}
 
 	private String trimRequired(String value, String fieldName) {
