@@ -4,11 +4,11 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-10-25T08:07:24.435137900Z">
+        <DropdownSelection timestamp="2025-10-26T20:58:28.279787900Z">
           <Target type="DEFAULT_BOOT">
-            <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\ChouChou\.android\avd\Pixel_9_Pro_XL.avd" />
-            </handle>
+            <template>
+              <DeviceId pluginId="FirebaseDirectAccess" type="TEMPLATE" identifier="model_id=e1q/34" />
+            </template>
           </Target>
         </DropdownSelection>
         <DialogSelection />

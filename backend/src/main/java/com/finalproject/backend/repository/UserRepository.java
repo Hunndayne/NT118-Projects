@@ -24,6 +24,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("SELECT u FROM User u WHERE LOWER(u.username) = LOWER(:username)")
 	Optional<User> findByUsernameIgnoreCase(@Param("username") String username);
 
+	@Query("SELECT u FROM User u WHERE LOWER(u.email) = LOWER(:email)")
+	Optional<User> findByEmailIgnoreCase(@Param("email") String email);
+
 	@Query("SELECT u FROM User u LEFT JOIN FETCH u.profile WHERE u.id = :id")
 	Optional<User> findWithProfileById(@Param("id") Long id);
+
+	@Query("SELECT u FROM User u LEFT JOIN FETCH u.profile WHERE u.legacyUserId = :legacyId")
+	Optional<User> findWithProfileByLegacyUserId(@Param("legacyId") Long legacyId);
 }
