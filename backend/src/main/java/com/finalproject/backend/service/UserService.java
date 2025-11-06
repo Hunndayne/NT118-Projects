@@ -116,6 +116,10 @@ public class UserService {
 		return toResponse(authenticated);
 	}
 
+	public User getAuthenticatedUserEntity(String rawToken) {
+		return resolveAuthenticatedUser(rawToken);
+	}
+
 	public UserResponse getUserByIdForAdmin(String rawToken, Long userId) {
 		User adminUser = resolveAuthenticatedUser(rawToken);
 		if (!adminUser.isAdmin()) {
