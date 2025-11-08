@@ -2,10 +2,14 @@ package com.finalproject.backend.service;
 
 import com.finalproject.backend.dto.request.CourseCreationRequest;
 import com.finalproject.backend.dto.response.CourseResponse;
+import com.finalproject.backend.dto.response.CourseParticipantResponse;
 import com.finalproject.backend.dto.request.CourseUpdateRequest;
+import com.finalproject.backend.dto.request.CourseParticipantsRequest;
 import com.finalproject.backend.entity.Course;
 import com.finalproject.backend.entity.User;
 import com.finalproject.backend.repository.CourseRepository;
+import com.finalproject.backend.repository.UserRepository;
+import com.finalproject.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,7 @@ public class CourseService {
 
 	private final CourseRepository courseRepository;
 	private final UserService userService;
+	private final UserRepository userRepository;
 
 	@Transactional
 	public CourseResponse createCourse(String rawToken, CourseCreationRequest request) {
@@ -61,6 +66,29 @@ public class CourseService {
 		User requester = userService.getAuthenticatedUserEntity(rawToken);
 		Course course = ensureCourseAccess(requester, courseId);
 		return toResponse(course);
+	}
+
+	@Transactional(readOnly = true)
+	public List<CourseParticipantResponse> getParticipantsForCourse(String rawToken, Long courseId) {
+		User requester = userService.getAuthenticatedUserEntity(rawToken);
+		Course course = ensureCourseAccess(requester, courseId);
+		return course.getStudents().stream()
+				.map(this::toParticipantResponse)
+				.collect(Collectors.toList());
+	}
+
+	@Transactional(readOnly = true)
+	public List<CourseParticipantResponse> getEligibleParticipants(String rawToken, Long courseId) {
+		User admin = userService.getAuthenticatedUserEntity(rawToken);
+		if (!admin.isAdmin()) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
+		}
+
+		loadCourse(courseId);
+		List<User> candidates = userRepository.findActiveUsersNotInCourse(courseId);
+		return candidates.stream()
+				.map(this::toParticipantResponse)
+				.collect(Collectors.toList());
 	}
 
 	@Transactional(readOnly = true)
@@ -129,6 +157,62 @@ public class CourseService {
 		courseRepository.delete(course);
 	}
 
+	@Transactional
+	public CourseResponse addParticipants(String rawToken, Long courseId, CourseParticipantsRequest request) {
+		User admin = userService.getAuthenticatedUserEntity(rawToken);
+		if (!admin.isAdmin()) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
+		}
+
+		Course course = loadCourseWithStudents(courseId);
+		List<Long> userIds = request.getUserIds();
+		if (userIds == null || userIds.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "userIds must not be empty");
+		}
+
+		for (Long userId : userIds) {
+			if (userId == null) {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "userId must not be null");
+			}
+			User participant = userService.loadUserEntity(userId);
+			boolean added = course.getStudents().add(participant);
+			if (!added) {
+				throw new ResponseStatusException(HttpStatus.CONFLICT, "User " + userId + " already enrolled in this course");
+			}
+		}
+
+		Course saved = courseRepository.save(course);
+		return toResponse(saved);
+	}
+
+	@Transactional
+	public CourseResponse removeParticipants(String rawToken, Long courseId, CourseParticipantsRequest request) {
+		User admin = userService.getAuthenticatedUserEntity(rawToken);
+		if (!admin.isAdmin()) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
+		}
+
+		Course course = loadCourseWithStudents(courseId);
+		List<Long> userIds = request.getUserIds();
+		if (userIds == null || userIds.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "userIds must not be empty");
+		}
+
+		for (Long userId : userIds) {
+			if (userId == null) {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "userId must not be null");
+			}
+			User participant = userService.loadUserEntity(userId);
+			boolean removed = course.getStudents().remove(participant);
+			if (!removed) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User " + userId + " is not enrolled in this course");
+			}
+		}
+
+		Course saved = courseRepository.save(course);
+		return toResponse(saved);
+	}
+
 	private CourseResponse toResponse(Course course) {
 		Long creatorId = course.getCreatedBy() != null ? course.getCreatedBy().getId() : null;
 		return new CourseResponse(
@@ -143,16 +227,37 @@ public class CourseService {
 		);
 	}
 
+	private CourseParticipantResponse toParticipantResponse(User user) {
+		return new CourseParticipantResponse(
+				user.getId(),
+				user.getFirstName(),
+				user.getLastName()
+		);
+	}
+
 	private Course loadCourse(Long courseId) {
 		return courseRepository.findById(courseId)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found"));
 	}
 
+	private Course loadCourseWithStudents(Long courseId) {
+		return courseRepository.findById(courseId)
+				.map(course -> {
+					course.getStudents().size(); // initialize collection
+					return course;
+				})
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found"));
+	}
+
 	private Course ensureCourseAccess(User requester, Long courseId) {
 		if (requester.isAdmin()) {
-			return loadCourse(courseId);
+			return loadCourseWithStudents(courseId);
 		}
 		return courseRepository.findByIdAndStudents_Id(courseId, requester.getId())
+				.map(course -> {
+					course.getStudents().size();
+					return course;
+				})
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied for this course"));
 	}
 

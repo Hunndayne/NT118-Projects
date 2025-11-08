@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -32,4 +33,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	@Query("SELECT u FROM User u LEFT JOIN FETCH u.profile WHERE u.legacyUserId = :legacyId")
 	Optional<User> findWithProfileByLegacyUserId(@Param("legacyId") Long legacyId);
+
+	@Query("SELECT u FROM User u WHERE u.active = true AND u.id NOT IN (" +
+			"SELECT s.id FROM Course c JOIN c.students s WHERE c.id = :courseId)")
+	List<User> findActiveUsersNotInCourse(@Param("courseId") Long courseId);
 }
