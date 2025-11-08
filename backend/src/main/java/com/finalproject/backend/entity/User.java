@@ -96,6 +96,12 @@ public class User {
 	@EqualsAndHashCode.Exclude
 	private UserProfile profile;
 
+	@ManyToMany(mappedBy = "students")
+	@JsonIgnore
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	private Set<Course> enrolledCourses = new HashSet<>();
+
 	@PrePersist
 	void onCreate() {
 		if (createdAt == null) {

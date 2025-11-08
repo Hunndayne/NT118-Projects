@@ -120,6 +120,11 @@ public class UserService {
 		return resolveAuthenticatedUser(rawToken);
 	}
 
+	public User loadUserEntity(Long userId) {
+		return userRepository.findById(userId)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+	}
+
 	public UserResponse getUserByIdForAdmin(String rawToken, Long userId) {
 		User adminUser = resolveAuthenticatedUser(rawToken);
 		if (!adminUser.isAdmin()) {
