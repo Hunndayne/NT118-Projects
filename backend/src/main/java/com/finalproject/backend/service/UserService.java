@@ -5,6 +5,7 @@ import com.finalproject.backend.dto.request.UserCreationRequest;
 import com.finalproject.backend.dto.request.UserUpdateRequest;
 import com.finalproject.backend.dto.response.LoginResponse;
 import com.finalproject.backend.dto.response.UserResponse;
+import com.finalproject.backend.dto.response.TokenStatusResponse;
 import com.finalproject.backend.entity.AuthToken;
 import com.finalproject.backend.entity.TokenType;
 import com.finalproject.backend.entity.User;
@@ -302,6 +303,23 @@ public class UserService {
 				.build();
 	}
 
+	public TokenStatusResponse checkToken(String rawToken) {
+		AuthToken authToken = resolveActiveToken(rawToken);
+		User user = authToken.getUser();
+
+		if (!user.isActive()) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User account is inactive");
+		}
+
+		return new TokenStatusResponse(true, authToken.getExpiresAt());
+	}
+
+	public void logout(String rawToken) {
+		AuthToken authToken = resolveActiveToken(rawToken);
+		authToken.setRevoked(true);
+		authTokenRepository.save(authToken);
+	}
+
 	private UserResponse toResponse(User user) {
 		Long publicId = user.getLegacyUserId();
 		if (publicId == null || publicId <= 0) {
@@ -380,15 +398,7 @@ public class UserService {
 	}
 
 	private User resolveAuthenticatedUser(String rawToken) {
-		if (rawToken == null || rawToken.isBlank()) {
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing authentication token");
-		}
-
-		String tokenHash = hashToken(rawToken);
-		AuthToken authToken = authTokenRepository.findByTokenHashAndRevokedFalse(tokenHash)
-				.filter(token -> token.getExpiresAt().isAfter(Instant.now()))
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid or expired token"));
-
+		AuthToken authToken = resolveActiveToken(rawToken);
 		User user = authToken.getUser();
 
 		if (!user.isActive()) {
@@ -396,6 +406,17 @@ public class UserService {
 		}
 
 		return loadUserWithProfile(user.getId());
+	}
+
+	private AuthToken resolveActiveToken(String rawToken) {
+		if (rawToken == null || rawToken.isBlank()) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing authentication token");
+		}
+
+		String tokenHash = hashToken(rawToken);
+		return authTokenRepository.findByTokenHashAndRevokedFalse(tokenHash)
+				.filter(token -> token.getExpiresAt().isAfter(Instant.now()))
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid or expired token"));
 	}
 
 	private String trimRequired(String value, String fieldName) {
