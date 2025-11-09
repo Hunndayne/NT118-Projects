@@ -117,7 +117,7 @@
                     android:background="@drawable/bg_edit_text_form"
                     android:gravity="top|start"
                     android:padding="12dp"
-                    android:text="Mu từ nhóm đua trụ hạng thành nhóm đua vô địch"
+                    android:text="Write an essay..."
                     android:hint="Write something here..."
                     android:textSize="14sp" />
             </LinearLayout>
@@ -179,28 +179,32 @@
                 android:gravity="center_vertical"
                 android:layout_gravity="right"
                 android:orientation="horizontal"
-
                 android:layout_marginTop="5dp"
                 >
-                <Button
+                <android.widget.Button
                     android:id="@+id/buttonCancelUpLesson_Admin"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:background="@drawable/button"
+                    android:textAllCaps="false"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:backgroundTint="@color/enggo_grey_100"
                     android:text="Cancel"
                     android:textColor="@color/black"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:layout_marginEnd="5dp"
-                    android:backgroundTint="@color/enggo_grey_300"
+
                     />
 
-                <Button
+                <android.widget.Button
                     android:id="@+id/buttonUpLesson_Admin"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:backgroundTint="@android:color/holo_blue_light"
+                    android:background="@drawable/button"
+                    android:textAllCaps="false"
                     android:text="Upload"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     />
 
             </LinearLayout>
