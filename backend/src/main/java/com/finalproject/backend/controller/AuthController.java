@@ -20,7 +20,7 @@ public class AuthController {
 		return userService.login(request);
 	}
 
-	@GetMapping("/api/checklogin")
+	@GetMapping("/checklogin")
 	public TokenStatusResponse checkLogin(@RequestHeader("X-Auth-Token") String token) {
 		return userService.checkToken(token);
 	}
