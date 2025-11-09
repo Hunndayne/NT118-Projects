@@ -1,6 +1,7 @@
 package com.example.enggo;
 
 import android.os.Bundle;
+import android.widget.Button;
 
 public class EditCourseAdminActivity extends BaseAdminActivity {
     @Override
@@ -9,5 +10,8 @@ public class EditCourseAdminActivity extends BaseAdminActivity {
         setContentView(R.layout.edit_course_admin);
         setupAdminHeader();
         setupAdminFooter();
+
+        Button btnCancelCourse = findViewById(R.id.buttonCancelCourse);
+        btnCancelCourse.setOnClickListener(v -> finish());
     }
 }

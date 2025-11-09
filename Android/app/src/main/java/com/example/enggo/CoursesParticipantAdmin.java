@@ -3,6 +3,7 @@ package com.example.enggo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class CoursesParticipantAdmin extends BaseAdminActivity {
     @Override
@@ -18,5 +19,7 @@ public class CoursesParticipantAdmin extends BaseAdminActivity {
             Intent intent = new Intent(this, AvailableUserAdminActivity.class);
             startActivity(intent);
         });
+        TextView tvBack = findViewById(R.id.tvBack);
+        tvBack.setOnClickListener(v -> finish());
     }
 }

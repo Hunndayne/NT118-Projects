@@ -12,9 +12,9 @@ public class AddAssignmentAdminActivity extends BaseAdminActivity {
         setupAdminHeader();
         setupAdminFooter();
 
-//        Button btnCancel = findViewById(R.id.btnCancel);
-//        btnCancel.setOnClickListener(v -> {
-//            finish();
-//        });
+        Button btnCancel = findViewById(R.id.buttonCancelAddAssignment_admin);
+        btnCancel.setOnClickListener(v -> {
+            finish();
+        });
     }
 }
