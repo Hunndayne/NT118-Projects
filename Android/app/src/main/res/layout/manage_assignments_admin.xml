@@ -64,10 +64,14 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:layout_marginTop="8dp">
-            <Button
+
+            <android.widget.Button
                 android:id="@+id/btnAddAssignment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
+                android:background="@drawable/button"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
                 android:text="+ Add Assignment" />
             <EditText
                 android:id="@+id/etSearchAssignments_Admin"

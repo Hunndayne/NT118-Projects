@@ -77,11 +77,16 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:layout_marginTop="8dp">
-            <Button
+
+            <android.widget.Button
                 android:id="@+id/btnAddCourse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="110dp"
+                android:layout_height="35dp"
+                android:textAllCaps="false"
+                android:background="@drawable/button"
+                android:textColor="@color/white"
                 android:text="+ Add course" />
+
             <EditText
                 android:id="@+id/etSearchCourses_Admin"
                 android:layout_width="0dp"

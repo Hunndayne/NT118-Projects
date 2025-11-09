@@ -82,11 +82,17 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_marginTop="8dp">
-                <Button
+
+                <android.widget.Button
                     android:id="@+id/btnAddUser"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="+ Add user" />
+                    android:layout_height="35dp"
+                    android:background="@drawable/button"
+                    android:text="+ Add user"
+                    android:textAllCaps="false"
+                    android:textSize="12dp"
+                    android:textColor="@android:color/white" />
+
                 <EditText
                     android:id="@+id/etSearchAccount"
                     android:layout_width="0dp"

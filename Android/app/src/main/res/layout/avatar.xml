@@ -179,7 +179,8 @@
                     android:background="@drawable/button"
                     android:text="Save changes"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/black" />
+                    android:textSize="14sp"
+                    android:textColor="@android:color/white" />
 
                 <android.widget.Button
                     android:id="@+id/btnCancel"
@@ -190,6 +191,7 @@
                     android:background="@drawable/button"
                     android:text="Cancel"
                     android:textAllCaps="false"
+                    android:textSize="14sp"
                     android:textColor="@android:color/black" />
 
             </LinearLayout>

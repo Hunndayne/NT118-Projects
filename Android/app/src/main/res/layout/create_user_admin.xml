@@ -88,8 +88,7 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="hunn"
-                    android:hint="hunn"
+                    android:text="hungnt"
                     android:textSize="14sp" />
                 <TextView
                     android:layout_width="match_parent"
@@ -105,7 +104,7 @@
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
                     android:text="Hung"
-                    android:hint="Hung"
+                    android:hint="A"
                     android:textSize="14sp" />
                 <TextView
                     android:layout_width="match_parent"
@@ -121,7 +120,7 @@
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
                     android:text="Tran Thanh"
-                    android:hint="Tran Thanh"
+                    android:hint="Nguyen Van"
                     android:textSize="14sp" />
 
                 <TextView
@@ -137,7 +136,7 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="name@example.com"
+                    android:text="hunnt@suctremmt.com"
                     android:hint="name@example.com"
                     android:textSize="14sp" />
 
@@ -155,7 +154,6 @@
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
                     android:text="0912345678"
-                    android:hint="0912345678"
                     android:textSize="14sp" />
 
 
@@ -191,35 +189,35 @@
                 android:gravity="center_vertical"
                 android:layout_gravity="right"
                 android:orientation="horizontal"
+                android:layout_marginTop="5dp"    >
 
-                android:layout_marginTop="5dp"
-                >
-                <Button
+                <android.widget.Button
                     android:id="@+id/buttonCancelCreateUsr_Admin"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:background="@drawable/button"
+                    android:textAllCaps="false"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Cancel"
                     android:textColor="@color/black"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:layout_marginEnd="5dp"
                     android:backgroundTint="@color/enggo_grey_300"
                     />
 
-                <Button
+                <android.widget.Button
                     android:id="@+id/buttonCreateUsr_Admin"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:backgroundTint="@android:color/holo_blue_light"
+                    android:background="@drawable/button"
                     android:text="Create"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
+                    android:textAllCaps="false"
                     />
 
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
