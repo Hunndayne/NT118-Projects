@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F0F0F0"
-    tools:context=".CoursesParticipantAdmin">
+    tools:context=".CoursesParticipantAdmin"
+    android:fitsSystemWindows="true">
 
     <include
         android:id="@id/headerAdmin"
@@ -35,11 +36,11 @@
         android:paddingHorizontal="12dp"
         android:paddingVertical="8dp"
         android:elevation="4dp"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="3dp"
         android:background="@drawable/bg_header"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerAdmin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
