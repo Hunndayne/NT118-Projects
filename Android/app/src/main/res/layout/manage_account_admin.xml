@@ -23,6 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
+
     <include
         android:id="@id/footerAdmin"
         layout="@layout/footer_admin"
@@ -40,88 +41,79 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
-    <ScrollView
-        android:id="@+id/contentScrollView"
-        android:layout_width="match_parent"
+
+    <LinearLayout
+        android:id="@+id/contentContainer"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:orientation="vertical"
+        android:padding="16dp"
         android:background="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/headerAdmin"
         app:layout_constraintBottom_toTopOf="@id/footerAdmin"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerAdmin">
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tvBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/back_text"
+            android:textSize="13sp"
+            android:textColor="@android:color/black"
+            android:fontFamily="@font/nunito_extra_bold" />
+
+        <TextView
+            android:id="@+id/tvAdmin_AccountManager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Account management"
+            android:fontFamily="@font/nunito_extra_bold"
+            android:textColor="@android:color/black"
+            android:textSize="32sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-            <TextView
-                android:id="@+id/tvBack"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <android.widget.Button
+                android:id="@+id/btnAddUser"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/back_text"
-                android:textSize="13sp"
-                android:textColor="@android:color/black"
-                android:fontFamily="@font/nunito_extra_bold"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:layout_height="35dp"
+                android:background="@drawable/button"
+                android:text="+ Add user"
+                android:textAllCaps="false"
+                android:textSize="12dp"
+                android:textColor="@android:color/white" />
 
-            <TextView
-                android:id="@+id/tvAdmin_AccountManager"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="Account management"
-                android:fontFamily="@font/nunito_extra_bold"
-                android:textColor="@android:color/black"
-                android:textSize="32sp"
-                android:textStyle="bold" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="8dp">
-
-                <android.widget.Button
-                    android:id="@+id/btnAddUser"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:background="@drawable/button"
-                    android:text="+ Add user"
-                    android:textAllCaps="false"
-                    android:textSize="12dp"
-                    android:textColor="@android:color/white" />
-
-                <EditText
-                    android:id="@+id/etSearchAccount"
-                    android:layout_width="0dp"
-                    android:layout_height="44dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_search"
-                    android:drawableStart="@drawable/ic_search"
-                    android:hint="Search..."
-                    android:inputType="text"
-                    android:paddingStart="12dp"
-                    android:textSize="14dp"
-                    android:layout_marginStart="16dp"/>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/userListContainer_Admin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="1dp">
-
-                <include layout="@layout/user_management_list_item" />
-                <include layout="@layout/user_management_list_item" />
-
-
-            </LinearLayout>
-
+            <EditText
+                android:id="@+id/etSearchAccount"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_search"
+                android:drawableStart="@drawable/ic_search"
+                android:hint="Search..."
+                android:inputType="text"
+                android:paddingStart="12dp"
+                android:textSize="14dp"
+                android:layout_marginStart="16dp"/>
         </LinearLayout>
-    </ScrollView>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewUsers"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            tools:listitem="@layout/user_management_list_item" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
