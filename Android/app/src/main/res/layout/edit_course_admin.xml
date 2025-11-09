@@ -132,9 +132,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:text="View and edit Participants list"
-                    android:textColor="@color/black"
                     android:textSize="10sp"
                     android:layout_marginEnd="5dp"
+                    android:background="@drawable/button"
+                    android:textColor="@color/white"
                     android:backgroundTint="@color/enggo_grey_300"
                     />
             </LinearLayout>
