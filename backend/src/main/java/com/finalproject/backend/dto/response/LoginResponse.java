@@ -11,4 +11,5 @@ public class LoginResponse {
 	String token;
 	String tokenType;
 	Instant expiresAt;
+	boolean admin;
 }
