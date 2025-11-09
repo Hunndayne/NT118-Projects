@@ -300,6 +300,7 @@ public class UserService {
 				.token(rawToken)
 				.tokenType(TokenType.ACCESS.getDbValue())
 				.expiresAt(expiresAt)
+				.admin(user.isAdmin())
 				.build();
 	}
 
