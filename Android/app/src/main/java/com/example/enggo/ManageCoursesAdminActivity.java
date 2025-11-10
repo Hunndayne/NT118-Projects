@@ -39,8 +39,8 @@ public class ManageCoursesAdminActivity extends BaseAdminActivity {
 
         // 4. Tạo dữ liệu (Tạm thời)
         courseNames = new ArrayList<>();
-        courseNames.add("Introduction of Vietnamese");
-        courseNames.add("Basic Vietnamese Grammar");
+        courseNames.add("Introduction of IELTS");
+        courseNames.add("Basic ENGLISH Grammar");
         courseNames.add("TOEIC READING LISTENING");
 
         // 5. Khởi tạo Adapter MỚI
