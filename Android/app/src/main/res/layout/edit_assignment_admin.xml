@@ -116,7 +116,7 @@
                     android:background="@drawable/bg_edit_text_form"
                     android:gravity="top|start"
                     android:padding="12dp"
-                    android:text="Mu từ nhóm đua trụ hạng thành nhóm đua vô địch"
+                    android:text="A deeper dive into complex grammar topics."
                     android:hint="Write something here..."
                     android:textSize="14sp" />
             </LinearLayout>
