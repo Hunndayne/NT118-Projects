@@ -133,7 +133,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/button"
                     android:text="View and edit Participants list"
-                    android:textSize="13sp"
+                    android:textSize="15sp"
                     android:layout_marginEnd="5dp"
                     android:textColor="@color/white"
                     android:textAllCaps="false"

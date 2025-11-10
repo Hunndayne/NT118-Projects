@@ -13,10 +13,24 @@ import java.util.List;
 
 public class ManageCoursesAdminActivity extends BaseAdminActivity {
 
+    // Lớp nội bộ để giữ dữ liệu cho mỗi mục trong danh sách
+    public static class CourseItem {
+        String name;
+        String classCode;
+        int lessonCount;
+
+        public CourseItem(String name, String classCode, int lessonCount) {
+            this.name = name;
+            this.classCode = classCode;
+            this.lessonCount = lessonCount;
+        }
+    }
+
     // Khai báo RecyclerView và Adapter
     private RecyclerView coursesRecyclerView;
     private CourseAdminAdapter courseAdminAdapter;
-    private List<String> courseNames; // Danh sách dữ liệu
+    // Thay đổi danh sách dữ liệu để sử dụng CourseItem
+    private List<CourseItem> courseItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +51,15 @@ public class ManageCoursesAdminActivity extends BaseAdminActivity {
         // 3. Ánh xạ RecyclerView MỚI
         coursesRecyclerView = findViewById(R.id.coursesRecyclerView);
 
-        // 4. Tạo dữ liệu (Tạm thời)
-        courseNames = new ArrayList<>();
-        courseNames.add("Introduction of IELTS");
-        courseNames.add("Basic ENGLISH Grammar");
-        courseNames.add("TOEIC READING LISTENING");
+        // 4. Tạo dữ liệu mới (sử dụng CourseItem)
+        courseItems = new ArrayList<>();
+        courseItems.add(new CourseItem("Introduction of IELTS", "IE01", 2));
+        courseItems.add(new CourseItem("Basic ENGLISH Grammar", "ENG01", 5));
+        courseItems.add(new CourseItem("TOEIC READING LISTENING", "TOE03", 10));
 
-        // 5. Khởi tạo Adapter MỚI
-        courseAdminAdapter = new CourseAdminAdapter(this, courseNames);
+        // 5. Khởi tạo Adapter MỚI với danh sách mới
+        // LƯU Ý: Bạn cần cập nhật CourseAdminAdapter để chấp nhận List<CourseItem>
+        courseAdminAdapter = new CourseAdminAdapter(this, courseItems);
 
         // 6. Gắn Adapter vào RecyclerView
         coursesRecyclerView.setAdapter(courseAdminAdapter);
