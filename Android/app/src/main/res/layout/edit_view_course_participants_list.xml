@@ -37,7 +37,7 @@
         android:paddingVertical="8dp"
         android:elevation="4dp"
         android:layout_marginTop="3dp"
-        android:background="@drawable/bg_header"
+        android:background="#FFFFFF"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         app:layout_constraintTop_toBottomOf="@id/headerAdmin"
@@ -58,12 +58,17 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
-        <Button
+        <android.widget.Button
             android:id="@+id/btnSaveChangesParticipants"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:textSize="10sp"
-            android:text="Save" />
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="69dp"
+            android:layout_height="30dp"
+            android:background="@drawable/button"
+            android:paddingHorizontal="8dp"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <ScrollView
@@ -98,11 +103,15 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_marginTop="8dp">
-                <Button
+                <android.widget.Button
                     android:id="@+id/btnAddUser"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="+ Add Participant" />
+                    android:layout_height="40dp"
+                    android:paddingHorizontal="16dp"
+                    android:background="@drawable/button"
+                    android:text="+ Add Participant"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
                 <EditText
                     android:id="@+id/etSearchUser"
                     android:layout_width="0dp"
@@ -113,7 +122,7 @@
                     android:hint="Search..."
                     android:inputType="text"
                     android:paddingStart="12dp"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     android:layout_marginStart="16dp"/>
             </LinearLayout>
 

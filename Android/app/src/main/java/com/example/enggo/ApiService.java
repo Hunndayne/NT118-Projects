@@ -29,9 +29,6 @@ class LoginResponse {
     boolean admin;
 }
 
-
-
-
 class CheckLoginResponse {
     boolean active;
     String expiresAt;
