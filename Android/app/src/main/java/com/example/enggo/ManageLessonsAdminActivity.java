@@ -1,21 +1,35 @@
 package com.example.enggo;
 
-import android.content.Intent; // <-- Thêm vào
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button; // <-- Thêm vào
-import android.widget.TextView; // <-- Thêm vào
+import android.widget.Button;
+import android.widget.TextView;
 
-// Thêm 2 import này
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ManageLessonsAdminActivity extends BaseAdminActivity {
 
-    // Khai báo RecyclerView và Adapter
+    // Lớp nội bộ để giữ dữ liệu cho mỗi bài học
+    public static class LessonItem {
+        String name;
+        String date;
+        String poster;
+        String description;
+
+        public LessonItem(String name, String date, String poster, String description) {
+            this.name = name;
+            this.date = date;
+            this.poster = poster;
+            this.description = description;
+        }
+    }
+
     private RecyclerView lessonsRecyclerView;
     private LessonAdminAdapter lessonAdminAdapter;
-    private List<String> lessonNames; // Danh sách dữ liệu
+    // Thay đổi danh sách dữ liệu để sử dụng LessonItem
+    private List<LessonItem> lessonItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,24 +39,21 @@ public class ManageLessonsAdminActivity extends BaseAdminActivity {
         setupAdminHeader();
         setupAdminFooter();
 
-        // Xử lý nút Back (như cọu hỏi)
         TextView tvBack = findViewById(R.id.tvBack);
         tvBack.setOnClickListener(v -> finish());
 
-        // 1. Ánh xạ RecyclerView
         lessonsRecyclerView = findViewById(R.id.lessonsRecyclerView);
 
-        // 2. Tạo dữ liệu (Tạm thời, sau này cọu sẽ lấy từ database)
-        lessonNames = new ArrayList<>();
-        lessonNames.add("Basic Vietnamese Grammar");
-        lessonNames.add("Advanced Grammar");
-        lessonNames.add("Vocabulary Lesson 1");
-        lessonNames.add("Listening Practice");
+        // Tạo dữ liệu mới (sử dụng LessonItem)
+        lessonItems = new ArrayList<>();
+        lessonItems.add(new LessonItem("Basic Grammar", "20/05/2024", "Admin 1", "An introduction to the basic grammar rules."));
+        lessonItems.add(new LessonItem("Advanced Grammar", "21/05/2024", "Admin 2", "A deeper dive into complex grammar topics."));
+        lessonItems.add(new LessonItem("Vocabulary Lesson 1", "22/05/2024", "Admin 1", "Learn the first 50 essential vocabulary words."));
 
-        // 3. Khởi tạo Adapter (đưa dữ liệu vào)
-        lessonAdminAdapter = new LessonAdminAdapter(this, lessonNames);
+        // Khởi tạo Adapter với danh sách mới
+        // LƯU Ý: Bạn cần cập nhật LessonAdminAdapter để chấp nhận List<LessonItem>
+        lessonAdminAdapter = new LessonAdminAdapter(this, lessonItems);
 
-        // 4. Gắn Adapter vào RecyclerView
         lessonsRecyclerView.setAdapter(lessonAdminAdapter);
 
         Button btnAddLesson = findViewById(R.id.btnAddLesson);
@@ -50,6 +61,5 @@ public class ManageLessonsAdminActivity extends BaseAdminActivity {
             Intent intent = new Intent(this, AddNewLessonAdminActivity.class);
             startActivity(intent);
         });
-
     }
 }

@@ -14,75 +14,65 @@ import java.util.List;
 
 public class LessonAdminAdapter extends RecyclerView.Adapter<LessonAdminAdapter.LessonViewHolder> {
 
-    private List<String> lessonNameList;
+    private List<ManageLessonsAdminActivity.LessonItem> lessonItems;
     private Context context;
 
-    // Hàm khởi tạo để nhận dữ liệu
-    public LessonAdminAdapter(Context context, List<String> lessonNameList) {
+    public LessonAdminAdapter(Context context, List<ManageLessonsAdminActivity.LessonItem> lessonItems) {
         this.context = context;
-        this.lessonNameList = lessonNameList;
+        this.lessonItems = lessonItems;
     }
+
     public class LessonViewHolder extends RecyclerView.ViewHolder {
 
-        // Khai báo các view bên trong "lesson_management_list_item.xml"
         TextView tvLessonName;
+        TextView tvLessonDate;
+        TextView tvLessonPoster;
+        TextView tvLessonDescription;
         TextView btnEdit;
-        TextView btnDelete;
 
         public LessonViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvLessonName = itemView.findViewById(R.id.tvLessonName_manageusritem);
+            tvLessonDate = itemView.findViewById(R.id.tvLessonDate_manageusritem);
+            tvLessonPoster = itemView.findViewById(R.id.tvLessonPoster_manageusritem);
+            tvLessonDescription = itemView.findViewById(R.id.tvLessonDescription_manageusritem);
             btnEdit = itemView.findViewById(R.id.btnEdit_manageLessonitem);
 
-            // === GẮN SỰ KIỆN CLICK CHO NÚT EDIT ===
             btnEdit.setOnClickListener(v -> {
-                // Lấy vị trí của item được click
                 int position = getAdapterPosition();
-
-                // Lấy tên bài học (hoặc ID) từ danh sách
-                String lessonName = lessonNameList.get(position);
-
-                // Tạo Intent để mở EditLessonAdminActivity
-                Intent intent = new Intent(context, EditLessonAdminActivity.class);
-
-                context.startActivity(intent);
+                if (position != RecyclerView.NO_POSITION) {
+                    ManageLessonsAdminActivity.LessonItem lessonItem = lessonItems.get(position);
+                    Intent intent = new Intent(context, EditLessonAdminActivity.class);
+                    context.startActivity(intent);
+                }
             });
-            itemView.setOnClickListener(v -> {
-               Intent intent = new Intent(context, AssignmentsManagementAdminActivity.class);
-               context.startActivity(intent);
 
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, AssignmentsManagementAdminActivity.class);
+                context.startActivity(intent);
             });
         }
     }
 
-    // ========================================================
-    // CÁC HÀM BẮT BUỘC CỦA ADAPTER
-    // ========================================================
-
-    // 1. Hàm này tạo ra cái ViewHolder (ở trên)
     @NonNull
     @Override
     public LessonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Dùng layout "lesson_management_list_item.xml" của cọu
         View view = LayoutInflater.from(context).inflate(R.layout.lesson_management_list_item, parent, false);
         return new LessonViewHolder(view);
     }
 
-    // 2. Hàm này "nhét" dữ liệu vào item
     @Override
     public void onBindViewHolder(@NonNull LessonViewHolder holder, int position) {
-        // Lấy tên bài học ở vị trí "position"
-        String lessonName = lessonNameList.get(position);
-
-        // Gắn tên bài học lên TextView
-        holder.tvLessonName.setText(lessonName);
-
+        ManageLessonsAdminActivity.LessonItem lessonItem = lessonItems.get(position);
+        holder.tvLessonName.setText(lessonItem.name);
+        holder.tvLessonDate.setText(lessonItem.date);
+        holder.tvLessonPoster.setText(lessonItem.poster); // Bỏ "Posted by:"
+        holder.tvLessonDescription.setText(lessonItem.description);
     }
 
-    // 3. Hàm này báo cho RecyclerView biết có bao nhiêu item
     @Override
     public int getItemCount() {
-        return lessonNameList.size();
+        return lessonItems.size();
     }
 }
