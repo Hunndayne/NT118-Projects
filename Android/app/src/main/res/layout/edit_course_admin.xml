@@ -89,7 +89,7 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="Basic Vietnamese"
+                    android:text="IELTS 6.0+"
                     android:hint="Course name"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -115,7 +115,7 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="VI01"
+                    android:text="IE6"
                     android:hint="Class code"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -127,16 +127,16 @@
                 android:layout_marginTop="5dp"
                 >
 
-                <Button
+                <android.widget.Button
                     android:id="@+id/buttonParticipantsList"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:text="View and edit Participants list"
-                    android:textSize="10sp"
-                    android:layout_marginEnd="5dp"
                     android:background="@drawable/button"
+                    android:text="View and edit Participants list"
+                    android:textSize="13sp"
+                    android:layout_marginEnd="5dp"
                     android:textColor="@color/white"
-                    android:backgroundTint="@color/enggo_grey_300"
+                    android:textAllCaps="false"
                     />
             </LinearLayout>
 
