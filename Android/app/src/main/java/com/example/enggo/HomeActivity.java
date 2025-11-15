@@ -75,6 +75,9 @@ public class HomeActivity extends BaseActivity {
 
         layoutNotificationList.setVisibility(View.VISIBLE);
         imgArrowNotification.setRotation(180f);
+
+        viewPager.setBackgroundResource(R.drawable.round_frame_background);
+        viewPager.setClipToOutline(true);
     }
 
     private void toggleSection(View content, ImageView arrow) {
