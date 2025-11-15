@@ -68,6 +68,13 @@ public class HomeActivity extends BaseActivity {
         }).attach();
 
         startAutoScroll(imageList.size());
+
+        layoutCourseList.setVisibility(View.VISIBLE);
+        imgArrowMyCourses.setRotation(180f);
+
+
+        layoutNotificationList.setVisibility(View.VISIBLE);
+        imgArrowNotification.setRotation(180f);
     }
 
     private void toggleSection(View content, ImageView arrow) {
