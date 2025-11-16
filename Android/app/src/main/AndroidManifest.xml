@@ -14,54 +14,47 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EngGo">
         <activity
-            android:name=".LoginActivity"
+            android:name=".user.LoginActivity"
             android:exported="false">
 
         </activity>
 
         <activity
-            android:name=".BaseActivity"
+            android:name=".user.HomeActivity"
             android:exported="false"/>
         <activity
-            android:name=".HomeActivity"
+            android:name=".user.CourseActivity"
             android:exported="false"/>
         <activity
-            android:name=".CourseActivity"
+            android:name=".user.MenuActivity"
             android:exported="false"/>
         <activity
-            android:name=".MenuActivity"
+            android:name=".user.EditInformationActivity"
             android:exported="false"/>
         <activity
-            android:name=".EditInformationActivity"
+            android:name=".user.ProfileActivity"
             android:exported="false"/>
         <activity
-            android:name=".ProfileActivity"
+            android:name=".user.NotificationActivity"
             android:exported="false"/>
         <activity
-            android:name=".NotificationActivity"
+            android:name=".user.ClassActivity"
             android:exported="false"/>
         <activity
-            android:name=".ClassActivity"
+            android:name=".user.ChangeAvatarActivity"
             android:exported="false"/>
         <activity
-            android:name=".ChangeAvatarActivity"
+            android:name=".user.ChangePasswordActivity"
             android:exported="false"/>
         <activity
-            android:name=".ChangePasswordActivity"
+            android:name=".user.SubmitHomeworkActivity"
             android:exported="false"/>
         <activity
-            android:name=".SubmitHomeworkActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".BaseAdminActivity"
-            android:exported="false"/>
-        
-        <activity
-            android:name=".HomeAdminActivity"
+            android:name=".admin.HomeAdminActivity"
             android:exported="false"/>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".user.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -70,49 +63,49 @@
         </activity>
 
         <activity
-            android:name=".ManageCoursesAdminActivity"
+            android:name=".admin.ManageCoursesAdminActivity"
             android:exported="false"/>
         <activity
-            android:name=".ManageAccountAdminActivity"
+            android:name=".admin.ManageAccountAdminActivity"
             android:exported="false"/>
         <activity
-            android:name=".ManageLessonsAdminActivity"
+            android:name=".admin.ManageLessonsAdminActivity"
             android:exported="false"/>
         <activity
-            android:name="EditLessonAdminActivity"
+            android:name=".admin.EditLessonAdminActivity"
             android:exported="false"/>
         <activity
-            android:name=".CreateCourseAdminActivity"
+            android:name=".admin.CreateCourseAdminActivity"
             android:exported="false"/>
         <activity
-            android:name=".AddUserAdminActivity"
+            android:name=".admin.AddUserAdminActivity"
             android:exported="false"/>
         <activity
-            android:name=".AvailableUserAdminActivity"
+            android:name=".admin.AvailableUserAdminActivity"
             android:exported="false"/>
         <activity
-            android:name=".CoursesParticipantAdmin"
+            android:name=".admin.CoursesParticipantAdmin"
             android:exported="false"/>
         <activity
-            android:name=".AddNewLessonAdminActivity"
+            android:name=".admin.AddNewLessonAdminActivity"
             android:exported="false"/>
         <activity
-            android:name=".ManageReportsAdminActivity"
+            android:name=".admin.ManageReportsAdminActivity"
             android:exported="false"/>
         <activity
-            android:name=".AssignmentsManagementAdminActivity"
+            android:name=".admin.AssignmentsManagementAdminActivity"
             android:exported="false"/>
         <activity
-            android:name=".AddAssignmentAdminActivity"
+            android:name=".admin.AddAssignmentAdminActivity"
             android:exported="false"/>
         <activity
-            android:name=".EditAssignmentAdminActivity"
+            android:name=".admin.EditAssignmentAdminActivity"
             android:exported="false"/>
         <activity
-            android:name=".EditCourseAdminActivity"
+            android:name=".admin.EditCourseAdminActivity"
             android:exported="false"/>
         <activity
-            android:name=".EditUserAdminActivity"
+            android:name=".admin.EditUserAdminActivity"
             android:exported="false"/>
 
     </application>
