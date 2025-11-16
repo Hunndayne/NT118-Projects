@@ -52,6 +52,9 @@
         <activity
             android:name=".admin.HomeAdminActivity"
             android:exported="false"/>
+        <activity
+            android:name=".admin.MenuAdminActivity"
+            android:exported="false"/>
 
         <activity
             android:name=".user.MainActivity"

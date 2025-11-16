@@ -49,9 +49,11 @@ public abstract class BaseAdminActivity extends AppCompatActivity {
 
         // 3. Nút Cài đặt
         btnSettings.setOnClickListener(v -> {
-            // Cọu sẽ tạo một AdminSettingsActivity.java sau
-            // Intent intent = new Intent(this, AdminSettingsActivity.class);
-            // startActivity(intent);
+            if (!(this instanceof MenuAdminActivity)) {
+                Intent intent = new Intent(this, MenuAdminActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
         });
 
         // 4. Nút Avatar Admin
@@ -105,14 +107,11 @@ public abstract class BaseAdminActivity extends AppCompatActivity {
 
         // 4. Nút Menu
         btnMenu.setOnClickListener(v -> {
-            // Tạm thời tui comment lại, cọu phải tạo file ManageLessonAdminActivity.java
-            /*
-            if (!(this instanceof ManageLessonAdminActivity)) {
-                Intent intent = new Intent(this, ManageLessonAdminActivity.class);
+            if (!(this instanceof MenuAdminActivity)) {
+                Intent intent = new Intent(this, MenuAdminActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
-            */
         });
     }
 }
