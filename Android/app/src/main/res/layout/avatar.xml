@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
+    android:background="@color/background_primary"
     tools:context=".ChangeAvatarActivity">
 
     <include
@@ -29,7 +29,7 @@
         android:layout_height="74dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@android:color/white"
+        android:background="@color/background_secondary"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:paddingTop="4dp"
@@ -56,7 +56,7 @@
             android:drawablePadding="4dp"
             android:gravity="center_vertical"
             android:text="@string/back_text"
-            android:textColor="@android:color/black"
+            android:textColor="@color/text_primary"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -91,7 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Current picture"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
                     <ImageView
@@ -99,7 +99,7 @@
                         android:layout_width="140dp"
                         android:layout_height="140dp"
                         android:layout_marginTop="8dp"
-                        android:background="#E0E0E0"
+                        android:background="@color/background_card"
                         android:contentDescription="Current user picture"
                         android:scaleType="centerCrop" />
 
@@ -112,7 +112,7 @@
                         android:focusable="true"
                         android:minHeight="48dp"
                         android:text="Delete picture"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/text_primary"
                         android:textSize="13sp" />
                 </LinearLayout>
 
@@ -128,7 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Current picture"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
                     <LinearLayout
@@ -145,6 +145,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:src="@drawable/ic_upload"
+                            app:tint="@color/icon_tint"
                             android:contentDescription="Upload icon" />
 
                         <TextView
@@ -153,7 +154,7 @@
                             android:layout_marginTop="8dp"
                             android:gravity="center"
                             android:text="You can drag and drop files here to add them."
-                            android:textColor="@android:color/darker_gray"
+                            android:textColor="@color/text_secondary"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -187,12 +188,12 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#F5F5F5"
+                    android:backgroundTint="@color/background_card"
                     android:background="@drawable/button"
                     android:text="Cancel"
                     android:textAllCaps="false"
                     android:textSize="14sp"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@color/text_primary" />
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@
     android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
+    android:background="@color/background_primary"
     tools:context=".HomeActivity">
 
     <include
@@ -30,7 +30,7 @@
         android:layout_height="74dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@android:color/white"
+        android:background="@color/background_secondary"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:paddingTop="4dp"
@@ -44,7 +44,7 @@
         android:id="@+id/contentScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#FFFFFF"
+        android:background="@color/background_secondary"
         app:layout_constraintBottom_toTopOf="@id/footerStudent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_extra_bold"
                 android:text="@string/back_text"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -77,7 +77,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/nunito_extra_bold"
                 android:text="HOME"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="32dp"
                 android:textStyle="bold" />
 
@@ -119,10 +119,10 @@
                 android:layout_marginTop="12dp"
                 android:elevation="0dp"
                 android:outlineProvider="none"
-                app:cardBackgroundColor="@android:color/white"
+                app:cardBackgroundColor="@color/background_card"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="6dp"
-                app:strokeColor="@color/grey"
+                app:strokeColor="@color/card_stroke"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -146,7 +146,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/nunito_extra_bold"
                             android:text="My Courses"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/text_primary"
                             android:textSize="16dp" />
 
                         <ImageView
@@ -155,7 +155,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/ic_arrow_drop_down"
-                            app:tint="@color/black" />
+                            app:tint="@color/icon_tint" />
                     </LinearLayout>
 
                     <!-- Danh sách khóa học (ẩn ban đầu) -->
@@ -205,12 +205,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                app:cardBackgroundColor="@android:color/white"
+                app:cardBackgroundColor="@color/background_card"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="6dp"
                 android:elevation="0dp"
                 android:outlineProvider="none"
-                app:strokeColor="@color/grey"
+                app:strokeColor="@color/card_stroke"
                 app:strokeWidth="1dp"
                 >
 
@@ -235,7 +235,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/nunito_extra_bold"
                             android:text="Notifications"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/text_primary"
                             android:textSize="16dp" />
 
                         <ImageView
@@ -244,7 +244,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/ic_arrow_drop_down"
-                            app:tint="@color/black" />
+                            app:tint="@color/icon_tint" />
                     </LinearLayout>
 
                     <!-- Nội dung thông báo (ẩn ban đầu) -->
@@ -272,7 +272,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="20/11 - GỬI LỜI CHÚC, VẠN ĐIỀU HAY"
-                            android:textColor="@color/black"
+                            android:textColor="@color/text_primary"
                             android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvFolder" />
@@ -304,7 +304,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="[TA153GD] LỊCH THI GIỮA KHÓA"
-                            android:textColor="@color/black"
+                            android:textColor="@color/text_primary"
                             android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvFile1" />
@@ -336,7 +336,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="Học viên nghỉ quá 3 buổi"
-                            android:textColor="@color/black"
+                            android:textColor="@color/text_primary"
                             android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvFile2" />

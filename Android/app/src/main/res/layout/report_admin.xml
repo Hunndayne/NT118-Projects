@@ -5,7 +5,7 @@
     android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
+    android:background="@color/background_primary"
     tools:context=".HomeAdminActivity">
 
     <include
@@ -30,7 +30,7 @@
         android:layout_height="74dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@android:color/white"
+        android:background="@color/background_secondary"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:paddingTop="4dp"
@@ -44,7 +44,7 @@
         android:id="@+id/contentScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#FFFFFF"
+        android:background="@color/background_secondary"
         app:layout_constraintBottom_toTopOf="@+id/footerAdmin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
                 android:layout_marginTop="8dp"
                 android:text="Reports"
                 android:fontFamily="@font/nunito_extra_bold"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -84,6 +84,7 @@
                     android:layout_columnWeight="1"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/background_card"
                     android:layout_margin="4dp">
                     <LinearLayout
                         android:id="@+id/totalStudents_admin"
@@ -103,7 +104,7 @@
                             android:text="120"
                             android:textSize="24sp"
                             android:textStyle="bold"
-                            android:textColor="@android:color/black"/>
+                            android:textColor="@color/text_primary"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -115,7 +116,8 @@
                     android:layout_columnWeight="1"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="4dp"
-                     android:layout_margin="4dp">
+                    app:cardBackgroundColor="@color/background_card"
+                    android:layout_margin="4dp">
                     <LinearLayout
                         android:id="@+id/totalCourses_admin"
                         android:layout_width="match_parent"
@@ -134,7 +136,7 @@
                             android:text="8"
                             android:textSize="24sp"
                             android:textStyle="bold"
-                            android:textColor="@android:color/black"/>
+                            android:textColor="@color/text_primary"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -146,7 +148,8 @@
                     android:layout_columnWeight="1"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="4dp"
-                     android:layout_margin="4dp">
+                    app:cardBackgroundColor="@color/background_card"
+                    android:layout_margin="4dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -164,7 +167,7 @@
                             android:text="20"
                             android:textSize="24sp"
                             android:textStyle="bold"
-                            android:textColor="@android:color/black"/>
+                            android:textColor="@color/text_primary"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -176,7 +179,8 @@
                     android:layout_columnWeight="1"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="4dp"
-                     android:layout_margin="4dp">
+                    app:cardBackgroundColor="@color/background_card"
+                    android:layout_margin="4dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -194,7 +198,7 @@
                             android:text="44"
                             android:textSize="24sp"
                             android:textStyle="bold"
-                            android:textColor="@android:color/black"/>
+                            android:textColor="@color/text_primary"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </GridLayout>
@@ -206,7 +210,8 @@
                 android:layout_marginTop="24dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
-                 android:layout_margin="4dp">
+                app:cardBackgroundColor="@color/background_card"
+                android:layout_margin="4dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -219,7 +224,7 @@
                         android:text="Submission Statistics"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/text_primary"
                         android:layout_marginBottom="16dp"/>
 
                     <!-- On time -->
@@ -240,12 +245,12 @@
                             android:text="85"
                             android:textSize="16sp"
                             android:layout_alignParentEnd="true"
-                            android:textColor="@android:color/black"/>
+                            android:textColor="@color/text_primary"/>
                     </RelativeLayout>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#e0e0e0"/>
+                        android:background="@color/divider_color"/>
 
                     <!-- Late -->
                     <RelativeLayout
@@ -265,12 +270,12 @@
                             android:text="21"
                             android:textSize="16sp"
                             android:layout_alignParentEnd="true"
-                            android:textColor="@android:color/black"/>
+                            android:textColor="@color/text_primary"/>
                     </RelativeLayout>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#e0e0e0"/>
+                        android:background="@color/divider_color"/>
 
                     <!-- Missing -->
                     <RelativeLayout
@@ -290,12 +295,12 @@
                             android:text="14"
                             android:textSize="16sp"
                             android:layout_alignParentEnd="true"
-                            android:textColor="@android:color/black"/>
+                            android:textColor="@color/text_primary"/>
                     </RelativeLayout>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#e0e0e0"/>
+                        android:background="@color/divider_color"/>
 
                     <!-- Submission rate -->
                     <RelativeLayout
@@ -315,7 +320,7 @@
                             android:text="86%"
                             android:textSize="16sp"
                             android:layout_alignParentEnd="true"
-                            android:textColor="@android:color/black"/>
+                            android:textColor="@color/text_primary"/>
                     </RelativeLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

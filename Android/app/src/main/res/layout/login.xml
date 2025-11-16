@@ -5,7 +5,7 @@
     android:id="@+id/login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/background_primary"
     tools:context=".LoginActivity">
 
     <ImageView
@@ -40,14 +40,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/edittext_bg"
+        android:background="@drawable/bg_edit_text_form"
         android:fontFamily="@font/nunito_extra_bold"
         android:hint="Username"
         android:minHeight="48dp"
         android:padding="10dp"
         android:textSize="14sp"
-        android:textColorHint="@color/grey"
-        android:textColor="@color/black"
+        android:textColorHint="@color/text_secondary"
+        android:textColor="@color/text_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSignIn"
@@ -60,15 +60,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/edittext_bg"
+        android:background="@drawable/bg_edit_text_form"
         android:fontFamily="@font/nunito_extra_bold"
         android:hint="Password"
         android:inputType="textPassword"
         android:minHeight="48dp"
         android:padding="10dp"
         android:textSize="14sp"
-        android:textColorHint="@color/grey"
-        android:textColor="@color/black"
+        android:textColorHint="@color/text_secondary"
+        android:textColor="@color/text_primary"
         android:textCursorDrawable="@drawable/cursor_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,6 +104,7 @@
         android:fontFamily="@font/nunito_extra_bold"
         android:gravity="center"
         android:text="@string/fg"
+        android:textColor="@color/text_primary"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -123,7 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="────────"
-            android:textColor="@color/grey"
+            android:textColor="@color/divider_color"
             android:textSize="14sp"
             tools:ignore="HardcodedText,TextContrastCheck" />
 
@@ -132,14 +133,14 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_extra_bold"
             android:text=" o "
-            android:textColor="@color/grey"
+            android:textColor="@color/text_secondary"
             android:textSize="14sp"
             tools:ignore="HardcodedText,TextContrastCheck" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="────────"
-            android:textColor="@color/grey"
+            android:textColor="@color/divider_color"
             android:textSize="14sp"
             tools:ignore="HardcodedText,TextContrastCheck" />
     </LinearLayout>

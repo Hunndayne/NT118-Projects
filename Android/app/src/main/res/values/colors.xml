@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Static colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lightblue">#6FCDEF</color>
@@ -12,4 +13,14 @@
     <color name="blueslogan">#0d71af</color>
     <color name="bluelogo">#43b9ce</color>
     <color name="enggo_grey_100">#e6e5e5</color>
+    
+    <!-- Dynamic colors for light mode -->
+    <color name="background_primary">#F0F0F0</color>
+    <color name="background_secondary">#FFFFFF</color>
+    <color name="background_card">#FFFFFF</color>
+    <color name="text_primary">#000000</color>
+    <color name="text_secondary">#828282</color>
+    <color name="divider_color">#D3D3D3</color>
+    <color name="icon_tint">#000000</color>
+    <color name="card_stroke">#D3D3D3</color>
 </resources>

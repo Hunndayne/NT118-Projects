@@ -8,7 +8,7 @@ import android.widget.LinearLayout; // Thêm import này
 import android.widget.ImageView; // Thêm import này
 import androidx.cardview.widget.CardView; // Thêm import này
 
-public class ClassActivity extends BaseActivity {
+public class ClassUserActivity extends BaseUserActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class ClassActivity extends BaseActivity {
 
         LinearLayout homework = findViewById(R.id.hw1);
         homework.setOnClickListener(v -> {
-            Intent intent = new Intent(ClassActivity.this, SubmitHomeworkActivity.class);
+            Intent intent = new Intent(ClassUserActivity.this, SubmitHomeworkUserActivity.class);
             startActivity(intent);
         });
 

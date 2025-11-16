@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CourseActivity extends BaseActivity {
+public class CourseUserActivity extends BaseUserActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class CourseActivity extends BaseActivity {
         LinearLayout card2Content = findViewById(R.id.card2Content);
 
         card1Content.setOnClickListener(v -> {
-            Intent intent = new Intent(CourseActivity.this, ClassActivity.class);
+            Intent intent = new Intent(CourseUserActivity.this, ClassUserActivity.class);
             startActivity(intent);
         });
 

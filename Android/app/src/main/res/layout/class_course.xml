@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/background_primary">
 
     <include
         android:id="@id/headerStudent"
@@ -29,7 +29,7 @@
         android:layout_height="74dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@android:color/white"
+        android:background="@color/background_secondary"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:paddingTop="4dp"
@@ -45,6 +45,7 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:paddingBottom="90dp"
+        android:background="@color/background_secondary"
         app:layout_constraintTop_toBottomOf="@id/headerStudent"
         app:layout_constraintBottom_toTopOf="@id/footerStudent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,14 +55,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:background="@color/background_secondary">
 
             <TextView
                 android:id="@+id/tvBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Back"
-                android:textColor="@color/black"
+                android:textColor="@color/text_primary"
                 android:textStyle="bold" />
 
             <TextView
@@ -71,7 +73,8 @@
                 android:layout_marginTop="8dp"
                 android:text="TOIEC READING LISTENING TA153"
                 android:textSize="22sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/text_primary" />
 
             <TextView
                 android:id="@+id/tvWelcome"
@@ -180,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Announcement"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_primary"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -189,7 +192,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_arrow_drop_down"
-                    app:tint="@color/black" />
+                    app:tint="@color/icon_tint" />
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
@@ -215,7 +218,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
                         android:text="📢 Notices"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         android:textSize="14dp"
                         android:textStyle="bold" />
 
@@ -229,21 +232,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginVertical="8dp"
-                        android:background="@color/grey" />
+                        android:background="@color/divider_color" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
                         android:text="Folder"
-                        android:textColor="@color/dimgrey"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="⚡ Important Guideline - Read it first ⚡"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         android:textStyle="bold" />
 
                     <TextView
@@ -257,21 +260,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginVertical="8dp"
-                        android:background="@color/grey" />
+                        android:background="@color/divider_color" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
                         android:text="Folder"
-                        android:textColor="@color/dimgrey"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="📒 Learning Resources"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         android:textStyle="bold" />
 
                     <TextView
@@ -285,21 +288,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginVertical="8dp"
-                        android:background="@color/grey" />
+                        android:background="@color/divider_color" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
                         android:text="Folder"
-                        android:textColor="@color/dimgrey"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="📧 Form"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         android:textStyle="bold" />
 
                     <TextView
@@ -326,7 +329,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Lecture"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_primary"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -335,7 +338,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_arrow_drop_down"
-                    app:tint="@color/black" />
+                    app:tint="@color/icon_tint" />
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
@@ -361,7 +364,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
                         android:text="Folder"
-                        android:textColor="@color/dimgrey"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13dp"/>
 
                     <TextView
@@ -369,7 +372,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
                         android:text="MẸO CANH THỜI GIAN KHI LUYỆN READING"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         android:textSize="14dp"/>
 
 
@@ -377,81 +380,81 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginVertical="8dp"
-                        android:background="@color/grey" />
+                        android:background="@color/divider_color" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
                         android:text="File"
-                        android:textColor="@color/dimgrey"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Dịch hiểu câu dài + Review Part 7"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/text_primary"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginVertical="8dp"
-                        android:background="@color/grey" />
+                        android:background="@color/divider_color" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
                         android:text="File"
-                        android:textColor="@color/dimgrey"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Phương pháp luyện nghe Part 3, 4"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/text_primary"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginVertical="8dp"
-                        android:background="@color/grey" />
+                        android:background="@color/divider_color" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
                         android:text="File"
-                        android:textColor="@color/dimgrey"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="CÁC LƯU Ý KHI LÀM PART 5"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/text_primary" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginVertical="8dp"
-                        android:background="@color/grey" />
+                        android:background="@color/divider_color" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
                         android:text="File"
-                        android:textColor="@color/dimgrey"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="CÁC LƯU Ý KHI LÀM PART 6"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/text_primary"/>
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -470,7 +473,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Homework"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -479,7 +482,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_arrow_drop_down"
-                    app:tint="@color/black" />
+                    app:tint="@color/icon_tint" />
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
@@ -505,7 +508,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Homework"
-                        android:textColor="@color/dimgrey"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13dp" />
 
                     <TextView
@@ -513,7 +516,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="HW 1.1"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         android:textStyle="bold"
                         android:textSize="15dp" />
 
@@ -528,7 +531,7 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:text="READING &amp; VOCAB"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         android:textSize="14dp"
                         android:layout_marginTop="4dp" />
 
@@ -571,7 +574,7 @@
                             android:layout_height="wrap_content"
                             android:text="Opened: "
                             android:textStyle="bold"
-                            android:textColor="@color/black"
+                            android:textColor="@color/text_primary"
                             android:textSize="14dp" />
 
                         <TextView
@@ -579,7 +582,7 @@
                             android:layout_height="wrap_content"
                             android:text="Thứ Ba, 18 tháng 2 2025, 9:00 PM"
                             android:textSize="14dp"
-                            android:textColor="@color/dimgrey" />
+                            android:textColor="@color/text_secondary" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -593,7 +596,7 @@
                             android:layout_height="wrap_content"
                             android:text="Due: "
                             android:textStyle="bold"
-                            android:textColor="@color/black"
+                            android:textColor="@color/text_primary"
                             android:textSize="14dp" />
 
                         <TextView
@@ -601,20 +604,20 @@
                             android:layout_height="wrap_content"
                             android:text="Thứ Năm, 20 tháng 2 2025, 7:30 PM"
                             android:textSize="14dp"
-                            android:textColor="@color/dimgrey" />
+                            android:textColor="@color/text_secondary" />
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/grey"
+                        android:background="@color/divider_color"
                         android:layout_marginVertical="8dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Homework"
-                        android:textColor="@color/dimgrey"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13sp" />
 
                     <TextView
@@ -622,7 +625,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="HW 1.2"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         android:textStyle="bold"
                         android:textSize="15sp" />
 
@@ -649,7 +652,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Forum"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -658,7 +661,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_arrow_drop_down"
-                    app:tint="@color/black" />
+                    app:tint="@color/icon_tint" />
             </LinearLayout>
 
             <androidx.cardview.widget.CardView

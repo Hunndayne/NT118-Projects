@@ -5,7 +5,7 @@
     android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/background_primary"
     tools:context=".ManageCoursesAdminActivity">
 
     <include
@@ -30,7 +30,7 @@
         android:layout_height="74dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@android:color/white"
+        android:background="@color/background_secondary"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:paddingTop="4dp"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:text="@string/back_text"
             android:textSize="13sp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/text_secondary"
             android:fontFamily="@font/nunito_extra_bold" />
 
         <TextView
@@ -67,7 +67,7 @@
             android:layout_marginTop="2dp"
             android:text="Courses management"
             android:fontFamily="@font/nunito_extra_bold"
-            android:textColor="@android:color/black"
+            android:textColor="@color/text_primary"
             android:textSize="32sp"
             android:textStyle="bold" />
 

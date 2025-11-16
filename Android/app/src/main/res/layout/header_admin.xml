@@ -31,7 +31,7 @@
         android:layout_width="1dp"
         android:layout_height="24dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/black" />
+        android:background="@color/divider_color" />
 
     <!-- Light/Dark mode icon -->
     <ImageButton
@@ -41,7 +41,7 @@
         android:background="@android:color/transparent"
         android:src="@drawable/ic_theme"
         android:contentDescription="Toggle Theme"
-        app:tint="@color/dimgrey"
+        app:tint="@color/icon_tint"
         android:layout_marginEnd="2dp"/>
 
     <!-- Notification icon -->
@@ -53,7 +53,7 @@
         android:background="@android:color/transparent"
         android:contentDescription="Notifications"
         android:src="@drawable/ic_notification"
-        app:tint="@color/dimgrey"/>
+        app:tint="@color/icon_tint"/>
 
         <Space
             android:layout_width="0dp"
@@ -71,7 +71,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="Settings"
             android:src="@drawable/ic_setting"
-            app:tint="@color/dimgrey" />
+            app:tint="@color/icon_tint" />
 
         <!-- Avatar -->
         <ImageView
@@ -79,7 +79,7 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:contentDescription="Avatar"
-            app:tint="@color/dimgrey"
+            app:tint="@color/icon_tint"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_account_admin" />
 

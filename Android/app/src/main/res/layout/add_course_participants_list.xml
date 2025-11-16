@@ -5,7 +5,7 @@
     android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
+    android:background="@color/background_primary"
     tools:context=".AvailableUserAdminActivity">
 
     <include
@@ -33,7 +33,7 @@
         android:id="@+id/contentScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#FFFFFF"
+        android:background="@color/background_primary"
         app:layout_constraintTop_toBottomOf="@id/headerAdmin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@color/background_secondary"
             android:padding="16dp">
 
             <LinearLayout
@@ -57,7 +58,7 @@
                 android:layout_marginTop="2dp"
                 android:text="Available User"
                 android:fontFamily="@font/nunito_extra_bold"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 

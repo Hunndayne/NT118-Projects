@@ -8,7 +8,7 @@
     android:layout_gravity="bottom"
     android:orientation="horizontal"
     android:gravity="center"
-    android:background="@android:color/white"
+    android:background="@color/background_secondary"
     android:paddingStart="12dp"
     android:paddingEnd="12dp"
     android:paddingTop="4dp"
@@ -30,7 +30,7 @@
             android:layout_height="26dp"
             android:src="@drawable/ic_home"
             android:contentDescription="Home"
-            app:tint="@color/black" />
+            app:tint="@color/icon_tint" />
 
         <TextView
             android:id="@+id/tvHome"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="Home"
             android:textSize="11sp"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:layout_marginTop="2dp" />
     </LinearLayout>
 
@@ -57,7 +57,7 @@
             android:layout_height="26dp"
             android:src="@drawable/ic_courses"
             android:contentDescription="My Course"
-            app:tint="@color/black" />
+            app:tint="@color/icon_tint" />
 
         <TextView
             android:id="@+id/tvMyCourse"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:text="My Course"
             android:textSize="11sp"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:layout_marginTop="2dp" />
     </LinearLayout>
 
@@ -84,7 +84,7 @@
             android:layout_height="26dp"
             android:src="@drawable/ic_notification"
             android:contentDescription="Notification"
-            app:tint="@color/black" />
+            app:tint="@color/icon_tint" />
 
         <TextView
             android:id="@+id/tvSearch"
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:text="Notification"
             android:textSize="11sp"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:layout_marginTop="2dp" />
     </LinearLayout>
 
@@ -111,7 +111,7 @@
             android:layout_height="26dp"
             android:src="@drawable/ic_menu"
             android:contentDescription="Menu"
-            app:tint="@color/black" />
+            app:tint="@color/icon_tint" />
 
         <TextView
             android:id="@+id/tvMenu"
@@ -119,7 +119,7 @@
             android:layout_height="wrap_content"
             android:text="Menu"
             android:textSize="11sp"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:layout_marginTop="2dp"/>
     </LinearLayout>
 

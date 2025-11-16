@@ -5,8 +5,8 @@
     android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
-    tools:context=".HomeAdminActivity">
+    android:background="@color/background_primary"
+    tools:context=".admin.HomeAdminActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -37,7 +37,7 @@
         android:layout_height="74dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@android:color/white"
+        android:background="@color/background_secondary"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:paddingTop="4dp"
@@ -51,7 +51,7 @@
         android:id="@+id/contentScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#FFFFFF"
+        android:background="@color/background_secondary"
         app:layout_constraintBottom_toTopOf="@id/footerAdmin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
                 android:layout_marginTop="8dp"
                 android:text="Dashboard"
                 android:fontFamily="@font/nunito_extra_bold"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -81,10 +81,10 @@
                 android:layout_marginTop="12dp"
                 android:elevation="0dp"
                 android:outlineProvider="none"
-                app:cardBackgroundColor="@android:color/white"
+                app:cardBackgroundColor="@color/background_card"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="6dp"
-                app:strokeColor="@color/grey"
+                app:strokeColor="@color/card_stroke"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -107,7 +107,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/nunito_extra_bold"
                             android:text="News"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/text_primary"
                             android:textSize="16dp" />
 
                         <ImageView
@@ -116,7 +116,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/ic_arrow_drop_down"
-                            app:tint="@color/black" />
+                            app:tint="@color/icon_tint" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -135,7 +135,8 @@
                             android:layout_width="0dp"
                             android:layout_marginEnd="4dp"
                             android:layout_weight="1"
-                            android:backgroundTint="#A7DAE7">
+                            app:cardBackgroundColor="@color/background_secondary"
+                            app:strokeColor="@color/card_stroke">
 
                             <TextView
                                 style="@style/CourseCardText"
@@ -149,7 +150,8 @@
                             android:layout_width="0dp"
                             android:layout_marginStart="4dp"
                             android:layout_weight="1"
-                            android:backgroundTint="#A7DAE7">
+                            app:cardBackgroundColor="@color/background_secondary"
+                            app:strokeColor="@color/card_stroke">
 
                             <TextView
                                 style="@style/CourseCardText"
@@ -167,10 +169,10 @@
                 android:layout_marginTop="12dp"
                 android:elevation="0dp"
                 android:outlineProvider="none"
-                app:cardBackgroundColor="@android:color/white"
+                app:cardBackgroundColor="@color/background_card"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="6dp"
-                app:strokeColor="@color/grey"
+                app:strokeColor="@color/card_stroke"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -193,7 +195,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/nunito_extra_bold"
                             android:text="Manage Courses"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/text_primary"
                             android:textSize="16dp" />
 
                         <ImageView
@@ -202,7 +204,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/ic_arrow_drop_down"
-                            app:tint="@color/black" />
+                            app:tint="@color/icon_tint" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -221,7 +223,8 @@
                             android:layout_width="0dp"
                             android:layout_marginEnd="4dp"
                             android:layout_weight="1"
-                            android:backgroundTint="#A7DAE7">
+                            app:cardBackgroundColor="@color/background_secondary"
+                            app:strokeColor="@color/card_stroke">
 
                             <TextView
                                 style="@style/CourseCardText"
@@ -235,7 +238,8 @@
                             android:layout_width="0dp"
                             android:layout_marginStart="4dp"
                             android:layout_weight="1"
-                            android:backgroundTint="#A7DAE7">
+                            app:cardBackgroundColor="@color/background_secondary"
+                            app:strokeColor="@color/card_stroke">
 
                             <TextView
                                 style="@style/CourseCardText"
@@ -253,10 +257,10 @@
                 android:layout_marginTop="12dp"
                 android:elevation="0dp"
                 android:outlineProvider="none"
-                app:cardBackgroundColor="@android:color/white"
+                app:cardBackgroundColor="@color/background_card"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="6dp"
-                app:strokeColor="@color/grey"
+                app:strokeColor="@color/card_stroke"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -279,7 +283,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/nunito_extra_bold"
                             android:text="Manage Accounts"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/text_primary"
                             android:textSize="16dp" />
 
                         <ImageView
@@ -288,7 +292,7 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/ic_arrow_drop_down"
-                            app:tint="@color/black" />
+                            app:tint="@color/icon_tint" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -307,7 +311,8 @@
                             android:layout_width="0dp"
                             android:layout_marginEnd="4dp"
                             android:layout_weight="1"
-                            android:backgroundTint="#A7DAE7">
+                            app:cardBackgroundColor="@color/background_secondary"
+                            app:strokeColor="@color/card_stroke">
 
                             <TextView
                                 style="@style/CourseCardText"
@@ -321,7 +326,8 @@
                             android:layout_width="0dp"
                             android:layout_marginStart="4dp"
                             android:layout_weight="1"
-                            android:backgroundTint="#A7DAE7">
+                            app:cardBackgroundColor="@color/background_secondary"
+                            app:strokeColor="@color/card_stroke">
 
                             <TextView
                                 style="@style/CourseCardText"

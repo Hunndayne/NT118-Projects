@@ -20,34 +20,34 @@
         </activity>
 
         <activity
-            android:name=".user.HomeActivity"
+            android:name=".user.HomeUserActivity"
             android:exported="false"/>
         <activity
-            android:name=".user.CourseActivity"
+            android:name=".user.CourseUserActivity"
             android:exported="false"/>
         <activity
-            android:name=".user.MenuActivity"
+            android:name=".user.MenuUserActivity"
             android:exported="false"/>
         <activity
-            android:name=".user.EditInformationActivity"
+            android:name=".user.EditInformationUserActivity"
             android:exported="false"/>
         <activity
-            android:name=".user.ProfileActivity"
+            android:name=".user.ProfileUserActivity"
             android:exported="false"/>
         <activity
-            android:name=".user.NotificationActivity"
+            android:name=".user.NotificationUserActivity"
             android:exported="false"/>
         <activity
-            android:name=".user.ClassActivity"
+            android:name=".user.ClassUserActivity"
             android:exported="false"/>
         <activity
-            android:name=".user.ChangeAvatarActivity"
+            android:name=".user.ChangeAvatarUserActivity"
             android:exported="false"/>
         <activity
             android:name=".user.ChangePasswordActivity"
             android:exported="false"/>
         <activity
-            android:name=".user.SubmitHomeworkActivity"
+            android:name=".user.SubmitHomeworkUserActivity"
             android:exported="false"/>
         <activity
             android:name=".admin.HomeAdminActivity"

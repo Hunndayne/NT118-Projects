@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
+    android:background="@color/background_primary"
     tools:context=".UserAccount_xoadcr">
 
     <include
@@ -29,7 +29,7 @@
             android:layout_height="74dp"
             android:orientation="horizontal"
             android:gravity="center"
-            android:background="@android:color/white"
+            android:background="@color/background_secondary"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:paddingTop="4dp"
@@ -53,7 +53,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp">
+            android:paddingBottom="16dp"
+            android:background="@color/background_secondary">
 
             <TextView
                 android:id="@+id/tvBack"
@@ -64,7 +65,7 @@
                 android:drawablePadding="0dp"
                 android:gravity="center_vertical"
                 android:text="@string/back_text"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="13dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -86,7 +87,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginEnd="12dp"
-                    android:background="@android:color/darker_gray"
+                    android:background="@color/background_card"
                     android:contentDescription="Avatar"
                     android:scaleType="centerCrop" />
 
@@ -100,7 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/user_name"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -109,7 +110,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_student_role"
-                        android:textColor="@android:color/darker_gray"
+                        android:textColor="@color/text_secondary"
                         android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -133,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:text="@string/header_user_account"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/text_primary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 

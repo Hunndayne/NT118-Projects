@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MenuActivity extends BaseActivity {
+public class MenuUserActivity extends BaseUserActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +46,18 @@ public class MenuActivity extends BaseActivity {
                 String selectedItem = (String) parent.getItemAtPosition(position);
 
                 // Hiển thị một thông báo nhanh (Toast)
-                Toast.makeText(MenuActivity.this, "Bạn đã chọn: " + selectedItem, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MenuUserActivity.this, "Bạn đã chọn: " + selectedItem, Toast.LENGTH_SHORT).show();
 
                 // Dùng switch-case để xử lý logic cho từng mục
                 switch (position) {
                     case 0: // Edit Profile
                         // Viết code để mở màn hình chỉnh sửa profile ở đây
-                        Intent intent = new Intent(MenuActivity.this, EditInformationActivity.class);
+                        Intent intent = new Intent(MenuUserActivity.this, EditInformationUserActivity.class);
                         // Khởi chạy Activity mới
                         startActivity(intent);
                         break;
                     case 1: // Change Password
-                        Intent intent1 = new Intent(MenuActivity.this, ChangePasswordActivity.class);
+                        Intent intent1 = new Intent(MenuUserActivity.this, ChangePasswordActivity.class);
                         // Khởi chạy Activity mới
                         startActivity(intent1);
                         break;
@@ -67,12 +67,12 @@ public class MenuActivity extends BaseActivity {
         });
         ImageView imAvatar = findViewById(R.id.imAvatar);
         imAvatar.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuActivity.this, ChangeAvatarActivity.class);
+            Intent intent = new Intent(MenuUserActivity.this, ChangeAvatarUserActivity.class);
             startActivity(intent);
         });
         LinearLayout userInfoLayout = findViewById(R.id.userInfoLayout);
         userInfoLayout.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuActivity.this, ProfileActivity.class);
+            Intent intent = new Intent(MenuUserActivity.this, ProfileUserActivity.class);
             startActivity(intent);
         });
     }
