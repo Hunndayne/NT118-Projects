@@ -6,6 +6,7 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
 app:cardCornerRadius="8dp"
 app:cardElevation="4dp"
+app:cardBackgroundColor="@color/background_card"
 android:layout_marginTop="16dp"
 android:layout_marginBottom="8dp">
 
@@ -13,7 +14,7 @@ android:layout_marginBottom="8dp">
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="15dp"
-    android:background="@color/enggo_grey_100"
+    android:background="@color/background_secondary"
     >
 
     <TextView
@@ -21,7 +22,7 @@ android:layout_marginBottom="8dp">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Assignment 1"
-        android:textColor="@android:color/black"
+        android:textColor="@color/text_primary"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,6 +34,7 @@ android:layout_marginBottom="8dp">
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="From: 26/10/2025"
+        android:textColor="@color/text_secondary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAssignmentName_manageassitem" />
 
@@ -41,6 +43,7 @@ android:layout_marginBottom="8dp">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Due: 26/10/2025"
+        android:textColor="@color/text_secondary"
         android:layout_marginTop="4dp"
         android:layout_marginLeft="20dp"
         app:layout_constraintStart_toEndOf="@+id/tvFromDate_manageassitem"
@@ -51,6 +54,7 @@ android:layout_marginBottom="8dp">
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="Write an Essay about your mom"
+        android:textColor="@color/text_secondary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvFromDate_manageassitem" />
 
@@ -69,13 +73,12 @@ android:layout_marginBottom="8dp">
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:background="@drawable/user_management_button_bg"
-            android:backgroundTint="@color/grey"
             android:paddingStart="16dp"
             android:paddingTop="8dp"
             android:paddingEnd="16dp"
             android:paddingBottom="8dp"
             android:text="Edit"
-            android:textColor="@android:color/black" />
+            android:textColor="@color/text_primary" />
 
         <TextView
             android:id="@+id/btnDelete_manageAssignmentitem"
@@ -83,26 +86,24 @@ android:layout_marginBottom="8dp">
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:background="@drawable/user_management_button_bg"
-            android:backgroundTint="@color/grey"
             android:paddingStart="16dp"
             android:paddingTop="8dp"
             android:paddingEnd="16dp"
             android:paddingBottom="8dp"
             android:text="Delete"
-            android:textColor="@android:color/black" />
+            android:textColor="@color/text_primary" />
         <TextView
             android:id="@+id/btnStatistic_manageAssignmentitem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:background="@drawable/user_management_button_bg"
-            android:backgroundTint="@color/grey"
             android:paddingStart="16dp"
             android:paddingTop="8dp"
             android:paddingEnd="16dp"
             android:paddingBottom="8dp"
             android:text="Statistic"
-            android:textColor="@android:color/black" />
+            android:textColor="@color/text_primary" />
 
     </LinearLayout>
 

@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -19,7 +18,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.Arrays;
 import java.util.List;
 
-public class HomeActivity extends BaseActivity {
+public class HomeUserActivity extends BaseUserActivity {
 
     private static final long AUTO_SCROLL_DELAY_MS = 4000;
 
@@ -41,7 +40,7 @@ public class HomeActivity extends BaseActivity {
         CardView cardCourse2 = findViewById(R.id.cardCourse2);
 
         cardCourse1.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ClassActivity.class);
+            Intent intent = new Intent(this, ClassUserActivity.class);
             startActivity(intent);
         });
 

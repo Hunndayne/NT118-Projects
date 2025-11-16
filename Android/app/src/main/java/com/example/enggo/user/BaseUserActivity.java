@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseUserActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,8 +28,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         btnHome.setOnClickListener(v -> {
             // Không thực hiện hành động nếu đang ở HomeActivity
-            if (!(this instanceof HomeActivity)) {
-                Intent intent = new Intent(this, HomeActivity.class);
+            if (!(this instanceof HomeUserActivity)) {
+                Intent intent = new Intent(this, HomeUserActivity.class);
                 // Xóa các activity khác trên stack để tránh back lại chúng
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
@@ -37,24 +37,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
 
         btnCourse.setOnClickListener(v -> {
-            if (!(this instanceof CourseActivity)) {
-                Intent intent = new Intent(this, CourseActivity.class);
+            if (!(this instanceof CourseUserActivity)) {
+                Intent intent = new Intent(this, CourseUserActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
 
         btnNotification.setOnClickListener(v -> {
-            if (!(this instanceof MenuActivity)) {
-                Intent intent = new Intent(this, NotificationActivity.class);
+            if (!(this instanceof MenuUserActivity)) {
+                Intent intent = new Intent(this, NotificationUserActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
         btnMenu.setOnClickListener(v -> {
             // Tương tự cho ProfileActivity
-            if (!(this instanceof MenuActivity)) {
-                Intent intent = new Intent(this, MenuActivity.class);
+            if (!(this instanceof MenuUserActivity)) {
+                Intent intent = new Intent(this, MenuUserActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }

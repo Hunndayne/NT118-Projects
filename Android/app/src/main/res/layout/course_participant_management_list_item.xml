@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/background_card"
     android:layout_marginTop="16dp"
     android:layout_marginBottom="8dp">
 
@@ -13,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:background="@color/enggo_grey_100"
+        android:background="@color/background_secondary"
         >
 
         <TextView
@@ -21,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nguyễn Văn A"
-            android:textColor="@android:color/black"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="van.a@email.com"
+            android:textColor="@color/text_secondary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvUserName_manageusritem" />
 
@@ -42,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Active"
+            android:textColor="@color/text_secondary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvUserEmail_manageusritem" />
 
@@ -65,8 +68,7 @@
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:text="Remove"
-                android:textColor="@android:color/black"
-                android:backgroundTint="@color/grey"
+                android:textColor="@color/text_primary"
                 />
         </LinearLayout>
 

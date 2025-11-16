@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/background_card"
     android:layout_marginTop="16dp"
     android:layout_marginBottom="8dp">
 
@@ -13,14 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:background="@color/enggo_grey_100">
+        android:background="@color/background_secondary">
 
         <TextView
             android:id="@+id/tvLessonName_manageusritem"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Basic Vietnamese Grammar"
-            android:textColor="@android:color/black"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,14 +41,16 @@
                 android:id="@+id/tvLessonDate_manageusritem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20/05/2024" />
+                android:text="20/05/2024"
+                android:textColor="@color/text_secondary" />
 
             <TextView
                 android:id="@+id/tvLessonPoster_manageusritem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Admin 1" />
+                android:text="Admin 1"
+                android:textColor="@color/text_secondary" />
         </LinearLayout>
 
         <TextView
@@ -56,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="An introduction to the basic grammar rules."
+            android:textColor="@color/text_secondary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dateAndPosterLayout"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -73,13 +77,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/user_management_button_bg"
-                android:backgroundTint="@color/grey"
                 android:paddingStart="16dp"
                 android:paddingTop="8dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"
                 android:text="Edit"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/text_primary" />
 
         </LinearLayout>
 

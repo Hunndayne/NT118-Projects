@@ -3,10 +3,11 @@ import com.example.enggo.R;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View; // Sửa từ TextView
-import android.widget.Button;
-import android.widget.TextView;
-import com.example.enggo.user.HomeActivity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import com.example.enggo.user.HomeUserActivity;
 
 public class HomeAdminActivity extends BaseAdminActivity{
     @Override
@@ -17,27 +18,49 @@ public class HomeAdminActivity extends BaseAdminActivity{
         setupAdminHeader();
         setupAdminFooter();
 
-        // SỬA LỖI:
-        // 1. Đổi kiểu dữ liệu từ TextView -> View (hoặc LinearLayout)
-        // 2. Trỏ tới đúng ID của các Layout
-        View btnManageCourses = findViewById(R.id.layoutAdmin_ManageCourses); // ID đúng là layoutAdmin_ManageCourses
-        View btnManageAccount = findViewById(R.id.layoutAdmin_ManageAccount); // ID đúng là layoutAdmin_ManageAccount
-        View btnNew = findViewById(R.id.btnAdmin_News); // ID này là của LinearLayout, không phải TextView
+        // Setup News section
+        LinearLayout layoutNewsList = findViewById(R.id.layoutAdmin_NewsList);
+        ImageView imgArrowNews = findViewById(R.id.imgArrowAdmin_News);
+        imgArrowNews.setOnClickListener(v -> toggleSection(layoutNewsList, imgArrowNews));
 
+        // Setup Manage Courses section
+        LinearLayout layoutManageCourses = findViewById(R.id.layoutAdmin_ManageCourses);
+        LinearLayout layoutManageCoursesList = findViewById(R.id.layoutAdmin_ManageCoursesList);
+        ImageView imgArrowManageCourses = findViewById(R.id.imgArrowAdmin_ManageCourses);
+        imgArrowManageCourses.setOnClickListener(v -> toggleSection(layoutManageCoursesList, imgArrowManageCourses));
 
-        btnManageCourses.setOnClickListener(v -> {
+        // Click on the whole Manage Courses card to navigate
+        layoutManageCourses.setOnClickListener(v -> {
             Intent intent = new Intent(HomeAdminActivity.this, ManageCoursesAdminActivity.class);
             startActivity(intent);
         });
 
-        btnManageAccount.setOnClickListener(v ->{
+        // Setup Manage Accounts section
+        LinearLayout layoutManageAccount = findViewById(R.id.layoutAdmin_ManageAccount);
+        LinearLayout layoutManageAccountList = findViewById(R.id.layoutAdmin_ManageAccountList);
+        ImageView imgArrowManageAccount = findViewById(R.id.imgArrowAdmin_ManageAccount);
+        imgArrowManageAccount.setOnClickListener(v -> toggleSection(layoutManageAccountList, imgArrowManageAccount));
+
+        // Click on the whole Manage Accounts card to navigate
+        layoutManageAccount.setOnClickListener(v -> {
             Intent intent = new Intent(HomeAdminActivity.this, ManageAccountAdminActivity.class);
             startActivity(intent);
         });
 
-        btnNew.setOnClickListener(v -> {
-            Intent intent = new Intent(this, HomeActivity.class); // Giả định HomeActivity là đúng
-            startActivity(intent);
-        });
+        // Initially show all sections
+        layoutNewsList.setVisibility(View.VISIBLE);
+        imgArrowNews.setRotation(180f);
+
+        layoutManageCoursesList.setVisibility(View.VISIBLE);
+        imgArrowManageCourses.setRotation(180f);
+
+        layoutManageAccountList.setVisibility(View.VISIBLE);
+        imgArrowManageAccount.setRotation(180f);
+    }
+
+    private void toggleSection(View content, ImageView arrow) {
+        boolean isVisible = content.getVisibility() == View.VISIBLE;
+        content.setVisibility(isVisible ? View.GONE : View.VISIBLE);
+        arrow.animate().rotation(isVisible ? 0f : 180f).setDuration(300).start();
     }
 }

@@ -6,8 +6,8 @@
     android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
-    tools:context=".CourseActivity">
+    android:background="@color/background_primary"
+    tools:context=".user.CourseUserActivity">
 
     <include
         android:id="@+id/headerStudent"
@@ -32,7 +32,7 @@
         android:id="@+id/contentScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@android:color/white"
+        android:background="@color/background_secondary"
         app:layout_constraintTop_toBottomOf="@id/headerStudent"
         app:layout_constraintBottom_toTopOf="@id/footerStudent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/back_text"
                 android:textSize="13dp"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:fontFamily="@font/nunito_extra_bold"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -63,7 +63,7 @@
                 android:layout_marginTop="8dp"
                 android:text="MY COURSE"
                 android:textAllCaps="true"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="32dp"
                 android:textStyle="bold"
                 android:fontFamily="@font/nunito_extra_bold" />
@@ -78,9 +78,9 @@
                 android:foreground="?attr/selectableItemBackground"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
-                app:strokeColor="@android:color/darker_gray"
+                app:strokeColor="@color/card_stroke"
                 app:strokeWidth="1dp"
-                app:cardBackgroundColor="#F5F5F5">
+                app:cardBackgroundColor="@color/background_card">
 
                 <TextView
                     android:id="@+id/tvTimeline"
@@ -91,9 +91,10 @@
                     android:gravity="center_vertical"
                     android:text="Next 6 months"
                     android:textSize="13dp"
-                    android:textColor="@android:color/black"
+                        android:textColor="@color/text_primary"
                     android:drawableEnd="@drawable/ic_arrow_drop_down"
-                    android:drawablePadding="8dp" />
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/icon_tint" />
             </com.google.android.material.card.MaterialCardView>
 
 
@@ -106,14 +107,13 @@
                 android:layout_marginTop="12dp"
                 android:hint="Search courses"
                 app:boxBackgroundMode="filled"
-                app:boxBackgroundColor="#F5F5F5"
+                app:boxBackgroundColor="@color/background_card"
                 app:boxCornerRadiusTopStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
                 app:boxCornerRadiusBottomStart="12dp"
                 app:boxCornerRadiusBottomEnd="12dp"
                 app:startIconDrawable="@drawable/ic_search_24"
-                app:startIconTint="@color/grey"
-                app:hintTextColor="@color/grey">
+                app:startIconTint="@color/icon_tint">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtSearch"
@@ -125,7 +125,8 @@
                     android:inputType="text"
                     android:imeOptions="actionSearch"
                     android:maxLines="1"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_secondary" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -135,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Recently accessed courses"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="16dp"
                 android:fontFamily="@font/nunito_extra_bold" />
 
@@ -154,9 +155,11 @@
                     android:layout_height="112dp"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="#a7dae7"
+                    app:cardBackgroundColor="@color/background_card"
                     app:cardCornerRadius="8dp"
-                    app:cardUseCompatPadding="true">
+                    app:cardUseCompatPadding="true"
+                    app:strokeColor="@color/card_stroke"
+                    app:strokeWidth="1dp">
 
                     <LinearLayout
                         android:id="@+id/card1Content"
@@ -172,7 +175,7 @@
                             android:text="TOEIC READING LISTENING"
                             android:textStyle="bold"
                             android:textSize="12dp"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@color/text_primary" />
 
                         <TextView
                             android:id="@+id/tvCourse1Code"
@@ -181,7 +184,7 @@
                             android:text="TA15  3GD"
                             android:textStyle="bold"
                             android:textSize="12dp"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@color/text_primary" />
 
                         <TextView
                             android:id="@+id/tvCourse1Tag"
@@ -189,7 +192,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:text="Toeic"
-                            android:textSize="12dp" />
+                            android:textSize="12dp"
+                            android:textColor="@color/text_secondary" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -199,9 +203,11 @@
                     android:layout_height="112dp"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="#a7dae7"
+                    app:cardBackgroundColor="@color/background_card"
                     app:cardCornerRadius="8dp"
-                    app:cardUseCompatPadding="true">
+                    app:cardUseCompatPadding="true"
+                    app:strokeColor="@color/card_stroke"
+                    app:strokeWidth="1dp">
 
                     <LinearLayout
                         android:id="@+id/card2Content"
@@ -217,7 +223,7 @@
                             android:text="TOEIC SPEAKING WRITING"
                             android:textStyle="bold"
                             android:textSize="12dp"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@color/text_primary" />
 
                         <TextView
                             android:id="@+id/tvCourse2Code"
@@ -226,7 +232,7 @@
                             android:text="TB115"
                             android:textStyle="bold"
                             android:textSize="12dp"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@color/text_primary" />
 
                         <TextView
                             android:id="@+id/tvCourse2Tag"
@@ -234,7 +240,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
                             android:text="Toeic"
-                            android:textSize="12dp" />
+                            android:textSize="12dp"
+                            android:textColor="@color/text_secondary" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
@@ -250,7 +257,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Calendar"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp"
                     android:fontFamily="@font/nunito_extra_bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -265,9 +272,9 @@
                     android:layout_marginEnd="8dp"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="0dp"
-                    app:strokeColor="@android:color/darker_gray"
+                    app:strokeColor="@color/card_stroke"
                     app:strokeWidth="1dp"
-                    app:cardBackgroundColor="#F5F5F5"
+                    app:cardBackgroundColor="@color/background_card"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent">
@@ -281,9 +288,10 @@
                         android:gravity="center_vertical"
                         android:text="Shortened mode"
                         android:textSize="12dp"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/text_primary"
                         android:drawableEnd="@drawable/ic_arrow_drop_down"
-                        android:drawablePadding="8dp" />
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/icon_tint" />
                 </com.google.android.material.card.MaterialCardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

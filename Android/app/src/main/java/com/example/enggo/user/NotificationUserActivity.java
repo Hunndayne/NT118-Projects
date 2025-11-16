@@ -3,7 +3,7 @@ import com.example.enggo.R;
 
 import android.os.Bundle;
 
-public class NotificationActivity extends BaseActivity {
+public class NotificationUserActivity extends BaseUserActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

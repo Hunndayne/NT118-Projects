@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goToUserHome() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, HomeUserActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

@@ -1,4 +1,5 @@
 <resources>
+    <!-- Dark mode specific styles -->
     <style name="CourseCard" parent="Widget.MaterialComponents.CardView">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">150dp</item>
@@ -25,30 +26,5 @@
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/nunito_extra_bold</item>
-    </style>
-    <style name="Widget.App.ExposedDropdownMenu.Filled" parent="Widget.Material3.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu">
-        <item name="boxBackgroundColor">#EFEFEF</item>
-
-        <item name="boxStrokeWidth">0dp</item>
-        <item name="boxStrokeWidthFocused">0dp</item>
-
-        <item name="boxCornerRadiusTopStart">12dp</item>
-        <item name="boxCornerRadiusTopEnd">12dp</item>
-        <item name="boxCornerRadiusBottomStart">12dp</item>
-        <item name="boxCornerRadiusBottomEnd">12dp</item>
-    </style>
-    <style name="Widget.App.TextInputLayout.Search" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="startIconMinSize">48dp</item>
-        <item name="startIconScaleType">centerInside</item>
-    </style>
-
-    <style name="OtpEditTextStyle" parent="Widget.AppCompat.EditText">
-        <item name="android:layout_width">48dp</item>
-        <item name="android:layout_height">48dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:inputType">number</item>
-        <item name="android:maxLength">1</item>
-        <item name="android:textSize">20sp</item>
     </style>
 </resources>

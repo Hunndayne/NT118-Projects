@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0">
+    android:background="@color/background_primary">
 
     <include
         android:id="@+id/headerStudent"
@@ -48,7 +48,7 @@
                 android:paddingVertical="12dp"
                 android:paddingHorizontal="16dp"
                 android:gravity="center_vertical"
-                android:background="@android:color/white">
+                android:background="@color/background_secondary">
 
                 <TextView
                     android:id="@+id/tvBack"
@@ -57,7 +57,7 @@
                     android:fontFamily="@font/nunito_extra_bold"
                     android:gravity="center_vertical"
                     android:text="@string/back_text"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/text_primary"
                     android:textSize="13sp" />
 
                 <TextView
@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Home - My courses - TA143GD - Homework - HW1.1"
-                    android:textColor="#666666"
+                    android:textColor="@color/text_secondary"
                     android:textSize="12sp"
                     android:layout_marginStart="16dp"
                     android:singleLine="true"
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="2dp"
-                    app:cardBackgroundColor="@android:color/white">
+                    app:cardBackgroundColor="@color/background_card">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -97,7 +97,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="HW 1.1"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/text_primary"
                             android:textSize="24sp"
                             android:textStyle="bold" />
 
@@ -105,7 +105,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:background="#F5F5F5"
+                            android:background="@color/background_secondary"
                             android:padding="12dp"
                             android:layout_marginTop="16dp">
 
@@ -118,14 +118,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Opened:"
-                                    android:textColor="#555555"
+                                    android:textColor="@color/text_secondary"
                                     android:textSize="14sp"
                                     android:textStyle="bold"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="12:00 AM, Sep 1, 2025"
-                                    android:textColor="#333333"
+                                    android:textColor="@color/text_primary"
                                     android:textSize="14sp" />
                             </LinearLayout>
 
@@ -139,14 +139,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Due:"
-                                    android:textColor="#555555"
+                                    android:textColor="@color/text_secondary"
                                     android:textSize="14sp"
                                     android:textStyle="bold"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="12:00 AM, Sep 3, 2025"
-                                    android:textColor="#333333"
+                                    android:textColor="@color/text_primary"
                                     android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>
@@ -155,7 +155,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Please complete the following assignments"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/text_primary"
                             android:textSize="16sp"
                             android:layout_marginTop="16dp" />
 
@@ -163,7 +163,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="READING &amp; VOCAB"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/text_primary"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:layout_marginTop="12dp" />
@@ -172,17 +172,17 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="• Quizizz Test 1 RL via: https://quizizz.com/join?gc=93065950. Remember to type your full name."
-                            android:textColor="#333333"
+                            android:textColor="@color/text_primary"
                             android:textSize="14sp"
                             android:layout_marginTop="8dp"
                             android:autoLink="web"
-                            android:textColorLink="#007AFF"/>
+                            android:textColorLink="@color/bluelogo"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="• Reading Test 1 (questions 101-146)"
-                            android:textColor="#333333"
+                            android:textColor="@color/text_primary"
                             android:textSize="14sp"
                             android:layout_marginTop="4dp" />
 
@@ -190,7 +190,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Instructions: Take photos of your completed work and upload them to a Google Drive folder. Set the folder's sharing settings to 'Anyon..."
-                            android:textColor="#333333"
+                            android:textColor="@color/text_primary"
                             android:textSize="14sp"
                             android:layout_marginTop="12dp"
                             android:lineSpacingExtra="4dp"/>
@@ -199,7 +199,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Submission status"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/text_primary"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:layout_marginTop="24dp" />
@@ -210,19 +210,19 @@
                             android:columnCount="2"
                             android:rowCount="5"
                             android:layout_marginTop="8dp"
-                            android:background="#F9F9F9"
+                            android:background="@color/background_secondary"
                             android:padding="8dp">
 
-                            <TextView android:text="Submission status" android:layout_gravity="fill_horizontal" android:padding="8dp" android:textStyle="bold" android:textColor="#555"/>
-                            <TextView android:layout_gravity="fill_horizontal" android:padding="8dp" android:textColor="#333"/>
-                            <TextView android:text="Scoring status" android:layout_gravity="fill_horizontal" android:padding="8dp" android:textStyle="bold" android:textColor="#555"/>
-                            <TextView android:layout_gravity="fill_horizontal" android:padding="8dp" android:textColor="#333"/>
-                            <TextView android:text="Time Remaining" android:layout_gravity="fill_horizontal" android:padding="8dp" android:textStyle="bold" android:textColor="#555"/>
-                            <TextView android:layout_gravity="fill_horizontal" android:padding="8dp" android:textColor="#333"/>
-                            <TextView android:text="Last edited" android:layout_gravity="fill_horizontal" android:padding="8dp" android:textStyle="bold" android:textColor="#555"/>
-                            <TextView android:layout_gravity="fill_horizontal" android:padding="8dp" android:textColor="#333"/>
-                            <TextView android:text="Post comments" android:layout_gravity="fill_horizontal" android:padding="8dp" android:textStyle="bold" android:textColor="#555"/>
-                            <TextView android:layout_gravity="fill_horizontal" android:padding="8dp" android:textColor="#333"/>
+                            <TextView android:text="Submission status" android:layout_gravity="fill_horizontal" android:padding="8dp" android:textStyle="bold" android:textColor="@color/text_secondary"/>
+                            <TextView android:layout_gravity="fill_horizontal" android:padding="8dp" android:textColor="@color/text_primary"/>
+                            <TextView android:text="Scoring status" android:layout_gravity="fill_horizontal" android:padding="8dp" android:textStyle="bold" android:textColor="@color/text_secondary"/>
+                            <TextView android:layout_gravity="fill_horizontal" android:padding="8dp" android:textColor="@color/text_primary"/>
+                            <TextView android:text="Time Remaining" android:layout_gravity="fill_horizontal" android:padding="8dp" android:textStyle="bold" android:textColor="@color/text_secondary"/>
+                            <TextView android:layout_gravity="fill_horizontal" android:padding="8dp" android:textColor="@color/text_primary"/>
+                            <TextView android:text="Last edited" android:layout_gravity="fill_horizontal" android:padding="8dp" android:textStyle="bold" android:textColor="@color/text_secondary"/>
+                            <TextView android:layout_gravity="fill_horizontal" android:padding="8dp" android:textColor="@color/text_primary"/>
+                            <TextView android:text="Post comments" android:layout_gravity="fill_horizontal" android:padding="8dp" android:textStyle="bold" android:textColor="@color/text_secondary"/>
+                            <TextView android:layout_gravity="fill_horizontal" android:padding="8dp" android:textColor="@color/text_primary"/>
 
                         </GridLayout>
 
@@ -230,7 +230,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Add submission"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/text_primary"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:layout_marginTop="24dp" />
@@ -247,13 +247,13 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@android:drawable/ic_menu_upload"
-                            app:tint="#888888" />
+                            app:tint="@color/icon_tint" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="You can drag and drop files here to add them."
-                                android:textColor="#555555"
+                                android:textColor="@color/text_secondary"
                                 android:textSize="14sp"
                                 android:layout_marginTop="12dp"
                                 android:gravity="center"/>
@@ -263,7 +263,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Maximum file size: 50 MB, maximum number of files: 20"
-                            android:textColor="#777777"
+                            android:textColor="@color/text_secondary"
                             android:textSize="12sp"
                             android:layout_marginTop="8dp"
                             android:layout_gravity="center_horizontal"/>
@@ -291,10 +291,9 @@
                                 android:layout_width="140dp"
                                 android:layout_height="wrap_content"
                                 android:text="Remove"
-                                android:background="@drawable/button"
-                                android:textColor="#FF0000"
+                                android:background="@drawable/user_management_button_bg"
+                                android:textColor="@color/text_primary"
                                 android:textSize="12dp"
-                                android:backgroundTint="@color/white"
                                 android:layout_marginStart="26dp"/>
                         </LinearLayout>
 

@@ -5,7 +5,7 @@
     android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
+    android:background="@color/background_primary"
     tools:context=".EditCourseAdminActivity">
 
     <include
@@ -16,7 +16,6 @@
         android:paddingHorizontal="12dp"
         android:elevation="4dp"
         android:layout_marginTop="34dp"
-        android:background="@drawable/bg_header"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +29,7 @@
         android:layout_height="74dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@android:color/white"
+        android:background="@color/background_secondary"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:paddingTop="4dp"
@@ -44,7 +43,7 @@
         android:id="@+id/contentScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#FFFFFF"
+        android:background="@color/background_primary"
         app:layout_constraintBottom_toTopOf="@id/footerAdmin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@color/background_secondary"
             android:padding="16dp">
 
 
@@ -64,7 +64,7 @@
                 android:layout_marginTop="2dp"
                 android:text="Edit course"
                 android:fontFamily="@font/nunito_extra_bold"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -81,6 +81,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="Title"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp" />
 
                 <EditText
@@ -108,6 +109,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="Class code"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp" />
                 <EditText
                     android:id="@+id/etClassCode"
@@ -155,13 +157,12 @@
                     android:id="@+id/buttonCancelCourse"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:background="@drawable/button"
+                    android:background="@drawable/user_management_button_bg"
                     android:textAllCaps="false"
                     android:text="Cancel"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_primary"
                     android:textSize="12sp"
                     android:layout_marginEnd="5dp"
-                    android:backgroundTint="@color/enggo_grey_300"
                     />
 
                 <android.widget.Button

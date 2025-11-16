@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F0"
+    android:background="@color/background_primary"
     tools:context=".UserAccount_xoadcr">
 
     <include
@@ -29,7 +29,7 @@
         android:layout_height="74dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@android:color/white"
+        android:background="@color/background_secondary"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:paddingTop="4dp"
@@ -44,6 +44,7 @@
         android:layout_height="0dp"
         android:paddingHorizontal="16dp"
         android:paddingTop="8dp"
+        android:background="@color/background_primary"
         app:layout_constraintBottom_toTopOf="@id/footerStudent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -54,7 +55,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp">
+            android:paddingBottom="16dp"
+            android:background="@color/background_secondary">
 
             <TextView
                 android:id="@+id/tvBack"
@@ -64,7 +66,7 @@
                 android:fontFamily="@font/nunito_extra_bold"
                 android:gravity="center_vertical"
                 android:text="@string/back_text"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -100,7 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/user_name"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -109,7 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_student_role"
-                        android:textColor="@android:color/darker_gray"
+                        android:textColor="@color/text_secondary"
                         android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -135,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extra_bold"
                         android:text="@string/label_first_name"
-
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
                     <EditText
@@ -160,7 +162,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extra_bold"
                         android:text="@string/label_last_name"
-
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
                     <EditText
@@ -185,7 +187,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extra_bold"
                         android:text="@string/label_email_address"
-
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
                     <EditText
@@ -211,7 +213,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extra_bold"
                         android:text="@string/label_email_visibility"
-
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
                     <EditText
@@ -236,6 +238,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extra_bold"
                         android:text="@string/label_city_town"
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
                     <EditText
@@ -261,6 +264,7 @@
                         android:fontFamily="@font/nunito_extra_bold"
 
                         android:text="@string/label_select_country"
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
                     <EditText
@@ -285,7 +289,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extra_bold"
                         android:text="@string/label_timezone"
-
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
                     <EditText
@@ -311,7 +315,7 @@
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/nunito_extra_bold"
                         android:text="@string/label_description"
-
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
                     <EditText
@@ -339,7 +343,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extra_bold"
                         android:text="@string/label_interests"
-
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
                     <EditText
@@ -364,7 +368,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_extra_bold"
                         android:text="@string/label_phone_number"
-
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
                     <EditText
@@ -390,6 +394,7 @@
                     android:paddingHorizontal="12dp"
                     android:text="@string/button_update_profile"
                     android:textAllCaps="false"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     app:backgroundTint="@null" />
 
