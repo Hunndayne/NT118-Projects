@@ -135,13 +135,13 @@
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="Attachment File"
                     android:textSize="14sp" />
-                <Button
+                <android.widget.Button
                     android:id="@+id/buttonAddAttachment_Assignment_admin"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:background="@drawable/user_management_button_bg"
+                    android:background="@drawable/button"
+                    android:textColor="@color/white"
                     android:text="Upload a file"
-                    android:textColor="@color/text_primary"
                     android:textSize="10sp"
                     />
             </LinearLayout>
@@ -240,18 +240,19 @@
 
                 android:layout_marginTop="5dp"
                 >
-                <Button
+                <android.widget.Button
                     android:id="@+id/buttonCancelAddAssignment_admin"
                     android:layout_width="wrap_content"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_height="40dp"
-                    android:background="@drawable/user_management_button_bg"
                     android:text="Cancel"
                     android:textColor="@color/text_primary"
+                    android:backgroundTint="@color/enggo_grey_100"
                     android:textSize="10sp"
                     android:layout_marginEnd="5dp"
                     />
 
-                <Button
+                <android.widget.Button
                     android:id="@+id/buttonCreateAssignment_admin"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
