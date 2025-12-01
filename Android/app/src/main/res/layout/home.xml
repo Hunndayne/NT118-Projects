@@ -132,12 +132,12 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <!-- Hàng tiêu đề và mũi tên -->
                     <LinearLayout
                         android:id="@+id/headerMyCourses"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
 
                         <TextView
                             android:id="@+id/tvMyCourses"
@@ -158,45 +158,61 @@
                             app:tint="@color/icon_tint" />
                     </LinearLayout>
 
-                    <!-- Danh sách khóa học (ẩn ban đầu) -->
-                    <LinearLayout
-                        android:id="@+id/layoutCourseList"
+                    <HorizontalScrollView
+                        android:id="@+id/scrollCourses"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        android:weightSum="2">
+                        android:scrollbars="none"
+                        android:overScrollMode="never">
 
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cardCourse1"
-                            style="@style/CourseCard"
-                            android:layout_width="0dp"
-                            android:layout_marginEnd="4dp"
-                            android:layout_weight="1"
-                            android:backgroundTint="#A7DAE7">
+                        <LinearLayout
+                            android:id="@+id/layoutCourseList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/CourseCardText"
-                                android:text="TOEIC READING LISTENING TA153GD"
-                                android:textSize="16sp" />
-                        </androidx.cardview.widget.CardView>
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cardCourse1"
+                                style="@style/CourseCard"
+                                android:layout_width="160dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:backgroundTint="#A7DAE7">
+                                <TextView
+                                    style="@style/CourseCardText"
+                                    android:text="TOEIC READING LISTENING TA153GD"
+                                    android:textSize="16sp" />
+                            </androidx.cardview.widget.CardView>
 
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cardCourse2"
-                            style="@style/CourseCard"
-                            android:layout_width="0dp"
-                            android:layout_marginStart="4dp"
-                            android:layout_weight="1"
-                            android:backgroundTint="#A7DAE7">
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cardCourse2"
+                                style="@style/CourseCard"
+                                android:layout_width="160dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:backgroundTint="#A7DAE7">
 
-                            <TextView
-                                style="@style/CourseCardText"
-                                android:text="TOEIC SPEAKING WRITING TB115"
-                                android:textSize="16sp" />
-                        </androidx.cardview.widget.CardView>
-                    </LinearLayout>
+                                <TextView
+                                    style="@style/CourseCardText"
+                                    android:text="TOEIC SPEAKING WRITING TB115"
+                                    android:textSize="16sp" />
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cardCourse3"
+                                style="@style/CourseCard"
+                                android:layout_width="160dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:backgroundTint="#A7DAE7">
+
+                                <TextView
+                                    style="@style/CourseCardText"
+                                    android:text="IELTS BASIC COURSE 2024"
+                                    android:textSize="16sp" />
+                            </androidx.cardview.widget.CardView>
+                        </LinearLayout>
+                    </HorizontalScrollView>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

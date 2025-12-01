@@ -166,7 +166,7 @@
                 android:id="@+id/cardAdmin_ManageCourses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:elevation="0dp"
                 android:outlineProvider="none"
                 app:cardBackgroundColor="@color/background_card"
@@ -180,14 +180,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
-
+                    android:padding="12dp">
                     <LinearLayout
                         android:id="@+id/headerAdmin_ManageCourses"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
                         <TextView
                             android:id="@+id/tvAdmin_ManageCourses"
                             android:layout_width="0dp"
@@ -211,41 +210,115 @@
                         android:id="@+id/layoutAdmin_ManageCoursesList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        android:weightSum="2">
+                        android:orientation="vertical"
+                        android:visibility="visible">
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardAdmin_Course1"
-                            style="@style/CourseCard"
-                            android:layout_width="0dp"
-                            android:layout_marginEnd="4dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
                             app:cardBackgroundColor="@color/background_secondary"
-                            app:strokeColor="@color/card_stroke">
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/card_stroke"
+                            app:strokeWidth="1dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackground">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="8dp"
+                                android:gravity="center_vertical">
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
-                            <TextView
-                                style="@style/CourseCardText"
-                                android:text="[TA143GD] MID TERM"
-                                android:textSize="16sp" />
+                                    <TextView
+                                        android:text="[TA153GD] TOEIC R&amp;L"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/text_primary"
+                                        android:maxLines="1"
+                                        android:ellipsize="end"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" />
+
+                                    <TextView
+                                        android:text="Toiec • 45 Students"
+                                        android:textSize="12sp"
+                                        android:textColor="#808080"
+                                        android:layout_marginTop="2dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_edit"
+                                    app:tint="@color/icon_tint" />
+                            </LinearLayout>
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardAdmin_Course2"
-                            style="@style/CourseCard"
-                            android:layout_width="0dp"
-                            android:layout_marginStart="4dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
                             app:cardBackgroundColor="@color/background_secondary"
-                            app:strokeColor="@color/card_stroke">
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/card_stroke"
+                            app:strokeWidth="1dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackground">
 
-                            <TextView
-                                style="@style/CourseCardText"
-                                android:text="TOEIC SPEAKING WRITING TB115"
-                                android:textSize="16sp" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="8dp"
+                                android:gravity="center_vertical">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:text="[TB115] TOEIC S&amp;W"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/text_primary"
+                                        android:maxLines="1"
+                                        android:ellipsize="end"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" />
+
+                                    <TextView
+                                        android:text="Toiec • 30 Students"
+                                        android:textSize="12sp"
+                                        android:textColor="#808080"
+                                        android:layout_marginTop="2dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_edit"
+                                    app:tint="@color/icon_tint" />
+                            </LinearLayout>
                         </androidx.cardview.widget.CardView>
+
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -268,13 +341,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
-
+                    android:padding="12dp">
                     <LinearLayout
                         android:id="@+id/headerAdmin_ManageAccount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
 
                         <TextView
                             android:id="@+id/tvAdmin_ManageAccount"
@@ -299,44 +372,151 @@
                         android:id="@+id/layoutAdmin_ManageAccountList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        android:weightSum="2">
+                        android:orientation="vertical"
+                        android:visibility="visible">
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardAdmin_Account1"
-                            style="@style/CourseCard"
-                            android:layout_width="0dp"
-                            android:layout_marginEnd="4dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
                             app:cardBackgroundColor="@color/background_secondary"
-                            app:strokeColor="@color/card_stroke">
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/card_stroke"
+                            app:strokeWidth="1dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackground">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="8dp"
+                                android:gravity="center_vertical">
 
-                            <TextView
-                                style="@style/CourseCardText"
-                                android:text="Trần Thanh Hùng"
-                                android:textSize="16sp" />
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardBackgroundColor="#E0F7FA"
+                                    app:cardElevation="0dp">
+                                    <TextView
+                                        android:text="H"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold"
+                                        android:textColor="#006064"
+                                        android:gravity="center"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"/>
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="12dp">
+
+                                    <TextView
+                                        android:text="Trần Thanh Hùng"
+                                        android:textSize="15sp"
+                                        android:textColor="@color/text_primary"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" />
+
+                                    <TextView
+                                        android:text="SV001 • hungtt@gmail.com"
+                                        android:textSize="12sp"
+                                        android:textColor="#808080"
+                                        android:layout_marginTop="2dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxLines="1"
+                                        android:ellipsize="end"/>
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_edit"
+                                    app:tint="@color/icon_tint" />
+                            </LinearLayout>
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardAdmin_Account2"
-                            style="@style/CourseCard"
-                            android:layout_width="0dp"
-                            android:layout_marginStart="4dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
                             app:cardBackgroundColor="@color/background_secondary"
-                            app:strokeColor="@color/card_stroke">
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp"
+                            app:strokeColor="@color/card_stroke"
+                            app:strokeWidth="1dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?attr/selectableItemBackground">
 
-                            <TextView
-                                style="@style/CourseCardText"
-                                android:text="Nguyễn Tài Quang"
-                                android:textSize="16sp" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="8dp"
+                                android:gravity="center_vertical">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardBackgroundColor="#F3E5F5"
+                                    app:cardElevation="0dp">
+                                    <TextView
+                                        android:text="Q"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold"
+                                        android:textColor="#4A148C"
+                                        android:gravity="center"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"/>
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="12dp">
+
+                                    <TextView
+                                        android:text="Nguyễn Tài Quang"
+                                        android:textSize="15sp"
+                                        android:textColor="@color/text_primary"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" />
+
+                                    <TextView
+                                        android:text="SV002 • quangnt@gmail.com"
+                                        android:textSize="12sp"
+                                        android:textColor="#808080"
+                                        android:layout_marginTop="2dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxLines="1"
+                                        android:ellipsize="end"/>
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/ic_edit"
+                                    app:tint="@color/icon_tint" />
+                            </LinearLayout>
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
     </ScrollView>
 
