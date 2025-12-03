@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class ForgetPasswordActivity extends AppCompatActivity {
@@ -32,6 +33,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
         btnSendEmail = findViewById(R.id.btnSendEmail);
         btnResetPassword = findViewById(R.id.btnResetPassword);
+
 
         btnSendEmail.setOnClickListener(new View.OnClickListener() {
             @Override

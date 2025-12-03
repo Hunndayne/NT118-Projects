@@ -42,7 +42,9 @@ public class LoginActivity extends AppCompatActivity {
         dao = new Database.Dao(this);
 
         btnLogin.setOnClickListener(v -> {
-            loginUser();
+            //loginUser();
+            Intent intent = new Intent(LoginActivity.this, HomeAdminActivity.class);
+            startActivity(intent);
         });
 
         tvForgetPassword.setOnClickListener(v -> {

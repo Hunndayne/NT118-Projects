@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.example.enggo.user.HomeUserActivity;
 
 public class HomeAdminActivity extends BaseAdminActivity{
+    ImageView btnEdit1, btnEdit2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +46,26 @@ public class HomeAdminActivity extends BaseAdminActivity{
         layoutManageAccount.setOnClickListener(v -> {
             Intent intent = new Intent(HomeAdminActivity.this, ManageAccountAdminActivity.class);
             startActivity(intent);
+        });
+
+        // Initialize the buttons
+        btnEdit1 = findViewById(R.id.btnEdit1);
+        btnEdit2 = findViewById(R.id.btnEdit2);
+
+        // Set click listeners for the buttons
+        btnEdit1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeAdminActivity.this, EditUserAdminActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnEdit2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeAdminActivity.this, EditUserAdminActivity.class);
+                startActivity(intent);
+            }
         });
 
         // Initially show all sections

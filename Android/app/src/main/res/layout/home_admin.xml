@@ -437,6 +437,7 @@
                                 </LinearLayout>
 
                                 <ImageView
+                                    android:id="@+id/btnEdit1"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:src="@drawable/ic_edit"
@@ -507,6 +508,7 @@
                                 </LinearLayout>
 
                                 <ImageView
+                                    android:id="@+id/btnEdit2"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:src="@drawable/ic_edit"
