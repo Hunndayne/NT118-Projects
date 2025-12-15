@@ -37,4 +37,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("SELECT u FROM User u WHERE u.active = true AND u.id NOT IN (" +
 			"SELECT s.id FROM Course c JOIN c.students s WHERE c.id = :courseId)")
 	List<User> findActiveUsersNotInCourse(@Param("courseId") Long courseId);
+    @Query("SELECT u FROM User u WHERE u.admin = false AND u.active = true")
+    List<User> findAllStudents();
 }

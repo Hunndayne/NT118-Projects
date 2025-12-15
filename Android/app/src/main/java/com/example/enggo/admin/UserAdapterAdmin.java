@@ -40,19 +40,17 @@ public class UserAdapterAdmin extends RecyclerView.Adapter<UserAdapterAdmin.User
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        // 3. Lấy data của user tại vị trí `position`
         UserAdmin user = userList.get(position);
 
-        // 4. Gán data lên View
-        holder.tvUserName.setText(user.getName());
-        holder.tvUserEmail.setText(user.getEmail());
-        holder.tvUserStatus.setText(user.getStatus());
+        holder.tvUserName.setText(user.getFullName());
+        holder.tvUserEmail.setText(user.getEmailAddress());
+        holder.tvUserStatus.setText(user.getStatusText());
 
-        // 5. Gán sự kiện click vào các nút (TextViews)
         holder.btnEdit.setOnClickListener(v -> listener.onEditClick(user));
         holder.btnDelete.setOnClickListener(v -> listener.onDeleteClick(user));
         holder.btnLock.setOnClickListener(v -> listener.onLockClick(user));
     }
+
 
     @Override
     public int getItemCount() {

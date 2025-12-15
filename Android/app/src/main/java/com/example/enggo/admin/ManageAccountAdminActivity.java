@@ -1,5 +1,7 @@
 package com.example.enggo.admin;
 import com.example.enggo.R;
+import com.example.enggo.api.ApiClient;
+import com.example.enggo.api.ApiService;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +13,10 @@ import androidx.recyclerview.widget.RecyclerView; // Thêm
 
 import java.util.ArrayList; // Thêm
 import java.util.List; // Thêm
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 // 1. Implement interface của Adapter
 public class ManageAccountAdminActivity extends BaseAdminActivity implements UserAdapterAdmin.OnUserActionsListener {
@@ -48,20 +54,36 @@ public class ManageAccountAdminActivity extends BaseAdminActivity implements Use
         recyclerViewUsers = findViewById(R.id.recyclerViewUsers);
         userList = new ArrayList<>();
 
-        // --- Đây là data giả (mock data) để test ---
-        // Sau này bạn sẽ thay bằng data lấy từ API/Database
-        userList.add(new UserAdmin("Nguyễn Văn A", "van.a@email.com", "Active"));
-        userList.add(new UserAdmin("Trần Thị B", "thi.b@email.com", "Locked"));
-        userList.add(new UserAdmin("Lê Văn C", "van.c@email.com", "Active"));
-        // ------------------------------------------
-
-        // 4. Khởi tạo Adapter và gán vào RecyclerView
-        // `this` (cái thứ 3) là để lắng nghe sự kiện click,
-        // vì Activity này đã "implements OnUserActionsListener"
         userAdapter = new UserAdapterAdmin(this, userList, this);
         recyclerViewUsers.setAdapter(userAdapter);
         recyclerViewUsers.setLayoutManager(new LinearLayoutManager(this));
+
+        loadStudentsFromApi();
     }
+
+    private void loadStudentsFromApi() {
+        String token = getTokenFromDb(); // lấy từ SQLite
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+
+        apiService.getAllStudents(token).enqueue(new Callback<List<UserAdmin>>() {
+            @Override
+            public void onResponse(Call<List<UserAdmin>> call,
+                                   Response<List<UserAdmin>> response) {
+
+                if (response.isSuccessful() && response.body() != null) {
+                    userList.clear();
+                    userList.addAll(response.body());
+                    userAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<UserAdmin>> call, Throwable t) {
+                // log lỗi
+            }
+        });
+    }
+
 
     // 5. Xử lý các sự kiện click (do implement interface)
     // Đây là nơi bạn sẽ code logic cho nút "Edit"

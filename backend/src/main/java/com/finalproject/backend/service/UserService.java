@@ -24,10 +24,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.HexFormat;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -216,6 +213,22 @@ public class UserService {
 
         return applyUserUpdates(actor, target, request);
     }
+    public List<UserResponse> getAllStudents(String token) {
+
+        User admin = getAuthenticatedUserEntity(token);
+
+        if (!admin.isAdmin()) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Admin privileges required"
+            );
+        }
+        return userRepository.findAllStudents()
+                .stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
 
     // =========================================================
     // INTERNAL
