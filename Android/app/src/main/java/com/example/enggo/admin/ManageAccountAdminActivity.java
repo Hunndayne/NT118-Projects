@@ -39,7 +39,7 @@ public class ManageAccountAdminActivity extends BaseAdminActivity implements Use
 
         btnAddUser.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddUserAdminActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 1001);
         });
 
         tvBack.setOnClickListener(v -> {
@@ -48,6 +48,14 @@ public class ManageAccountAdminActivity extends BaseAdminActivity implements Use
 
         // 3. Khởi tạo và cài đặt RecyclerView
         setupRecyclerView();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1001 && resultCode == RESULT_OK) {
+            loadStudentsFromApi(); // reload list
+        }
     }
 
     private void setupRecyclerView() {
@@ -102,5 +110,9 @@ public class ManageAccountAdminActivity extends BaseAdminActivity implements Use
     @Override
     public void onLockClick(UserAdmin user) {
         // Thêm logic khóa user và cập nhật lại adapter
+    }
+    public void onResumed() {
+        super.onResume();
+        loadStudentsFromApi();
     }
 }

@@ -38,10 +38,18 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     // =========================================================
-    // CREATE USER (EMAIL DOMAIN DECIDES ROLE)
+    // CREATE USER (ADMIN ONLY – ROLE FROM REQUEST)
     // =========================================================
     @Transactional
-    public UserResponse createUser(UserCreationRequest request) {
+    public UserResponse createUserByAdmin(String token, UserCreationRequest request) {
+
+        User admin = getAuthenticatedUserEntity(token);
+        if (!admin.isAdmin()) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Admin privileges required"
+            );
+        }
 
         String username = trimRequired(request.getUsername(), "username");
         String email = trimRequired(request.getEmailAddress(), "emailAddress");
@@ -57,7 +65,7 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
         }
 
-        boolean isAdmin = email.toLowerCase().endsWith("@admin.com");
+        boolean isAdmin = Boolean.TRUE.equals(request.getAdmin());
 
         User user = User.builder()
                 .username(username)
@@ -85,7 +93,7 @@ public class UserService {
     }
 
     // =========================================================
-    // LOGIN (USERNAME LOGIN, ROLE SYNC BY EMAIL DOMAIN)
+    // LOGIN (USERNAME + PASSWORD)
     // =========================================================
     @Transactional
     public LoginResponse login(LoginRequest request) {
@@ -106,16 +114,6 @@ public class UserService {
         if (!passwordEncoder.matches(rawPassword, user.getPasswordHash())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
-
-        // ===== ROLE SYNC =====
-        String email = user.getEmailAddress() != null ? user.getEmailAddress() : user.getEmail();
-        boolean shouldBeAdmin = email != null && email.toLowerCase().endsWith("@admin.com");
-
-        if (user.isAdmin() != shouldBeAdmin) {
-            user.setAdmin(shouldBeAdmin);
-            userRepository.save(user);
-        }
-        // =====================
 
         Instant now = Instant.now();
         Instant expiresAt = now.plus(ACCESS_TOKEN_TTL);
@@ -145,7 +143,7 @@ public class UserService {
     }
 
     // =========================================================
-    // TOKEN / AUTH HELPERS
+    // TOKEN / AUTH
     // =========================================================
     public TokenStatusResponse checkToken(String rawToken) {
         AuthToken authToken = resolveActiveToken(rawToken);
@@ -180,22 +178,28 @@ public class UserService {
     }
 
     // =========================================================
-    // USER QUERY / UPDATE
+    // ADMIN – GET ALL STUDENTS
     // =========================================================
-    public User loadUserEntity(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
-    }
+    public List<UserResponse> getAllStudents(String token) {
 
-    public UserResponse getUserByIdForAdmin(String rawToken, Long userId) {
-        User admin = getAuthenticatedUserEntity(rawToken);
+        User admin = getAuthenticatedUserEntity(token);
+
         if (!admin.isAdmin()) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Admin privileges required"
+            );
         }
-        return toResponse(loadUserWithProfile(userId));
+
+        return userRepository.findAllStudents()
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
+    // =========================================================
+    // UPDATE USER
+    // =========================================================
     @Transactional
     public UserResponse updateCurrentUser(String rawToken, UserUpdateRequest request) {
         User user = getAuthenticatedUserEntity(rawToken);
@@ -213,22 +217,6 @@ public class UserService {
 
         return applyUserUpdates(actor, target, request);
     }
-    public List<UserResponse> getAllStudents(String token) {
-
-        User admin = getAuthenticatedUserEntity(token);
-
-        if (!admin.isAdmin()) {
-            throw new ResponseStatusException(
-                    HttpStatus.FORBIDDEN,
-                    "Admin privileges required"
-            );
-        }
-        return userRepository.findAllStudents()
-                .stream()
-                .map(this::toResponse)
-                .toList();
-    }
-
 
     // =========================================================
     // INTERNAL
@@ -236,14 +224,16 @@ public class UserService {
     private UserResponse applyUserUpdates(User actor, User target, UserUpdateRequest request) {
 
         if (request.getEmailAddress() != null) {
-            String email = request.getEmailAddress().trim();
-            target.setEmail(email);
-            target.setEmailAddress(email);
-            target.setAdmin(email.toLowerCase().endsWith("@admin.com"));
+            target.setEmail(request.getEmailAddress().trim());
+            target.setEmailAddress(request.getEmailAddress().trim());
         }
 
-        if (request.getFirstName() != null) target.setFirstName(request.getFirstName().trim());
-        if (request.getLastName() != null) target.setLastName(request.getLastName().trim());
+        if (request.getFirstName() != null)
+            target.setFirstName(request.getFirstName().trim());
+
+        if (request.getLastName() != null)
+            target.setLastName(request.getLastName().trim());
+
         if (request.getPhoneNumber() != null) {
             target.setPhoneNumber(request.getPhoneNumber().trim());
             target.setPhone(request.getPhoneNumber().trim());
@@ -263,6 +253,12 @@ public class UserService {
                 .filter(t -> t.getExpiresAt().isAfter(Instant.now()))
                 .orElseThrow(() ->
                         new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid or expired token"));
+    }
+
+    private User loadUserEntity(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
 
     private User loadUserWithProfile(Long id) {
