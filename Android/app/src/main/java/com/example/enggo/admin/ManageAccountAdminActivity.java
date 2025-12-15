@@ -99,9 +99,9 @@ public class ManageAccountAdminActivity extends BaseAdminActivity implements Use
     // Đây là nơi bạn sẽ code logic cho nút "Edit"
     @Override
     public void onEditClick(UserAdmin user) {
-        // Chuyển sang Activity mới và gửi ID của user đi
-         Intent intent = new Intent(this, EditUserAdminActivity.class);
-         startActivity(intent);
+        Intent intent = new Intent(this, EditUserAdminActivity.class);
+        intent.putExtra("USER_ID", user.getId());
+        startActivity(intent);
     }
 
     @Override

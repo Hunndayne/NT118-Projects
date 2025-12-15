@@ -3,6 +3,7 @@ package com.example.enggo.admin;
 import com.example.enggo.R;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,10 @@ public class UserAdapterAdmin extends RecyclerView.Adapter<UserAdapterAdmin.User
         holder.tvUserEmail.setText(user.getEmailAddress());
         holder.tvUserStatus.setText(user.getStatusText());
 
-        holder.btnEdit.setOnClickListener(v -> listener.onEditClick(user));
+        holder.btnEdit.setOnClickListener(v -> {
+            Log.e("EDIT_TEST", "EDIT CLICKED: " + user.getId());
+            listener.onEditClick(user);
+        });
         holder.btnDelete.setOnClickListener(v -> listener.onDeleteClick(user));
         holder.btnLock.setOnClickListener(v -> listener.onLockClick(user));
     }
