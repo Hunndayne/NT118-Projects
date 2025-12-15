@@ -66,5 +66,9 @@ public class ManageReportsAdminActivity extends BaseAdminActivity {
             }
         });
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadTotalStudents();
+    }
 }

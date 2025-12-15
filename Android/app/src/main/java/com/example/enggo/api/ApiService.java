@@ -22,4 +22,10 @@ public interface ApiService {
     Call<List<UserAdmin>> getAllStudents(
             @Header("X-Auth-Token") String token
     );
+    @POST("users")
+    Call<UserAdmin> createUser(
+            @Header("X-Auth-Token") String token,
+            @Body CreateUserRequest request
+    );
+
 }
