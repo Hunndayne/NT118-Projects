@@ -4,19 +4,25 @@ import java.time.Instant;
 
 public class TokenStatusResponse {
 
-	private final boolean active;
-	private final Instant expiresAt;
+    private boolean loggedIn;
+    private boolean admin;
+    private Instant expiresAt;
 
-	public TokenStatusResponse(boolean active, Instant expiresAt) {
-		this.active = active;
-		this.expiresAt = expiresAt;
-	}
+    public TokenStatusResponse(boolean loggedIn, boolean admin, Instant expiresAt) {
+        this.loggedIn = loggedIn;
+        this.admin = admin;
+        this.expiresAt = expiresAt;
+    }
 
-	public boolean isActive() {
-		return active;
-	}
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
 
-	public Instant getExpiresAt() {
-		return expiresAt;
-	}
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public Instant getExpiresAt() {
+        return expiresAt;
+    }
 }

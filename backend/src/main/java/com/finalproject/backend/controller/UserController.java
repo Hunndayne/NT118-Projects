@@ -6,7 +6,10 @@ import com.finalproject.backend.dto.request.UserUpdateRequest;
 import com.finalproject.backend.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -15,12 +18,16 @@ public class UserController {
 
 	private final UserService userService;
 
-	@PostMapping
-	public UserResponse createUser(@Valid @RequestBody UserCreationRequest request) {
-		return userService.createUser(request);
-	}
+    @PostMapping
+    public UserResponse createUser(
+            @RequestHeader("X-Auth-Token") String token,
+            @Valid @RequestBody UserCreationRequest request
+    ) {
+        return userService.createUser(token, request);
+    }
 
-	@GetMapping
+
+    @GetMapping
 	public UserResponse getCurrentUser(@RequestHeader("X-Auth-Token") String token) {
 		return userService.getUserByToken(token);
 	}
@@ -42,4 +49,10 @@ public class UserController {
 	                               @Valid @RequestBody UserUpdateRequest request) {
 		return userService.updateUser(token, userId, request);
 	}
+    @GetMapping("/admin/students")
+    public List<UserResponse> getAllStudents(
+            @RequestHeader("X-Auth-Token") String token
+    ) {
+        return userService.getAllStudents(token);
+    }
 }

@@ -1,17 +1,51 @@
 package com.example.enggo.api;
 
+import com.example.enggo.admin.UserAdmin;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface ApiService {
+    @POST("auth/login")
+    Call<LoginResponse> login(@Body LoginRequest request);
 
-    @GET("api/checklogin")
+    @GET("checklogin")
     Call<CheckLoginResponse> checkLogin(@Header("X-Auth-Token") String token);
+    @POST("auth/logout")
+    Call<Void> logout(@Header("X-Auth-Token") String token);
+    @GET("admin/students")
+    Call<List<UserAdmin>> getAllStudents(
+            @Header("X-Auth-Token") String token
+    );
+    @POST("users")
+    Call<UserAdmin> createUser(
+            @Header("X-Auth-Token") String token,
+            @Body CreateUserRequest request
+    );
+    @DELETE("admin/users/{id}")
+    Call<Void> deleteUser(
+            @Header("X-Auth-Token") String token,
+            @Path("id") long userId
+    );
+    @GET("users/{id}")
+    Call<UserAdmin> getUserById(
+            @Header("X-Auth-Token") String token,
+            @Path("id") long userId
+    );
 
-    @POST("/api/auth/login")
-    Call<LoginResponse> login(@Body LoginRequest loginRequest);
+    @PUT("users/{id}")
+    Call<UserAdmin> updateUser(
+            @Header("X-Auth-Token") String token,
+            @Path("id") long userId,
+            @Body UserUpdateRequest request
+    );
 
 }
