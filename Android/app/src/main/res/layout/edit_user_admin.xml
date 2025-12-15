@@ -175,11 +175,6 @@
                     android:textSize="14sp"
                     android:inputType="textPassword"
                     />
-                <RadioButton
-                    android:id="@+id/rbIsAdminEditUsr_Admin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Is Admin" />
             </LinearLayout>
 
 

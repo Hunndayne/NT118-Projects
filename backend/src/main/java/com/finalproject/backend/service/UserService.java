@@ -301,7 +301,7 @@ public class UserService {
     private UserResponse toResponse(User user) {
         UserProfile profile = user.getProfile();
         return UserResponse.builder()
-                .id(user.getLegacyUserId())
+                .id(user.getId())
                 .username(user.getUsername())
                 .fullName(user.getFullName())
                 .emailAddress(user.getEmailAddress())

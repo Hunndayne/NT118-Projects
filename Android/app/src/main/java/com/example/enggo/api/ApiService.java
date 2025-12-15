@@ -10,6 +10,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ApiService {
@@ -34,4 +35,17 @@ public interface ApiService {
             @Header("X-Auth-Token") String token,
             @Path("id") long userId
     );
+    @GET("users/{id}")
+    Call<UserAdmin> getUserById(
+            @Header("X-Auth-Token") String token,
+            @Path("id") long userId
+    );
+
+    @PUT("users/{id}")
+    Call<UserAdmin> updateUser(
+            @Header("X-Auth-Token") String token,
+            @Path("id") long userId,
+            @Body UserUpdateRequest request
+    );
+
 }
