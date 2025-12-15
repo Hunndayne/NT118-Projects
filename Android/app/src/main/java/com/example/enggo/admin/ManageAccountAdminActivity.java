@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager; // Thêm
 import androidx.recyclerview.widget.RecyclerView; // Thêm
 
@@ -54,7 +56,7 @@ public class ManageAccountAdminActivity extends BaseAdminActivity implements Use
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1001 && resultCode == RESULT_OK) {
-            loadStudentsFromApi(); // reload list
+            loadStudentsFromApi();
         }
     }
 
@@ -104,8 +106,47 @@ public class ManageAccountAdminActivity extends BaseAdminActivity implements Use
 
     @Override
     public void onDeleteClick(UserAdmin user) {
-        // Thêm logic xóa user và cập nhật lại adapter
+
+        new AlertDialog.Builder(this)
+                .setTitle("Delete user")
+                .setMessage("Are you sure you want to delete this user?")
+                .setPositiveButton("Delete", (dialog, which) -> {
+
+                    String token = getTokenFromDb();
+                    ApiService apiService = ApiClient.getClient().create(ApiService.class);
+
+                    apiService.deleteUser(token, user.getId())
+                            .enqueue(new retrofit2.Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call,
+                                                       Response<Void> response) {
+
+                                    if (response.isSuccessful()) {
+                                        userList.remove(user);
+                                        userAdapter.notifyDataSetChanged();
+                                        Toast.makeText(
+                                                ManageAccountAdminActivity.this,
+                                                "User deleted",
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) {
+                                    Toast.makeText(
+                                            ManageAccountAdminActivity.this,
+                                            "Delete failed",
+                                            Toast.LENGTH_SHORT
+                                    ).show();
+                                }
+                            });
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
+
+
 
     @Override
     public void onLockClick(UserAdmin user) {

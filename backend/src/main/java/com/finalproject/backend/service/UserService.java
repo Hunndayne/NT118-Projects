@@ -41,7 +41,7 @@ public class UserService {
     // CREATE USER (ADMIN ONLY – ROLE FROM REQUEST)
     // =========================================================
     @Transactional
-    public UserResponse createUserByAdmin(String token, UserCreationRequest request) {
+    public UserResponse createUser(String token, UserCreationRequest request) {
 
         User admin = getAuthenticatedUserEntity(token);
         if (!admin.isAdmin()) {
@@ -217,6 +217,37 @@ public class UserService {
 
         return applyUserUpdates(actor, target, request);
     }
+    @Transactional
+    public void deleteUser(String rawToken, Long userId) {
+
+        User admin = getAuthenticatedUserEntity(rawToken);
+
+        if (!admin.isAdmin()) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Admin privileges required"
+            );
+        }
+
+        User target = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "User not found"
+                        ));
+
+        if (Objects.equals(admin.getId(), target.getId())) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Admin cannot delete himself"
+            );
+        }
+
+        target.setActive(false);
+        userRepository.save(target);
+    }
+
+
 
     // =========================================================
     // INTERNAL
@@ -255,7 +286,7 @@ public class UserService {
                         new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid or expired token"));
     }
 
-    private User loadUserEntity(Long userId) {
+    public User loadUserEntity(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
@@ -282,6 +313,21 @@ public class UserService {
                 .lastLoginAt(user.getLastLoginAt())
                 .build();
     }
+    public UserResponse getUserByIdForAdmin(String rawToken, Long userId) {
+
+        User admin = getAuthenticatedUserEntity(rawToken);
+
+        if (!admin.isAdmin()) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Admin privileges required"
+            );
+        }
+
+        User target = loadUserWithProfile(userId);
+        return toResponse(target);
+    }
+
 
     private String hashToken(String token) {
         try {

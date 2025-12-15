@@ -18,12 +18,16 @@ public class UserController {
 
 	private final UserService userService;
 
-	@PostMapping
-	public UserResponse createUser(@Valid @RequestBody UserCreationRequest request) {
-		return userService.createUser(request);
-	}
+    @PostMapping
+    public UserResponse createUser(
+            @RequestHeader("X-Auth-Token") String token,
+            @Valid @RequestBody UserCreationRequest request
+    ) {
+        return userService.createUser(token, request);
+    }
 
-	@GetMapping
+
+    @GetMapping
 	public UserResponse getCurrentUser(@RequestHeader("X-Auth-Token") String token) {
 		return userService.getUserByToken(token);
 	}
