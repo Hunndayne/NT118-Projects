@@ -4,8 +4,8 @@ import com.finalproject.backend.dto.request.LoginRequest;
 import com.finalproject.backend.dto.request.UserCreationRequest;
 import com.finalproject.backend.dto.request.UserUpdateRequest;
 import com.finalproject.backend.dto.response.LoginResponse;
-import com.finalproject.backend.dto.response.UserResponse;
 import com.finalproject.backend.dto.response.TokenStatusResponse;
+import com.finalproject.backend.dto.response.UserResponse;
 import com.finalproject.backend.entity.AuthToken;
 import com.finalproject.backend.entity.TokenType;
 import com.finalproject.backend.entity.User;
@@ -26,8 +26,8 @@ import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HexFormat;
-import java.util.Optional;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -317,7 +317,7 @@ public class UserService {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User account is inactive");
 		}
 
-		return new TokenStatusResponse(true, authToken.getExpiresAt());
+		return new TokenStatusResponse(true, user.isSuperAdmin(), authToken.getExpiresAt());
 	}
 
 	public void logout(String rawToken) {
