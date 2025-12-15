@@ -13,9 +13,7 @@ public class BackendApplication {
 		TimeZone.setDefault(timeZone);
 		System.setProperty("user.timezone", timeZone.getID());
 	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
 	}
-
 }

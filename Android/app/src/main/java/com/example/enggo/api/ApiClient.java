@@ -4,9 +4,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
+    private static final String BASE_URL = "http://10.0.241.132:9090/api/";
 
-    private static final String BASE_URL = "https://nt118.hunn.io.vn/";
-    private static Retrofit retrofit = null;
+    private static Retrofit retrofit;
 
     public static Retrofit getClient() {
         if (retrofit == null) {

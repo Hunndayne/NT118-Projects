@@ -1,13 +1,13 @@
 server:
-  port: 8080
+  port: 9090
   servlet:
     context-path: /api
 
 spring:
   datasource:
-    url: jdbc:postgresql://10.147.17.180:5432/nt118?TimeZone=UTC
-    username: hunn
-    password: hunn
+    url: jdbc:postgresql://localhost:5432/nt118_db
+    username: postgres
+    password: '201204'
     hikari:
       data-source-properties:
         TimeZone: UTC

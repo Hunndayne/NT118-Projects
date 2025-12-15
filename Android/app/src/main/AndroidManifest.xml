@@ -12,7 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.EngGo">
+        android:theme="@style/Theme.EngGo"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".user.LoginActivity"
             android:exported="false">
