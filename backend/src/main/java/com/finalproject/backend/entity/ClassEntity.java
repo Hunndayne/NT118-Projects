@@ -4,39 +4,42 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "courses")
+@Table(name = "classes")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Course {
+public class ClassEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "course_id")
+	@Column(name = "class_id")
 	private Long id;
 
-	@Column(length = 64, unique = true)
-	private String code;
-
-	@Column(length = 255, nullable = false)
+	@Column(name = "class_name", length = 255)
 	private String name;
 
-	@Column(length = 64)
-	private String level;
-
-	@Column(columnDefinition = "text")
+	@Column(name = "description", columnDefinition = "text")
 	private String description;
 
-	@Column(name = "status", nullable = false, length = 32)
-	@Convert(converter = CourseStatusConverter.class)
-	@Builder.Default
-	private Boolean active = Boolean.TRUE;
+	@Column(name = "start_date")
+	private LocalDate startDate;
+
+	@Column(name = "end_date")
+	private LocalDate endDate;
+
+	@Column(name = "is_active")
+	private Boolean active;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "course_id")
+	private Course course;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "created_by")
@@ -47,12 +50,12 @@ public class Course {
 
 	@ManyToMany
 	@JoinTable(
-			name = "courses_students",
-			joinColumns = @JoinColumn(name = "course_id"),
-			inverseJoinColumns = @JoinColumn(name = "student_id")
+			name = "classes_teachers",
+			joinColumns = @JoinColumn(name = "class_id"),
+			inverseJoinColumns = @JoinColumn(name = "teacher_id")
 	)
 	@Builder.Default
-	private Set<User> students = new HashSet<>();
+	private Set<User> teachers = new HashSet<>();
 
 	@PrePersist
 	void onCreate() {
