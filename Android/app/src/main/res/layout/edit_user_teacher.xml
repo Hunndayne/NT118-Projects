@@ -6,45 +6,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_primary"
-    tools:context=".AddUserAdminActivity">
+    tools:context=".EditUserAdminActivity">
 
     <include
-        android:id="@id/headerAdmin"
+        android:id="@+id/headerAdmin"
         layout="@layout/header_admin_teacher"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:paddingHorizontal="12dp"
         android:elevation="4dp"
         android:layout_marginTop="34dp"
+        android:background="@drawable/bg_header"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-    <include
-        android:id="@id/footerAdmin"
-        layout="@layout/footer_admin"
-        android:layout_width="match_parent"
-        android:layout_height="74dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="@color/background_secondary"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="22dp"
-        android:elevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <ScrollView
         android:id="@+id/contentScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/background_primary"
-        app:layout_constraintBottom_toTopOf="@id/footerAdmin"
+        android:background="#FFFFFF"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/headerAdmin">
@@ -53,9 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/background_secondary"
             android:padding="16dp">
-
 
             <TextView
                 android:id="@+id/tvAdmin_AddLessons"
@@ -63,8 +47,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/nunito_extra_bold"
-                android:text="Create New User"
-                android:textColor="@color/text_primary"
+                android:text="Edit user information "
+                android:textColor="@android:color/black"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -73,34 +57,33 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:layout_marginTop="5dp"
-                >
+                android:layout_marginTop="5dp">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="Username"
-                    android:textColor="@color/text_primary"
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/etUsernameCreateUsr_Admin"
+                    android:id="@+id/etUsernameEditUsr_Admin"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
                     android:text="hungnt"
                     android:textSize="14sp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="First Name"
-                    android:textColor="@color/text_primary"
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/etFirstNameCreateUsr_Admin"
+                    android:id="@+id/etFirstNameEditUsr_Admin"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
@@ -108,16 +91,16 @@
                     android:text="Hung"
                     android:hint="A"
                     android:textSize="14sp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="Last Name"
-                    android:textColor="@color/text_primary"
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/etLastNameCreateUsr_Admin"
+                    android:id="@+id/etLastNameEditUsr_Admin"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
@@ -131,11 +114,10 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="Email"
-                    android:textColor="@color/text_primary"
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/etEmailCreateUsr_Admin"
+                    android:id="@+id/etEmailEditUsr_Admin"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
@@ -149,11 +131,10 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="Phone number"
-                    android:textColor="@color/text_primary"
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/etPhoneNumberCreateUsr_Admin"
+                    android:id="@+id/etPhoneNumberEditUsr_Admin"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
@@ -167,11 +148,10 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="Password (Blank for auto generate)"
-                    android:textColor="@color/text_primary"
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/etPasswordCreateUsr_Admin"
+                    android:id="@+id/etPasswordEditUsr_Admin"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
@@ -179,16 +159,14 @@
                     android:text="**********"
                     android:hint="**********"
                     android:textSize="14sp"
-                    android:inputType="textPassword"
-                    />
+                    android:inputType="textPassword" />
+
                 <RadioButton
-                    android:id="@+id/rbIsAdminCreateUsr_Admin"
+                    android:id="@+id/rbIsAdminEditUsr_Admin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Is Admin"
-                    android:textColor="@color/text_primary" />
+                    android:text="Is Admin" />
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -196,34 +174,167 @@
                 android:gravity="center_vertical"
                 android:layout_gravity="right"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp"    >
+                android:layout_marginTop="5dp">
 
                 <android.widget.Button
-                    android:id="@+id/buttonCancelCreateUsr_Admin"
+                    android:id="@+id/buttonCancelEditUsr_Admin"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:background="@drawable/user_management_button_bg"
+                    android:background="@drawable/button"
                     android:textAllCaps="false"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Cancel"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/black"
                     android:textSize="12sp"
                     android:layout_marginEnd="5dp"
-                    />
+                    android:backgroundTint="@color/enggo_grey_300" />
 
                 <android.widget.Button
-                    android:id="@+id/buttonCreateUsr_Admin"
+                    android:id="@+id/buttonEditUsr_Admin"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:background="@drawable/button"
-                    android:text="Create"
+                    android:text="Edit"
                     android:textColor="@color/white"
                     android:textSize="12sp"
-                    android:textAllCaps="false"
-                    />
+                    android:textAllCaps="false" />
 
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/footerTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@color/background_secondary"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="22dp"
+        android:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/btnDashboard_teacher"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/icDashboard_teacher"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_dashboard"
+                android:contentDescription="Dashboard"
+                app:tint="@color/icon_tint" />
+
+            <TextView
+                android:id="@+id/tvDashboard_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dashboard"
+                android:textSize="11sp"
+                android:textColor="@color/text_primary"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnCourses_teacher"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/icCourses_teacher"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_courses"
+                android:contentDescription="Courses"
+                app:tint="@color/icon_tint" />
+
+            <TextView
+                android:id="@+id/tvCourses_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Courses"
+                android:textSize="11sp"
+                android:textColor="@color/text_primary"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnSchedule_teacher"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/icSchedule_teacher"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_schedule"
+                android:contentDescription="Schedule"
+                app:tint="@color/icon_tint" />
+
+            <TextView
+                android:id="@+id/tvSchedule_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Schedule"
+                android:textSize="11sp"
+                android:textColor="@color/text_primary"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnMenu_teacher"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/icMenu_teacher"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_menu"
+                android:contentDescription="Menu"
+                app:tint="@color/icon_tint" />
+
+            <TextView
+                android:id="@+id/tvMenu_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Menu"
+                android:textSize="11sp"
+                android:textColor="@color/text_primary"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/grading_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_primary"
+    tools:context=".GradingSubmissionActivity">
+
+    <include
+        android:id="@+id/headerAdmin"
+        layout="@layout/header_admin_teacher"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:paddingHorizontal="12dp"
+        android:elevation="4dp"
+        android:layout_marginTop="34dp"
+        android:background="@drawable/bg_header"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ScrollView
+        android:id="@+id/contentScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#FFFFFF"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerAdmin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/breadcrumbContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="16dp"
+                android:gravity="center_vertical"
+                android:background="@color/background_secondary">
+
+                <TextView
+                    android:id="@+id/tvBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extra_bold"
+                    android:gravity="center_vertical"
+                    android:text="Back"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp"
+                    android:drawableStart="@drawable/ic_back_arrow"
+                    android:drawablePadding="4dp"/>
+                <TextView
+                    android:id="@+id/tvBreadcrumbPath"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Home > TA143GD > HW1.1 > Grading"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:layout_marginStart="16dp"
+                    android:singleLine="true"
+                    android:ellipsize="end" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Grading: HW 1.1"
+                        android:fontFamily="@font/nunito_extra_bold"
+                        android:textColor="@color/text_primary"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Submitted"
+                        android:background="#E8F5E9"
+                        android:textColor="#2E7D32"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="4dp"
+                        android:textSize="12sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_edit_text_form"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_account_student"
+                        app:tint="@color/icon_tint"
+                        android:padding="4dp"
+                        android:background="@drawable/bg_circle_gray"
+                        tools:ignore="ContentDescription" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nguyen Van A"
+                            android:fontFamily="@font/nunito_extra_bold"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Submitted: Sep 2, 2025 - 10:30 PM"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Student Submission"
+                    android:fontFamily="@font/nunito_extra_bold"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:layout_marginTop="24dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:padding="12dp"
+                    android:background="@color/background_secondary"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_attach_file"
+                        app:tint="@color/text_secondary"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:text="Homework_Reading_Task.pdf"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_menu_save"
+                        app:tint="@color/text_secondary"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp"
+                    android:padding="12dp"
+                    android:background="@color/background_secondary"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_attach_file"
+                        app:tint="@color/text_secondary"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:text="Quiz_Screenshot_1.jpg"
+                        android:textColor="@android:color/holo_blue_dark"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_menu_save"
+                        app:tint="@color/text_secondary"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grade &amp; Feedback"
+                    android:fontFamily="@font/nunito_extra_bold"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp"
+                    android:layout_marginTop="24dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Grade out of 100:"
+                        android:fontFamily="@font/nunito_extra_bold"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/etGrade"
+                        android:layout_width="80dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/bg_edit_text_form"
+                        android:padding="8dp"
+                        android:inputType="numberDecimal"
+                        android:gravity="center"
+                        android:text="85"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Feedback comments:"
+                    android:fontFamily="@font/nunito_extra_bold"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:layout_marginTop="16dp"/>
+
+                <EditText
+                    android:id="@+id/etFeedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_edit_text_form"
+                    android:padding="12dp"
+                    android:gravity="top|start"
+                    android:hint="Enter your feedback here..."
+                    android:textColorHint="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_primary"/>
+
+                <CheckBox
+                    android:id="@+id/cbNotify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notify student via email"
+                    android:layout_marginTop="12dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_secondary"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="24dp"
+                    android:weightSum="2">
+
+                    <android.widget.Button
+                        android:id="@+id/btnSaveAndNext"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button"
+                        android:text="Save &amp; Next"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:layout_marginEnd="8dp"/>
+
+                    <android.widget.Button
+                        android:id="@+id/btnSaveOnly"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="Save"
+                        android:textAllCaps="false"
+                        android:background="@drawable/button"
+                        android:backgroundTint="@color/enggo_grey_300"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:layout_marginStart="8dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/footerTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@color/background_secondary"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="22dp"
+        android:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/btnDashboard_teacher"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/icDashboard_teacher"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_dashboard"
+                android:contentDescription="Dashboard"
+                app:tint="@color/icon_tint" />
+
+            <TextView
+                android:id="@+id/tvDashboard_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dashboard"
+                android:textSize="11sp"
+                android:textColor="@color/text_primary"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnCourses_teacher"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/icCourses_teacher"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_courses"
+                android:contentDescription="Courses"
+                app:tint="@color/icon_tint" />
+
+            <TextView
+                android:id="@+id/tvCourses_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Courses"
+                android:textSize="11sp"
+                android:textColor="@color/text_primary"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnSchedule_teacher"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/icSchedule_teacher"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_schedule"
+                android:contentDescription="Schedule"
+                app:tint="@color/icon_tint" />
+
+            <TextView
+                android:id="@+id/tvSchedule_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Schedule"
+                android:textSize="11sp"
+                android:textColor="@color/text_primary"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnMenu_teacher"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/icMenu_teacher"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_menu"
+                android:contentDescription="Menu"
+                app:tint="@color/icon_tint" />
+
+            <TextView
+                android:id="@+id/tvMenu_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Menu"
+                android:textSize="11sp"
+                android:textColor="@color/text_primary"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

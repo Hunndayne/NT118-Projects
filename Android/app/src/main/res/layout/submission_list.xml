@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_primary">
+
+    <include
+        android:id="@+id/headerAdmin"
+        layout="@layout/header_admin_teacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <include
+        android:id="@+id/footerAdmin"
+        layout="@layout/footer_admin"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/headerAdmin"
+        app:layout_constraintBottom_toTopOf="@+id/footerAdmin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="16dp"
+                android:gravity="center_vertical"
+                android:background="@color/background_secondary">
+
+                <TextView
+                    android:id="@+id/tvBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_extra_bold"
+                    android:text="@string/back_text"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Home - Courses - TA143GD - HW1.1 - Submissions"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:layout_marginStart="16dp"
+                    android:singleLine="true"
+                    android:ellipsize="end" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HW 1.1: Reading &amp; Vocab"
+                    android:textColor="@color/text_primary"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_dashed_box"
+                    android:padding="12dp"
+                    android:baselineAligned="false">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="30"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
+                            android:textColor="@color/text_primary"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Participants"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_secondary"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/divider_color"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="25"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
+                            android:textColor="#2E7D32"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Submitted"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_secondary"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/divider_color"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
+                            android:textColor="#EF6C00"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Needs Grading"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_secondary"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_vertical">
+
+                    <EditText
+                        android:id="@+id/etSearchStudent"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_search"
+                        android:drawableStart="@drawable/ic_search"
+                        android:drawablePadding="12dp"
+                        android:hint="Search student name..."
+                        android:paddingHorizontal="12dp"
+                        android:textSize="14sp" />
+
+                    <ImageButton
+                        android:id="@+id/btnFilter"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="8dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_filter"
+                        app:tint="@color/text_primary" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Submission List"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"/>
+
+                <include layout="@layout/item_submission" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/background_card">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="12dp"
+                        android:gravity="center_vertical">
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/ic_account_student"/>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="12dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:text="Tran Thi B"
+                                android:textColor="@color/text_primary"
+                                android:textStyle="bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp" />
+                            <TextView
+                                android:text="Graded: Sep 2"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp"
+                                android:layout_marginTop="2dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:text="85/100"
+                            android:minWidth="90dp"
+                            android:gravity="center"
+                            android:background="#E8F5E9"
+                            android:textColor="#2E7D32"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="6dp"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:layout_marginEnd="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="@color/text_secondary"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/background_card">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="12dp"
+                        android:gravity="center_vertical">
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/ic_account_student"
+                            app:tint="@color/text_secondary"/>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="12dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:text="Le Van C"
+                                android:textColor="@color/text_secondary"
+                                android:textStyle="bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp" />
+                            <TextView
+                                android:text="No submission"
+                                android:textColor="#D32F2F"
+                                android:textSize="12sp"
+                                android:layout_marginTop="2dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:text="Missing"
+                            android:minWidth="90dp"
+                            android:gravity="center"
+                            android:background="#FFEBEE"
+                            android:textColor="#D32F2F"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="6dp"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:layout_marginEnd="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="@color/text_secondary"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
