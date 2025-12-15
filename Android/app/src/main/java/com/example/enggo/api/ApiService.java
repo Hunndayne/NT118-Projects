@@ -7,11 +7,9 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface ApiService {
+    @POST("auth/login")
+    Call<LoginResponse> login(@Body LoginRequest request);
 
-    @GET("api/checklogin")
+    @GET("checklogin")
     Call<CheckLoginResponse> checkLogin(@Header("X-Auth-Token") String token);
-
-    @POST("/api/auth/login")
-    Call<LoginResponse> login(@Body LoginRequest loginRequest);
-
 }
