@@ -1,0 +1,42 @@
+sequenceDiagram
+    actor Client as Client App
+    participant AuthController
+    participant UserController
+    participant CourseController
+    participant UserService
+    participant CourseService
+    participant AuthTokenRepository
+    participant UserRepository
+    participant CourseRepository
+    participant Database as Relational DB
+
+    Client->>AuthController: POST /auth/login (username, password)
+    AuthController->>UserService: login(request)
+    UserService->>UserRepository: findByUsername + password hash
+    UserRepository-->>UserService: User entity
+    UserService->>AuthTokenRepository: save(AuthToken)
+    AuthTokenRepository-->>UserService: Token stored
+    UserService-->>AuthController: LoginResponse (token)
+    AuthController-->>Client: 200 OK + X-Auth-Token
+
+    Client->>UserController: GET /users (X-Auth-Token)
+    UserController->>UserService: getUserByToken(token)
+    UserService->>AuthTokenRepository: verify token + TTL
+    AuthTokenRepository-->>UserService: Token + status
+    UserService->>UserRepository: load user + profile
+    UserRepository-->>UserService: User entity
+    UserService-->>UserController: UserResponse
+    UserController-->>Client: 200 OK (profile)
+
+    Client->>CourseController: GET /courses (X-Auth-Token)
+    CourseController->>CourseService: getCoursesForCurrentUser(token)
+    CourseService->>UserService: getAuthenticatedUserEntity(token)
+    UserService->>AuthTokenRepository: resolve token
+    AuthTokenRepository-->>UserService: AuthToken
+    UserService-->>CourseService: User entity
+    CourseService->>CourseRepository: query courses by role
+    CourseRepository->>Database: SELECT courses + participants
+    Database-->>CourseRepository: Course rows
+    CourseRepository-->>CourseService: List<Course>
+    CourseService-->>CourseController: List<CourseResponse>
+    CourseController-->>Client: 200 OK (courses)

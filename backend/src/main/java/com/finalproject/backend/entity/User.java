@@ -71,6 +71,11 @@ public class User {
 	@Column(name = "is_admin", nullable = false)
 	private boolean admin = false;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "role", nullable = false, columnDefinition = "user_role")
+	@Builder.Default
+	private UserRole role = UserRole.STUDENT;
+
 	@Column(name = "created_at", nullable = false, updatable = false)
 	private Instant createdAt;
 
@@ -102,6 +107,18 @@ public class User {
 	@ToString.Exclude
 	private Set<Course> enrolledCourses = new HashSet<>();
 
+	public boolean isSuperAdmin() {
+		return role != null && role.isSuperAdmin();
+	}
+
+	public boolean isTeacher() {
+		return role != null && role.isTeacher();
+	}
+
+	public boolean isStudent() {
+		return role != null && role.isStudent();
+	}
+
 	@PrePersist
 	void onCreate() {
 		if (createdAt == null) {
@@ -109,4 +126,3 @@ public class User {
 		}
 	}
 }
-

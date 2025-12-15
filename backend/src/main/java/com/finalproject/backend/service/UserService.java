@@ -10,6 +10,7 @@ import com.finalproject.backend.entity.AuthToken;
 import com.finalproject.backend.entity.TokenType;
 import com.finalproject.backend.entity.User;
 import com.finalproject.backend.entity.UserProfile;
+import com.finalproject.backend.entity.UserRole;
 import com.finalproject.backend.repository.AuthTokenRepository;
 import com.finalproject.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -90,6 +91,7 @@ public class UserService {
 				.passwordHash(passwordEncoder.encode(request.getPassword()))
 				.active(true)
 				.admin(false)
+				.role(UserRole.STUDENT)
 				.build();
 
 		if (avatarUrl != null) {
@@ -128,7 +130,7 @@ public class UserService {
 
 	public UserResponse getUserByIdForAdmin(String rawToken, Long userId) {
 		User adminUser = resolveAuthenticatedUser(rawToken);
-		if (!adminUser.isAdmin()) {
+		if (!adminUser.isSuperAdmin()) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
 		}
 
@@ -141,7 +143,7 @@ public class UserService {
 		User actingUser = resolveAuthenticatedUser(rawToken);
 		User targetUser = loadUserWithProfileByIdentifier(userIdentifier);
 
-		boolean actorIsAdmin = actingUser.isAdmin();
+		boolean actorIsAdmin = actingUser.isSuperAdmin();
 		boolean sameUser = Objects.equals(actingUser.getId(), targetUser.getId());
 		if (!actorIsAdmin && !sameUser) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed to update this user");
@@ -157,7 +159,7 @@ public class UserService {
 	}
 
 	private UserResponse applyUserUpdates(User actingUser, User targetUser, UserUpdateRequest request) {
-		boolean actorIsAdmin = actingUser.isAdmin();
+		boolean actorIsAdmin = actingUser.isSuperAdmin();
 
 		if (request.getUsername() != null && !request.getUsername().equalsIgnoreCase(targetUser.getUsername())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username cannot be changed");
@@ -243,11 +245,13 @@ public class UserService {
 			targetUser.setPasswordHash(passwordEncoder.encode(rawPassword));
 		}
 
-		if (request.getAdmin() != null) {
+		if (request.getRole() != null) {
 			if (!actorIsAdmin) {
-				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required to change admin flag");
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Super admin privileges required to change role");
 			}
-			targetUser.setAdmin(Boolean.TRUE.equals(request.getAdmin()));
+			UserRole newRole = parseRole(request.getRole());
+			targetUser.setRole(newRole);
+			targetUser.setAdmin(newRole.isSuperAdmin());
 		}
 
 		if (nameChanged) {
@@ -300,7 +304,8 @@ public class UserService {
 				.token(rawToken)
 				.tokenType(TokenType.ACCESS.getDbValue())
 				.expiresAt(expiresAt)
-				.admin(user.isAdmin())
+				.admin(user.isSuperAdmin())
+				.role(user.getRole().name())
 				.build();
 	}
 
@@ -350,7 +355,8 @@ public class UserService {
 				.phoneNumber(phoneNumber)
 				.avatarUrl(avatarUrl)
 				.active(user.isActive())
-				.admin(user.isAdmin())
+				.admin(user.isSuperAdmin())
+				.role(user.getRole().name())
 				.createdAt(user.getCreatedAt())
 				.lastLoginAt(user.getLastLoginAt())
 				.build();
@@ -407,6 +413,14 @@ public class UserService {
 		}
 
 		return loadUserWithProfile(user.getId());
+	}
+
+	private UserRole parseRole(String role) {
+		try {
+			return UserRole.valueOf(role.trim().toUpperCase());
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid role value");
+		}
 	}
 
 	private AuthToken resolveActiveToken(String rawToken) {

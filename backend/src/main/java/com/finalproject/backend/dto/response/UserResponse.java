@@ -24,6 +24,7 @@ public class UserResponse {
     String avatarUrl;
     boolean active;
     boolean admin;
+    String role;
     Instant createdAt;
     Instant lastLoginAt;
 }

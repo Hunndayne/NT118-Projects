@@ -33,7 +33,7 @@ public class UserUpdateRequest {
 
 	private String password;
 
-	private Boolean admin;
+	private String role;
 
 	public String getUsername() {
 		return username;
@@ -87,7 +87,7 @@ public class UserUpdateRequest {
 		return password;
 	}
 
-	public Boolean getAdmin() {
-		return admin;
+	public String getRole() {
+		return role;
 	}
 }

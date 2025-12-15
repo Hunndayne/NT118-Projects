@@ -31,7 +31,7 @@ public class CourseService {
 	@Transactional
 	public CourseResponse createCourse(String rawToken, CourseCreationRequest request) {
 		User creator = userService.getAuthenticatedUserEntity(rawToken);
-		if (!creator.isAdmin()) {
+		if (!creator.isSuperAdmin()) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
 		}
 
@@ -80,7 +80,7 @@ public class CourseService {
 	@Transactional(readOnly = true)
 	public List<CourseParticipantResponse> getEligibleParticipants(String rawToken, Long courseId) {
 		User admin = userService.getAuthenticatedUserEntity(rawToken);
-		if (!admin.isAdmin()) {
+		if (!admin.isSuperAdmin()) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
 		}
 
@@ -95,7 +95,7 @@ public class CourseService {
 	public List<CourseResponse> getCoursesForCurrentUser(String rawToken) {
 		User requester = userService.getAuthenticatedUserEntity(rawToken);
 		List<Course> courses;
-		if (requester.isAdmin()) {
+		if (requester.isSuperAdmin()) {
 			courses = courseRepository.findAll();
 		} else {
 			courses = courseRepository.findDistinctByStudents_Id(requester.getId());
@@ -108,7 +108,7 @@ public class CourseService {
 	@Transactional
 	public CourseResponse updateCourse(String rawToken, Long courseId, CourseUpdateRequest request) {
 		User admin = userService.getAuthenticatedUserEntity(rawToken);
-		if (!admin.isAdmin()) {
+		if (!admin.isSuperAdmin()) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
 		}
 
@@ -149,7 +149,7 @@ public class CourseService {
 	@Transactional
 	public void deleteCourse(String rawToken, Long courseId) {
 		User admin = userService.getAuthenticatedUserEntity(rawToken);
-		if (!admin.isAdmin()) {
+		if (!admin.isSuperAdmin()) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
 		}
 
@@ -160,7 +160,7 @@ public class CourseService {
 	@Transactional
 	public CourseResponse addParticipants(String rawToken, Long courseId, CourseParticipantsRequest request) {
 		User admin = userService.getAuthenticatedUserEntity(rawToken);
-		if (!admin.isAdmin()) {
+		if (!admin.isSuperAdmin()) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
 		}
 
@@ -188,7 +188,7 @@ public class CourseService {
 	@Transactional
 	public CourseResponse removeParticipants(String rawToken, Long courseId, CourseParticipantsRequest request) {
 		User admin = userService.getAuthenticatedUserEntity(rawToken);
-		if (!admin.isAdmin()) {
+		if (!admin.isSuperAdmin()) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
 		}
 
@@ -250,7 +250,7 @@ public class CourseService {
 	}
 
 	private Course ensureCourseAccess(User requester, Long courseId) {
-		if (requester.isAdmin()) {
+		if (requester.isSuperAdmin()) {
 			return loadCourseWithStudents(courseId);
 		}
 		return courseRepository.findByIdAndStudents_Id(courseId, requester.getId())
