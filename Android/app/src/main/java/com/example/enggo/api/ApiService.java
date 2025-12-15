@@ -6,9 +6,11 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ApiService {
     @POST("auth/login")
@@ -27,5 +29,9 @@ public interface ApiService {
             @Header("X-Auth-Token") String token,
             @Body CreateUserRequest request
     );
-
+    @DELETE("admin/users/{id}")
+    Call<Void> deleteUser(
+            @Header("X-Auth-Token") String token,
+            @Path("id") long userId
+    );
 }
