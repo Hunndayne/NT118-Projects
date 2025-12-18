@@ -2,6 +2,7 @@ package com.example.enggo.api;
 
 import com.example.enggo.admin.CourseAdmin;
 import com.example.enggo.admin.CreateCourseRequest;
+import com.example.enggo.admin.UpdateCourseRequest;
 import com.example.enggo.admin.UserAdmin;
 
 import java.util.List;
@@ -69,5 +70,20 @@ public interface ApiService {
             @Header("X-Auth-Token") String token,
             @Body CreateCourseRequest request
     );
-
+    @GET("/api/admin/courses/{id}")
+    Call<CourseAdmin> getCourseById(
+            @Header("X-Auth-Token") String token,
+            @Path("id") Long id
+    );
+    @PUT("/api/courses/{id}")
+    Call<CourseAdmin> updateCourse(
+            @Header("X-Auth-Token") String token,
+            @Path("id") Long courseId,
+            @Body UpdateCourseRequest request
+    );
+    @DELETE("courses/{id}")
+    Call<Void> deleteCourse(
+            @Header("X-Auth-Token") String token,
+            @Path("id") Long courseId
+    );
 }

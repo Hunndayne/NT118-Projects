@@ -16,29 +16,52 @@ import java.util.List;
 public class CourseAdminAdapter
         extends RecyclerView.Adapter<CourseAdminAdapter.CourseViewHolder> {
 
+    public interface OnCourseActionListener {
+        void onEditClick(CourseAdmin course);
+        void onDeleteClick(CourseAdmin course);
+    }
+
     private Context context;
     private List<CourseAdmin> courseItems;
+    private OnCourseActionListener listener;
 
-    public CourseAdminAdapter(Context context, List<CourseAdmin> courseItems) {
+    public CourseAdminAdapter(Context context,
+                              List<CourseAdmin> courseItems,
+                              OnCourseActionListener listener) {
         this.context = context;
         this.courseItems = courseItems;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
-    public CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CourseViewHolder onCreateViewHolder(
+            @NonNull ViewGroup parent,
+            int viewType) {
+
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.course_management_list_item, parent, false);
         return new CourseViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
+    public void onBindViewHolder(
+            @NonNull CourseViewHolder holder,
+            int position) {
+
         CourseAdmin course = courseItems.get(position);
 
         holder.tvCourseName.setText(course.getName());
         holder.tvClassCode.setText(course.getClassCode());
         holder.tvLessons.setText(course.getLessonCount() + " lesson");
+
+        holder.btnEdit.setOnClickListener(v ->
+                listener.onEditClick(course)
+        );
+
+        holder.btnDelete.setOnClickListener(v ->
+                listener.onDeleteClick(course)
+        );
     }
 
     @Override
@@ -49,6 +72,7 @@ public class CourseAdminAdapter
     static class CourseViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvCourseName, tvClassCode, tvLessons;
+        TextView btnEdit, btnDelete;
 
         public CourseViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,6 +80,9 @@ public class CourseAdminAdapter
             tvCourseName = itemView.findViewById(R.id.tvCourseName_manageusritem);
             tvClassCode = itemView.findViewById(R.id.tvClassCode_manageusritem);
             tvLessons = itemView.findViewById(R.id.tvLessons_manageusritem);
+
+            btnEdit = itemView.findViewById(R.id.btnEdit_managecourseitem);
+            btnDelete = itemView.findViewById(R.id.btnDelete_managecourseitem);
         }
     }
 }
