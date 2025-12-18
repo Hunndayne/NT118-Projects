@@ -47,5 +47,17 @@ public interface ApiService {
             @Path("id") long userId,
             @Body UserUpdateRequest request
     );
+    @PUT("admin/users/{id}/lock")
+    Call<Void> lockUser(
+            @Header("X-Auth-Token") String token,
+            @Path("id") long userId
+    );
+
+    @PUT("admin/users/{id}/unlock")
+    Call<Void> unlockUser(
+            @Header("X-Auth-Token") String token,
+            @Path("id") long userId
+    );
+
 
 }

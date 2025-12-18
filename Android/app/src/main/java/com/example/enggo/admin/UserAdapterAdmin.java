@@ -53,6 +53,9 @@ public class UserAdapterAdmin extends RecyclerView.Adapter<UserAdapterAdmin.User
         });
         holder.btnDelete.setOnClickListener(v -> listener.onDeleteClick(user));
         holder.btnLock.setOnClickListener(v -> listener.onLockClick(user));
+        holder.tvUserStatus.setText(user.isActive() ? "Active" : "Locked");
+        holder.btnLock.setText(user.isActive() ? "Lock" : "Unlock");
+
     }
 
 

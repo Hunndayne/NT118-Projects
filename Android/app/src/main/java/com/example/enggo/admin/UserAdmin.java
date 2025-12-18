@@ -57,4 +57,8 @@ public class UserAdmin {
     public String getStatusText() {
         return active ? "Active" : "Locked";
     }
+
+    public void setActive(boolean b) {
+        this.active = b;
+    }
 }
