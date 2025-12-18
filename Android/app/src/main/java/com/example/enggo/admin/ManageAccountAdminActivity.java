@@ -150,8 +150,49 @@ public class ManageAccountAdminActivity extends BaseAdminActivity implements Use
 
     @Override
     public void onLockClick(UserAdmin user) {
-        // Thêm logic khóa user và cập nhật lại adapter
+
+        String action = user.isActive() ? "lock" : "unlock";
+
+        new AlertDialog.Builder(this)
+                .setTitle(action.equals("lock") ? "Lock user" : "Unlock user")
+                .setMessage("Are you sure?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+
+                    String token = getTokenFromDb();
+                    ApiService apiService = ApiClient.getClient().create(ApiService.class);
+
+                    Call<Void> call = user.isActive()
+                            ? apiService.lockUser(token, user.getId())
+                            : apiService.unlockUser(token, user.getId());
+
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                user.setActive(!user.isActive());
+                                userAdapter.notifyDataSetChanged();
+                                Toast.makeText(
+                                        ManageAccountAdminActivity.this,
+                                        action.equals("lock") ? "User locked" : "User unlocked",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Toast.makeText(
+                                    ManageAccountAdminActivity.this,
+                                    "Action failed",
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
+                    });
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
+
     public void onResumed() {
         super.onResume();
         loadStudentsFromApi();

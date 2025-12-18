@@ -28,4 +28,22 @@ public class AdminUserController {
     ) {
         userService.deleteUser(token, id);
     }
+    @PutMapping("/users/{id}/lock")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void lockUser(
+            @RequestHeader("X-Auth-Token") String token,
+            @PathVariable Long id
+    ) {
+        userService.lockUser(token, id);
+    }
+
+    // 🔓 UNLOCK USER
+    @PutMapping("/users/{id}/unlock")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void unlockUser(
+            @RequestHeader("X-Auth-Token") String token,
+            @PathVariable Long id
+    ) {
+        userService.unlockUser(token, id);
+    }
 }

@@ -141,6 +141,31 @@ public class UserService {
     }
 
     @Transactional
+    public void lockUser(String rawToken, Long userId) {
+        User admin = resolveAuthenticatedUser(rawToken);
+        if (!admin.isSuperAdmin()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin only");
+        }
+
+        User target = loadUserEntity(userId);
+        target.setActive(false);
+        userRepository.save(target);
+    }
+
+    @Transactional
+    public void unlockUser(String rawToken, Long userId) {
+        User admin = resolveAuthenticatedUser(rawToken);
+        if (!admin.isSuperAdmin()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin only");
+        }
+
+        User target = loadUserEntity(userId);
+        target.setActive(true);
+        userRepository.save(target);
+    }
+
+
+    @Transactional
     public UserResponse updateUser(String rawToken, Long userIdentifier, UserUpdateRequest request) {
         User actingUser = resolveAuthenticatedUser(rawToken);
         User targetUser = loadUserWithProfileByIdentifier(userIdentifier);
