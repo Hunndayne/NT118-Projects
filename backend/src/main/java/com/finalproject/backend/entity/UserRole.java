@@ -1,12 +1,12 @@
 package com.finalproject.backend.entity;
 
 public enum UserRole {
-	SUPER_ADMIN,
+	ADMIN,
 	TEACHER,
 	STUDENT;
 
 	public boolean isSuperAdmin() {
-		return this == SUPER_ADMIN;
+		return this == ADMIN;
 	}
 
 	public boolean isTeacher() {

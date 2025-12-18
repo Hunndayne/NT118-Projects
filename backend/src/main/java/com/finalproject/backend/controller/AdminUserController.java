@@ -16,11 +16,10 @@ public class AdminUserController {
     private final UserService userService;
 
     @GetMapping("/students")
-    public List<UserResponse> getAllStudents(
-            @RequestHeader("X-Auth-Token") String token
-    ) {
+    public List<UserResponse> getAllStudents(@RequestHeader("X-Auth-Token") String token) {
         return userService.getAllStudents(token);
     }
+
     @DeleteMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(
@@ -29,5 +28,4 @@ public class AdminUserController {
     ) {
         userService.deleteUser(token, id);
     }
-
 }

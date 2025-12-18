@@ -1,6 +1,7 @@
 package com.finalproject.backend.repository;
 
 import com.finalproject.backend.entity.AuthToken;
+import com.finalproject.backend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
 public interface AuthTokenRepository extends JpaRepository<AuthToken, Long> {
 
 	Optional<AuthToken> findByTokenHashAndRevokedFalse(String tokenHash);
+    void deleteAllByUser(User user);
 
 	void deleteByExpiresAtBefore(Instant instant);
 }
