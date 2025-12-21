@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_primary"
-    tools:context=".AddAssignmentAdminActivity">
+    tools:context=".EditAssignmentAdminActivity">
 
     <include
-        android:id="@id/headerAdmin"
-        layout="@layout/header_admin"
+        android:id="@+id/headerAdmin"
+        layout="@layout/header_admin_teacher"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:paddingHorizontal="12dp"
@@ -21,31 +21,16 @@
         android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-    <include
-        android:id="@id/footerAdmin"
-        layout="@layout/footer_admin"
-        android:layout_width="match_parent"
-        android:layout_height="74dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="@color/background_secondary"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="22dp"
-        android:elevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <ScrollView
         android:id="@+id/contentScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/background_secondary"
-        app:layout_constraintBottom_toTopOf="@id/footerAdmin"
+        android:background="#FFFFFF"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/headerAdmin">
@@ -56,15 +41,14 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-
             <TextView
                 android:id="@+id/tvAdmin_EditAssignment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Create Assignment"
+                android:text="Edit Assignment"
                 android:fontFamily="@font/nunito_extra_bold"
-                android:textColor="@color/text_primary"
+                android:textColor="@android:color/black"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -73,8 +57,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:layout_marginTop="5dp"
-                >
+                android:layout_marginTop="5dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -84,7 +67,7 @@
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/etAddAssignmentTitle_admin"
+                    android:id="@+id/etEditAssignmentTitle_admin"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
@@ -93,14 +76,12 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:layout_marginTop="5dp"
-                >
+                android:layout_marginTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -110,24 +91,23 @@
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/etAddAssignmentContent_admin"
+                    android:id="@+id/etEditAssignmentContent_admin"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:gravity="top|start"
                     android:padding="12dp"
+                    android:text="A deeper dive into complex grammar topics."
                     android:hint="Write something here..."
                     android:textSize="14sp" />
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:layout_marginTop="5dp"
-                >
+                android:layout_marginTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -135,23 +115,22 @@
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="Attachment File"
                     android:textSize="14sp" />
-                <android.widget.Button
-                    android:id="@+id/buttonAddAttachment_Assignment_admin"
+                <Button
+                    android:id="@+id/buttonAttachment_EditAssignment_admin"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:background="@drawable/button"
-                    android:textColor="@color/white"
                     android:text="Upload a file"
+                    android:textColor="@color/black"
                     android:textSize="10sp"
-                    />
+                    android:backgroundTint="@color/enggo_grey_100" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:layout_marginTop="5dp"
-                >
+                android:layout_marginTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -160,7 +139,7 @@
                     android:text="Attachment Link"
                     android:textSize="14sp" />
                 <EditText
-                    android:id="@+id/etAttachLinkContentAddAssignment_admin"
+                    android:id="@+id/etAttachLinkContentEditAssignment_admin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_edit_text_form"
@@ -174,8 +153,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp"
-                >
+                android:layout_marginTop="5dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -190,9 +168,9 @@
                         android:fontFamily="@font/nunito_extra_bold"
                         android:text="Start time"
                         android:textSize="14sp" />
-                    <!--https://m3.material.io/components/time-pickers/overview-->
+
                     <EditText
-                        android:id="@+id/etStartTimeAddAssignment_admin"
+                        android:id="@+id/etStartTimeEditAssignment_admin"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/bg_edit_text_form"
@@ -201,7 +179,6 @@
                         android:hint="Select start time"
                         android:paddingHorizontal="12dp"
                         android:textSize="14sp" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -219,7 +196,7 @@
                         android:textSize="14sp" />
 
                     <EditText
-                        android:id="@+id/etDueTimeAddAssignment_admin"
+                        android:id="@+id/etDueTimeEditAssignment_admin"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/bg_edit_text_form"
@@ -229,44 +206,170 @@
                         android:paddingHorizontal="12dp"
                         android:textSize="14sp" />
                 </LinearLayout>
-
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:layout_gravity="right"
                 android:orientation="horizontal"
+                android:layout_marginTop="20dp">
 
-                android:layout_marginTop="5dp"
-                >
-                <android.widget.Button
-                    android:id="@+id/buttonCancelAddAssignment_admin"
+                <Button
+                    android:id="@+id/buttonCancelEditAssignment_admin"
                     android:layout_width="wrap_content"
-                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_height="40dp"
                     android:text="Cancel"
-                    android:textColor="@color/text_primary"
-                    android:backgroundTint="@color/enggo_grey_100"
+                    android:textColor="@color/black"
                     android:textSize="10sp"
                     android:layout_marginEnd="5dp"
-                    />
+                    android:backgroundTint="@color/enggo_grey_300" />
 
-                <android.widget.Button
-                    android:id="@+id/buttonCreateAssignment_admin"
+                <Button
+                    android:id="@+id/buttonSaveEditAssignment_admin"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:background="@drawable/button"
-                    android:text="Create"
+                    android:backgroundTint="@android:color/holo_blue_light"
+                    android:text="Save"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
-                    android:textAllCaps="false"
-                    />
-
+                    android:textSize="10sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout
+        android:id="@+id/footerTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@color/background_secondary"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="22dp"
+        android:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <LinearLayout
+            android:id="@+id/btnDashboard_teacher"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/icDashboard_teacher"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_dashboard"
+                android:contentDescription="Dashboard"
+                app:tint="@color/icon_tint" />
+
+            <TextView
+                android:id="@+id/tvDashboard_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dashboard"
+                android:textSize="11sp"
+                android:textColor="@color/text_primary"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnCourses_teacher"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/icCourses_teacher"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_courses"
+                android:contentDescription="Courses"
+                app:tint="@color/icon_tint" />
+
+            <TextView
+                android:id="@+id/tvCourses_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Courses"
+                android:textSize="11sp"
+                android:textColor="@color/text_primary"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnSchedule_teacher"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/icSchedule_teacher"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_schedule"
+                android:contentDescription="Schedule"
+                app:tint="@color/icon_tint" />
+
+            <TextView
+                android:id="@+id/tvSchedule_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Schedule"
+                android:textSize="11sp"
+                android:textColor="@color/text_primary"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnMenu_teacher"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <ImageView
+                android:id="@+id/icMenu_teacher"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_menu"
+                android:contentDescription="Menu"
+                app:tint="@color/icon_tint" />
+
+            <TextView
+                android:id="@+id/tvMenu_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Menu"
+                android:textSize="11sp"
+                android:textColor="@color/text_primary"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

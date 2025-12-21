@@ -9,8 +9,8 @@
     tools:context=".CreateCourseAdminActivity">
 
     <include
-        android:id="@id/headerAdmin"
-        layout="@layout/header_admin"
+        android:id="@+id/headerAdmin"
+        layout="@layout/header_admin_teacher"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:paddingHorizontal="12dp"
@@ -23,9 +23,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
+
     <include
-        android:id="@id/footerAdmin"
-        layout="@layout/footer_admin"
+        android:id="@+id/footerTeacher"
+        layout="@layout/footer_teacher"
         android:layout_width="match_parent"
         android:layout_height="74dp"
         android:orientation="horizontal"
@@ -40,22 +41,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
+
     <ScrollView
         android:id="@+id/contentScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/background_secondary"
-        app:layout_constraintBottom_toTopOf="@id/footerAdmin"
+        app:layout_constraintBottom_toTopOf="@id/footerTeacher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/headerAdmin">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
-
 
             <TextView
                 android:id="@+id/tvAdmin_CourseManager"
@@ -73,8 +73,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:layout_marginTop="5dp"
-                >
+                android:layout_marginTop="5dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -94,14 +93,12 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:layout_marginTop="5dp"
-                >
+                android:layout_marginTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -119,13 +116,13 @@
                     android:hint="Class code"
                     android:textSize="14sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:layout_marginTop="5dp"
-                >
+                android:layout_marginTop="5dp">
 
                 <android.widget.Button
                     android:id="@+id/buttonParticipantsList_admin"
@@ -136,11 +133,8 @@
                     android:background="@drawable/button"
                     android:textColor="@color/white"
                     android:textSize="15sp"
-                    android:layout_marginEnd="5dp"
-                    />
+                    android:layout_marginEnd="5dp" />
             </LinearLayout>
-
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -148,7 +142,7 @@
                 android:gravity="center_vertical"
                 android:layout_gravity="right"
                 android:orientation="horizontal"
-                android:layout_marginTop="5dp" >
+                android:layout_marginTop="5dp">
 
                 <android.widget.Button
                     android:id="@+id/buttonCancelCourseCreate_admin"
@@ -160,9 +154,7 @@
                     android:background="@drawable/user_management_button_bg"
                     android:textColor="@color/text_primary"
                     android:textSize="14sp"
-                    android:layout_marginEnd="5dp"
-
-                    />
+                    android:layout_marginEnd="5dp" />
 
                 <android.widget.Button
                     android:id="@+id/buttonCreateCourse_admin"
@@ -173,13 +165,8 @@
                     android:background="@drawable/button"
                     android:text="Create"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    />
-
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

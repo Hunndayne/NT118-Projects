@@ -10,7 +10,7 @@
 
     <include
         android:id="@id/headerAdmin"
-        layout="@layout/header_admin"
+        layout="@layout/header_admin_teacher"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:paddingHorizontal="12dp"

@@ -8,7 +8,7 @@ public class EditAssignmentAdminActivity extends BaseAdminActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_assignment_admin);
+        setContentView(R.layout.edit_assignment_teacher);
         setupAdminHeader();
         setupAdminFooter();
 
