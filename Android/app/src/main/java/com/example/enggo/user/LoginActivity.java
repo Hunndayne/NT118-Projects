@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.enggo.admin.HomeAdminActivity;
+import com.example.enggo.teacher.HomeTeacherActivity;
 import com.example.enggo.api.ApiClient;
 import com.example.enggo.api.ApiService;
 import com.example.enggo.api.LoginRequest;
@@ -47,7 +48,15 @@ public class LoginActivity extends AppCompatActivity {
         dao = new Database.Dao(this);
 
         // ✅ BẤM LOGIN LÀ GỌI API THẬT (KHÔNG HARDCODE)
-        btnLogin.setOnClickListener(v -> loginUser());
+        // btnLogin.setOnClickListener(v -> loginUser());
+        
+        // 🔧 DEBUG MODE: Bỏ qua login, vào thẳng Admin, Teacher hoặc User
+        btnLogin.setOnClickListener(v -> {
+            // Chọn 1 trong 3 dòng dưới để debug:
+            // goToAdminDashboard();   // Debug Admin UI
+            goToTeacherDashboard(); // Debug Teacher UI
+            // goToUserHome();         // Debug User UI
+        });
 
         tvForgetPassword.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, ChangePasswordActivity.class);
@@ -108,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+
     private void goToUserHome() {
         Intent intent = new Intent(this, HomeUserActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -117,6 +127,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void goToAdminDashboard() {
         Intent intent = new Intent(this, HomeAdminActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    private void goToTeacherDashboard() {
+        Intent intent = new Intent(this, HomeTeacherActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

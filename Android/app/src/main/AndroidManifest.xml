@@ -57,6 +57,7 @@
             android:name=".admin.MenuAdminActivity"
             android:exported="false"/>
 
+
         <activity
             android:name=".user.MainActivity"
             android:exported="true">
@@ -110,6 +111,50 @@
             android:exported="false"/>
         <activity
             android:name=".admin.EditUserAdminActivity"
+            android:exported="false"/>
+
+        <!-- Teacher Activities -->
+        <activity
+            android:name=".teacher.HomeTeacherActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".teacher.MenuTeacherActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".teacher.ManageCoursesTeacherActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".teacher.GradingSubmissionActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".teacher.ClassCourseActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".teacher.ReportTeacherActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".teacher.ScheduleTeacherActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".teacher.SubmissionListActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".teacher.EditUserTeacherActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".teacher.AddAssignmentTeacherActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".teacher.AddLessonTeacherActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".teacher.EditLessonTeacherActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".teacher.EditAssignmentTeacherActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".teacher.CourseStudentsTeacherActivity"
             android:exported="false"/>
 
     </application>
