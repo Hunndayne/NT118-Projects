@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.enggo.user.HomeUserActivity;
+import androidx.cardview.widget.CardView;
 
 public class HomeAdminActivity extends BaseAdminActivity{
     ImageView btnEdit1, btnEdit2;
@@ -48,6 +49,34 @@ public class HomeAdminActivity extends BaseAdminActivity{
             startActivity(intent);
         });
 
+        // Setup onclick for course cards
+        CardView cardCourse1 = findViewById(R.id.cardAdmin_Course1);
+        CardView cardCourse2 = findViewById(R.id.cardAdmin_Course2);
+        
+        cardCourse1.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeAdminActivity.this, ManageCoursesAdminActivity.class);
+            startActivity(intent);
+        });
+        
+        cardCourse2.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeAdminActivity.this, ManageCoursesAdminActivity.class);
+            startActivity(intent);
+        });
+
+        // Setup onclick for account cards
+        CardView cardAccount1 = findViewById(R.id.cardAdmin_Account1);
+        CardView cardAccount2 = findViewById(R.id.cardAdmin_Account2);
+        
+        cardAccount1.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeAdminActivity.this, ManageAccountAdminActivity.class);
+            startActivity(intent);
+        });
+        
+        cardAccount2.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeAdminActivity.this, ManageAccountAdminActivity.class);
+            startActivity(intent);
+        });
+
         // Initialize the buttons
         btnEdit1 = findViewById(R.id.btnEdit1);
         btnEdit2 = findViewById(R.id.btnEdit2);
@@ -56,14 +85,14 @@ public class HomeAdminActivity extends BaseAdminActivity{
         btnEdit1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeAdminActivity.this, EditUserAdminActivity.class);
+                Intent intent = new Intent(HomeAdminActivity.this, ManageAccountAdminActivity.class);
                 startActivity(intent);
             }
         });
         btnEdit2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeAdminActivity.this, EditUserAdminActivity.class);
+                Intent intent = new Intent(HomeAdminActivity.this, ManageAccountAdminActivity.class);
                 startActivity(intent);
             }
         });

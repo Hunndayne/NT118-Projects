@@ -16,8 +16,8 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <include
-        android:id="@+id/footerAdmin"
-        layout="@layout/footer_admin"
+        android:id="@+id/footerTeacher"
+        layout="@layout/footer_teacher"
         android:layout_width="match_parent"
         android:layout_height="74dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,7 +28,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/headerAdmin"
-        app:layout_constraintBottom_toTopOf="@+id/footerAdmin"
+        app:layout_constraintBottom_toTopOf="@+id/footerTeacher"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:fillViewport="true">
@@ -203,13 +203,19 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="8dp"/>
 
-                <include layout="@layout/item_submission" />
+                <include
+                    android:id="@+id/cardSubmission0"
+                    layout="@layout/item_submission" />
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardSubmission1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="2dp"
                     app:cardBackgroundColor="@color/background_card">
@@ -268,10 +274,14 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardSubmission2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="2dp"
                     app:cardBackgroundColor="@color/background_card">

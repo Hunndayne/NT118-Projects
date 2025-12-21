@@ -187,8 +187,9 @@
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
+    <include
         android:id="@+id/footerTeacher"
+        layout="@layout/footer_teacher"
         android:layout_width="match_parent"
         android:layout_height="74dp"
         android:orientation="horizontal"
@@ -201,124 +202,6 @@
         android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <LinearLayout
-            android:id="@+id/btnDashboard_teacher"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless">
-
-            <ImageView
-                android:id="@+id/icDashboard_teacher"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_dashboard"
-                android:contentDescription="Dashboard"
-                app:tint="@color/icon_tint" />
-
-            <TextView
-                android:id="@+id/tvDashboard_teacher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dashboard"
-                android:textSize="11sp"
-                android:textColor="@color/text_primary"
-                android:layout_marginTop="2dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnCourses_teacher"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless">
-
-            <ImageView
-                android:id="@+id/icCourses_teacher"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_courses"
-                android:contentDescription="Courses"
-                app:tint="@color/icon_tint" />
-
-            <TextView
-                android:id="@+id/tvCourses_teacher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Courses"
-                android:textSize="11sp"
-                android:textColor="@color/text_primary"
-                android:layout_marginTop="2dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnSchedule_teacher"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless">
-
-            <ImageView
-                android:id="@+id/icSchedule_teacher"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_schedule"
-                android:contentDescription="Schedule"
-                app:tint="@color/icon_tint" />
-
-            <TextView
-                android:id="@+id/tvSchedule_teacher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Schedule"
-                android:textSize="11sp"
-                android:textColor="@color/text_primary"
-                android:layout_marginTop="2dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnMenu_teacher"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless">
-
-            <ImageView
-                android:id="@+id/icMenu_teacher"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:src="@drawable/ic_menu"
-                android:contentDescription="Menu"
-                app:tint="@color/icon_tint" />
-
-            <TextView
-                android:id="@+id/tvMenu_teacher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Menu"
-                android:textSize="11sp"
-                android:textColor="@color/text_primary"
-                android:layout_marginTop="2dp" />
-        </LinearLayout>
-
-    </LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,8 +17,8 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <include
-        android:id="@+id/footerAdmin"
-        layout="@layout/footer_admin"
+        android:id="@+id/footerTeacher"
+        layout="@layout/footer_teacher"
         android:layout_width="match_parent"
         android:layout_height="74dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,7 +31,7 @@
         android:layout_height="0dp"
         android:background="@color/background_secondary"
         app:layout_constraintTop_toBottomOf="@id/headerAdmin"
-        app:layout_constraintBottom_toTopOf="@+id/footerAdmin"
+        app:layout_constraintBottom_toTopOf="@+id/footerTeacher"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:fillViewport="true">
