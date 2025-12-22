@@ -71,7 +71,7 @@ public class User {
 	@Column(name = "is_admin", nullable = false)
 	private boolean admin = false;
 
-	@Enumerated(EnumType.STRING)
+	@Convert(converter = UserRoleConverter.class)
 	@Column(name = "role", nullable = false, columnDefinition = "user_role")
 	@Builder.Default
 	private UserRole role = UserRole.STUDENT;

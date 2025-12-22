@@ -126,8 +126,10 @@ public class UserService {
     }
 
     public User loadUserEntity(Long userId) {
-        return userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        effectiveRole(user);
+        return user;
     }
 
     public UserResponse getUserByIdForAdmin(String rawToken, Long userId) {
@@ -371,12 +373,13 @@ public class UserService {
         user.setLastLoginAt(now);
         userRepository.save(user);
 
+        UserRole role = effectiveRole(user);
         return LoginResponse.builder()
                 .token(rawToken)
                 .tokenType(TokenType.ACCESS.getDbValue())
                 .expiresAt(expiresAt)
-                .admin(user.isSuperAdmin())
-                .role(user.getRole().name())
+                .admin(role.isSuperAdmin())
+                .role(role.name())
                 .build();
     }
 
@@ -388,7 +391,8 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User account is inactive");
         }
 
-        return new TokenStatusResponse(true, user.isSuperAdmin(), authToken.getExpiresAt());
+        UserRole role = effectiveRole(user);
+        return new TokenStatusResponse(true, role.isSuperAdmin(), authToken.getExpiresAt(), role.name());
     }
 
     public void logout(String rawToken) {
@@ -410,6 +414,8 @@ public class UserService {
         String phoneNumber = Optional.ofNullable(trimToNull(user.getPhoneNumber()))
                 .orElseGet(() -> trimToNull(user.getPhone()));
 
+        UserRole role = effectiveRole(user);
+
         return UserResponse.builder()
                 .id(publicId)
                 .username(user.getUsername())
@@ -426,8 +432,8 @@ public class UserService {
                 .phoneNumber(phoneNumber)
                 .avatarUrl(avatarUrl)
                 .active(user.isActive())
-                .admin(user.isSuperAdmin())
-                .role(user.getRole().name())
+                .admin(role.isSuperAdmin())
+                .role(role.name())
                 .createdAt(user.getCreatedAt())
                 .lastLoginAt(user.getLastLoginAt())
                 .build();
@@ -455,17 +461,22 @@ public class UserService {
     }
 
     private User loadUserWithProfile(Long userId) {
-        return userRepository.findWithProfileById(userId)
+        User user = userRepository.findWithProfileById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        effectiveRole(user);
+        return user;
     }
 
     private User loadUserWithProfileByIdentifier(Long identifier) {
         Optional<User> byId = userRepository.findWithProfileById(identifier);
         if (byId.isPresent()) {
+            effectiveRole(byId.get());
             return byId.get();
         }
-        return userRepository.findWithProfileByLegacyUserId(identifier)
+        User user = userRepository.findWithProfileByLegacyUserId(identifier)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        effectiveRole(user);
+        return user;
     }
 
     private void recomputeFullName(User user) {
@@ -488,10 +499,19 @@ public class UserService {
 
     private UserRole parseRole(String role) {
         try {
-            return UserRole.valueOf(role.trim().toUpperCase());
+            return UserRole.fromString(role);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid role value");
         }
+    }
+
+    private UserRole effectiveRole(User user) {
+        if (user.getRole() != null) {
+            return user.getRole();
+        }
+        UserRole derived = user.isAdmin() ? UserRole.SUPER_ADMIN : UserRole.STUDENT;
+        user.setRole(derived);
+        return derived;
     }
 
     private AuthToken resolveActiveToken(String rawToken) {

@@ -58,6 +58,15 @@ public class ClassService {
 			classes = classRepository.findAll();
 		} else if (requester.isTeacher()) {
 			classes = classRepository.findDistinctByTeachers_Id(requester.getId());
+		} else if (requester.isStudent()) {
+			List<Long> courseIds = courseRepository.findDistinctByStudents_Id(requester.getId())
+					.stream()
+					.map(c -> c.getId())
+					.toList();
+			if (courseIds.isEmpty()) {
+				return List.of();
+			}
+			classes = classRepository.findDistinctByCourse_IdIn(courseIds);
 		} else {
 			classes = new ArrayList<>();
 		}
@@ -74,6 +83,9 @@ public class ClassService {
 			return toResponse(entity);
 		}
 		if (requester.isTeacher() && entity.getTeachers().stream().anyMatch(t -> t.getId().equals(requester.getId()))) {
+			return toResponse(entity);
+		}
+		if (requester.isStudent() && isStudentInCourse(requester, entity)) {
 			return toResponse(entity);
 		}
 		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied for this class");
@@ -169,6 +181,13 @@ public class ClassService {
 	private Course loadCourse(Long courseId) {
 		return courseRepository.findById(courseId)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found"));
+	}
+
+	private boolean isStudentInCourse(User student, ClassEntity clazz) {
+		if (clazz.getCourse() == null || clazz.getCourse().getId() == null) {
+			return false;
+		}
+		return courseRepository.findByIdAndStudents_Id(clazz.getCourse().getId(), student.getId()).isPresent();
 	}
 
 	private ClassEntity loadClass(Long classId) {
