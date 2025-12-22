@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_edit_account"
+        android:title="Chỉnh sửa tài khoản"
+        android:icon="@android:drawable/ic_menu_edit" />
+    
+    <item
+        android:id="@+id/menu_logout"
+        android:title="Đăng xuất"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel" />
+</menu>

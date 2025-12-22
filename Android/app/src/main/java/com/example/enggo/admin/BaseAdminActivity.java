@@ -6,9 +6,11 @@ import com.example.enggo.database.Database;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -65,12 +67,54 @@ public abstract class BaseAdminActivity extends AppCompatActivity {
             }
         });
 
-        // 4. Nút Avatar Admin
+        // 4. Nút Avatar Admin - Show popup menu
         imgAvatar.setOnClickListener(v -> {
-            // Cọu sẽ tạo một AdminProfileActivity.java sau
-            // Intent intent = new Intent(this, AdminProfileActivity.class);
-            // startActivity(intent);
+            showAvatarMenu(v);
         });
+    }
+
+    // ========================================================
+    // SHOW AVATAR MENU
+    // ========================================================
+    private void showAvatarMenu(android.view.View anchor) {
+        PopupMenu popupMenu = new PopupMenu(this, anchor);
+        popupMenu.getMenuInflater().inflate(R.menu.avatar_menu, popupMenu.getMenu());
+        
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int itemId = item.getItemId();
+                
+                if (itemId == R.id.menu_edit_account) {
+                    // Mở màn hình chỉnh sửa tài khoản
+                    Intent intent = new Intent(BaseAdminActivity.this, EditUserAdminActivity.class);
+                    startActivity(intent);
+                    return true;
+                } else if (itemId == R.id.menu_logout) {
+                    // Xử lý đăng xuất
+                    handleLogout();
+                    return true;
+                }
+                return false;
+            }
+        });
+        
+        popupMenu.show();
+    }
+
+    // ========================================================
+    // HANDLE LOGOUT
+    // ========================================================
+    private void handleLogout() {
+        // Xóa token khỏi database
+        Database.Dao dao = new Database.Dao(this);
+        dao.deleteAll();
+        
+        // Chuyển về màn hình đăng nhập
+        Intent intent = new Intent(this, com.example.enggo.auth.LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     // ========================================================

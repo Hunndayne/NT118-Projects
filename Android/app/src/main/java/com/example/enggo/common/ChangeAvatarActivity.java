@@ -1,10 +1,11 @@
-package com.example.enggo.user;
+package com.example.enggo.common;
 import com.example.enggo.R;
+import com.example.enggo.user.BaseUserActivity;
 
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class ChangeAvatarUserActivity extends BaseUserActivity {
+public class ChangeAvatarActivity extends BaseUserActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

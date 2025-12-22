@@ -1,4 +1,4 @@
-package com.example.enggo.user;
+package com.example.enggo.auth;
 import com.example.enggo.R;
 
 import android.text.Editable;
