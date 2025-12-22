@@ -1,5 +1,6 @@
 package com.example.enggo.user;
 import com.example.enggo.R;
+import com.example.enggo.common.ChangeAvatarActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ public class EditInformationUserActivity extends BaseUserActivity {
         setupFooter();
         LinearLayout userInfoLayout = findViewById(R.id.userInfoLayout);
         userInfoLayout.setOnClickListener(v -> {
-            Intent intent = new Intent(EditInformationUserActivity.this, ChangeAvatarUserActivity.class);
+            Intent intent = new Intent(EditInformationUserActivity.this, ChangeAvatarActivity.class);
             startActivity(intent);
         });
     }

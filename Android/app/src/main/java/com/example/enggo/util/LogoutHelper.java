@@ -7,7 +7,7 @@ import android.util.Log;
 import com.example.enggo.api.ApiClient;
 import com.example.enggo.api.ApiService;
 import com.example.enggo.database.Database;
-import com.example.enggo.user.LoginActivity;
+import com.example.enggo.auth.LoginActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
