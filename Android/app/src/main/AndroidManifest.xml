@@ -14,11 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EngGo"
         android:usesCleartextTraffic="true">
+
+
         <activity
             android:name=".auth.LoginActivity"
-            android:exported="false">
+            android:exported="false" />
 
-        </activity>
 
         <activity
             android:name=".user.HomeUserActivity"
@@ -66,6 +67,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <activity
             android:name=".admin.ManageCoursesAdminActivity"
@@ -135,6 +137,7 @@
         <activity
             android:name=".teacher.ScheduleTeacherActivity"
             android:exported="false"/>
+
         <activity
             android:name=".teacher.SubmissionListActivity"
             android:exported="false"/>
