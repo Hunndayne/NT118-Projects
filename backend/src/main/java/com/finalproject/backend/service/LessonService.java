@@ -12,6 +12,7 @@ import com.finalproject.backend.entity.User;
 import com.finalproject.backend.repository.ClassRepository;
 import com.finalproject.backend.repository.LessonRepository;
 import com.finalproject.backend.repository.LessonResourceRepository;
+import com.finalproject.backend.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class LessonService {
 	private final LessonRepository lessonRepository;
 	private final LessonResourceRepository lessonResourceRepository;
 	private final ClassRepository classRepository;
+	private final CourseRepository courseRepository;
 	private final UserService userService;
 
 	@Transactional(readOnly = true)
@@ -205,6 +207,9 @@ public class LessonService {
 		if (user.isTeacher() && isTeacher) {
 			return;
 		}
+		if (user.isStudent() && isStudentInCourse(user, clazz)) {
+			return;
+		}
 		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied for this class");
 	}
 
@@ -217,6 +222,13 @@ public class LessonService {
 			return;
 		}
 		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Teacher or super_admin required for this class");
+	}
+
+	private boolean isStudentInCourse(User student, ClassEntity clazz) {
+		if (clazz.getCourse() == null || clazz.getCourse().getId() == null) {
+			return false;
+		}
+		return courseRepository.findByIdAndStudents_Id(clazz.getCourse().getId(), student.getId()).isPresent();
 	}
 
 	private LessonResponse toResponseWithResources(Lesson lesson) {
