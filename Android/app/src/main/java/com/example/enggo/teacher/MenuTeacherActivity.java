@@ -3,7 +3,7 @@ package com.example.enggo.teacher;
 import com.example.enggo.R;
 import com.example.enggo.user.EditInformationUserActivity;
 import com.example.enggo.user.ProfileUserActivity;
-import com.example.enggo.user.ChangePasswordActivity;
+import com.example.enggo.auth.ChangePasswordActivity;
 
 import android.content.Intent;
 import android.os.Bundle;

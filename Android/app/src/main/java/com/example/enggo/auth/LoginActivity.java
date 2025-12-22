@@ -1,4 +1,4 @@
-package com.example.enggo.user;
+package com.example.enggo.auth;
 
 import com.example.enggo.R;
 
@@ -19,6 +19,7 @@ import com.example.enggo.api.ApiService;
 import com.example.enggo.api.LoginRequest;
 import com.example.enggo.api.LoginResponse;
 import com.example.enggo.database.Database;
+import com.example.enggo.user.HomeUserActivity;
 
 import java.util.Date;
 

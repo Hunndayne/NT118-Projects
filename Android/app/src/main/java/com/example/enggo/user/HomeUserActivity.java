@@ -1,5 +1,6 @@
 package com.example.enggo.user;
 import com.example.enggo.R;
+import com.example.enggo.common.ImageSliderAdapter;
 
 import android.content.Intent;
 import android.os.Bundle;

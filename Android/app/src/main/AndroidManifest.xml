@@ -15,7 +15,7 @@
         android:theme="@style/Theme.EngGo"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".user.LoginActivity"
+            android:name=".auth.LoginActivity"
             android:exported="false">
 
         </activity>
@@ -42,10 +42,10 @@
             android:name=".user.ClassUserActivity"
             android:exported="false"/>
         <activity
-            android:name=".user.ChangeAvatarUserActivity"
+            android:name=".common.ChangeAvatarActivity"
             android:exported="false"/>
         <activity
-            android:name=".user.ChangePasswordActivity"
+            android:name=".auth.ChangePasswordActivity"
             android:exported="false"/>
         <activity
             android:name=".user.SubmitHomeworkUserActivity"

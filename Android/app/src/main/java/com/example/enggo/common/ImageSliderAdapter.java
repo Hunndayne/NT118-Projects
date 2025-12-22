@@ -1,4 +1,4 @@
-package com.example.enggo.user; // Phải trùng package với HomeActivity
+package com.example.enggo.common;
 import com.example.enggo.R;
 
 import android.view.LayoutInflater;

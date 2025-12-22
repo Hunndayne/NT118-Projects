@@ -1,5 +1,7 @@
 package com.example.enggo.user;
 import com.example.enggo.R;
+import com.example.enggo.auth.ChangePasswordActivity;
+import com.example.enggo.common.ChangeAvatarActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -67,7 +69,7 @@ public class MenuUserActivity extends BaseUserActivity {
         });
         ImageView imAvatar = findViewById(R.id.imAvatar);
         imAvatar.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuUserActivity.this, ChangeAvatarUserActivity.class);
+            Intent intent = new Intent(MenuUserActivity.this, ChangeAvatarActivity.class);
             startActivity(intent);
         });
         LinearLayout userInfoLayout = findViewById(R.id.userInfoLayout);
