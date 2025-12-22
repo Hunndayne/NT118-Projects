@@ -72,4 +72,7 @@
     <string name="button_update_profile">Update Profile</string>
 
     <string name="demo_notification_item">ĐONG HOC PHI!</string>
+
+    <string name="log_out">Log Out</string>
+    <string name="account_settings">Account Settings</string>
 </resources>
