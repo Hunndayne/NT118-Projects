@@ -6,6 +6,7 @@ import com.example.enggo.api.ApiService;
 import com.example.enggo.admin.CourseAdmin;
 import com.example.enggo.admin.UpdateCourseRequest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +33,7 @@ public class EditCourseAdminActivity extends BaseAdminActivity {
         etCode = findViewById(R.id.etClassCode);
         Button btnSave = findViewById(R.id.buttonSaveCourse);
         Button btnCancel = findViewById(R.id.buttonCancelCourse);
+        Button btnParticipants = findViewById(R.id.buttonParticipantsList);
 
         courseId = getIntent().getLongExtra("COURSE_ID", -1);
 
@@ -46,6 +48,11 @@ public class EditCourseAdminActivity extends BaseAdminActivity {
         btnSave.setOnClickListener(v -> updateCourse());
 
         btnCancel.setOnClickListener(v -> finish());
+        btnParticipants.setOnClickListener(v -> {
+            Intent intent = new Intent(EditCourseAdminActivity.this, CoursesParticipantAdmin.class);
+            intent.putExtra(CoursesParticipantAdmin.EXTRA_COURSE_ID, courseId);
+            startActivity(intent);
+        });
     }
 
     private void loadCourseDetail() {

@@ -6,6 +6,7 @@ import com.example.enggo.api.ApiService;
 import com.example.enggo.admin.CreateCourseRequest;
 import com.example.enggo.admin.CourseAdmin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +30,12 @@ public class CreateCourseAdminActivity extends BaseAdminActivity {
         EditText etCode = findViewById(R.id.etClassCode_admin);
 
         Button btnCancel = findViewById(R.id.buttonCancelCourseCreate_admin);
+
+        Button btnParticipants = findViewById(R.id.buttonParticipantsList_admin);
+        btnParticipants.setOnClickListener(v -> {
+            Toast.makeText(this, "Create the course first, then add participants", Toast.LENGTH_SHORT).show();
+        });
+
         Button btnCreate = findViewById(R.id.buttonCreateCourse_admin);
 
         btnCancel.setOnClickListener(v -> finish());

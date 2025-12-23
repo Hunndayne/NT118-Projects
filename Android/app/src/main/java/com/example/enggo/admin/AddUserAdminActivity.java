@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -22,7 +22,7 @@ import retrofit2.Response;
 public class AddUserAdminActivity extends BaseAdminActivity {
 
     private EditText etUsername, etFirstName, etLastName, etEmail, etPhone, etPassword;
-    private RadioButton rbIsAdmin;
+    private RadioGroup rgRole;
     private ApiService apiService;
     private Database.Dao dao;
 
@@ -40,7 +40,7 @@ public class AddUserAdminActivity extends BaseAdminActivity {
         etEmail = findViewById(R.id.etEmailCreateUsr_Admin);
         etPhone = findViewById(R.id.etPhoneNumberCreateUsr_Admin);
         etPassword = findViewById(R.id.etPasswordCreateUsr_Admin);
-        rbIsAdmin = findViewById(R.id.rbIsAdminCreateUsr_Admin);
+        rgRole = findViewById(R.id.rgRoleCreateUsr_Admin);
 
         Button btnCreate = findViewById(R.id.buttonCreateUsr_Admin);
         Button btnCancel = findViewById(R.id.buttonCancelCreateUsr_Admin);
@@ -60,7 +60,7 @@ public class AddUserAdminActivity extends BaseAdminActivity {
         String email = etEmail.getText().toString().trim();
         String phone = etPhone.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-        boolean isAdmin = rbIsAdmin.isChecked();
+        String role = getSelectedRole();
 
         if (TextUtils.isEmpty(username)
                 || TextUtils.isEmpty(firstName)
@@ -81,7 +81,8 @@ public class AddUserAdminActivity extends BaseAdminActivity {
         req.emailAddress = email;
         req.phoneNumber = phone;
         req.password = password;
-        req.admin = isAdmin;
+        req.role = role;
+        req.admin = "SUPER_ADMIN".equals(role);
 
         apiService.createUser(token, req)
                 .enqueue(new Callback<UserAdmin>() {
@@ -117,5 +118,16 @@ public class AddUserAdminActivity extends BaseAdminActivity {
                         ).show();
                     }
                 });
+    }
+
+    private String getSelectedRole() {
+        int checkedId = rgRole.getCheckedRadioButtonId();
+        if (checkedId == R.id.rbRoleAdminCreateUsr_Admin) {
+            return "SUPER_ADMIN";
+        }
+        if (checkedId == R.id.rbRoleTeacherCreateUsr_Admin) {
+            return "TEACHER";
+        }
+        return "STUDENT";
     }
 }
