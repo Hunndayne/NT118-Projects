@@ -9,10 +9,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 import com.example.enggo.R;
+import com.example.enggo.api.ApiClient;
+import com.example.enggo.api.ApiService;
+import com.example.enggo.admin.UserAdmin;
 
 public class MenuAdminActivity extends BaseAdminActivity {
 
@@ -53,6 +57,38 @@ public class MenuAdminActivity extends BaseAdminActivity {
         adminInfoLayout.setOnClickListener(v -> {
             Intent intent = new Intent(MenuAdminActivity.this, ManageAccountAdminActivity.class);
             startActivity(intent);
+        });
+
+        TextView tvAdminName = findViewById(R.id.tvAdminName);
+        loadAdminName(tvAdminName);
+    }
+
+    private void loadAdminName(TextView tvAdminName) {
+        String token = getTokenFromDb();
+        if (token == null) {
+            return;
+        }
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.getCurrentUser(token).enqueue(new retrofit2.Callback<UserAdmin>() {
+            @Override
+            public void onResponse(retrofit2.Call<UserAdmin> call,
+                                   retrofit2.Response<UserAdmin> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String name = response.body().getFullName();
+                    if (name == null || name.trim().isEmpty()) {
+                        name = response.body().getUsername();
+                    }
+                    if (name != null && !name.trim().isEmpty()) {
+                        tvAdminName.setText(name);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<UserAdmin> call, Throwable t) {
+                // Keep default label on failure.
+            }
         });
     }
 }
