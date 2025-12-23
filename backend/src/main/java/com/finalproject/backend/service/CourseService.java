@@ -231,7 +231,8 @@ public class CourseService {
 		return new CourseParticipantResponse(
 				user.getId(),
 				user.getFirstName(),
-				user.getLastName()
+				user.getLastName(),
+				user.getRole() != null ? user.getRole().name() : null
 		);
 	}
 

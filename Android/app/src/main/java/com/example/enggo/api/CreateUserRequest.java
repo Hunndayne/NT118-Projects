@@ -8,5 +8,6 @@ public class CreateUserRequest {
     public String lastName;
     public String phoneNumber;
     public boolean admin;
+    public String role;
 }
 
