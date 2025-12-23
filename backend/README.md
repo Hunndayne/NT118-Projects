@@ -38,6 +38,9 @@
 | `/classes/{classId}/lessons/{lessonId}/resources/{resourceId}` | PUT | SUPER_ADMIN hoặc TEACHER của lớp | Cập nhật tài nguyên | Header `X-Auth-Token`; Body optional `{"type","title","content","url","filePath"}` | 200: `LessonResourceResponse` |
 | `/classes/{classId}/lessons/{lessonId}/resources/{resourceId}` | DELETE | SUPER_ADMIN hoặc TEACHER của lớp | Xoá tài nguyên | Header `X-Auth-Token` | 200 empty |
 | `/calendar/events` | GET | SUPER_ADMIN/TEACHER/STUDENT | Lịch tổng hợp (deadline assignment): admin thấy tất cả, teacher thấy lớp mình dạy, student thấy khoá đã đăng ký | Header `X-Auth-Token` | 200: `CalendarEventResponse[]` (mỗi event: id, title, description, deadline, classId/name, courseId/name, weight, createdBy, createdAt) |
+| `/assignments/{assignmentId}/submissions` | POST | STUDENT của khoá chứa lớp của assignment | Nộp bài: Body `{"content","fileUrl"}` | 200: `SubmissionResponse` |
+| `/assignments/{assignmentId}/submissions/{submissionId}` | GET | SUPER_ADMIN, TEACHER của lớp, hoặc chính STUDENT nộp bài | Xem bài nộp | 200: `SubmissionResponse` |
+| `/assignments/{assignmentId}/submissions/{submissionId}/grade` | PUT | SUPER_ADMIN hoặc TEACHER của lớp | Chấm điểm/feedback | Body `{"score","feedback","status"}` | 200: `SubmissionResponse` |
 
 Ghi chú:
 - Context-path `/api`, ví dụ login: `POST /api/auth/login`.
