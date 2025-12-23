@@ -6,6 +6,7 @@ import com.finalproject.backend.dto.request.LessonUpdateRequest;
 import com.finalproject.backend.dto.response.LessonResourceResponse;
 import com.finalproject.backend.dto.response.LessonResponse;
 import com.finalproject.backend.entity.ClassEntity;
+import com.finalproject.backend.entity.Course;
 import com.finalproject.backend.entity.Lesson;
 import com.finalproject.backend.entity.LessonResource;
 import com.finalproject.backend.entity.User;
@@ -35,10 +36,11 @@ public class LessonService {
 	@Transactional(readOnly = true)
 	public List<LessonResponse> getLessons(String token, Long classId) {
 		User requester = userService.getAuthenticatedUserEntity(token);
-		ClassEntity clazz = loadClassWithTeachers(classId);
+		ClassEntity clazz = resolveClass(classId);
 		requireAccessToClass(requester, clazz);
 
-		return lessonRepository.findByClazz_IdOrderByOrderIndexAsc(classId)
+		Long resolvedClassId = clazz.getId();
+		return lessonRepository.findByClazz_IdOrderByOrderIndexAsc(resolvedClassId)
 				.stream()
 				.map(this::toResponseWithResources)
 				.collect(Collectors.toList());
@@ -47,10 +49,11 @@ public class LessonService {
 	@Transactional(readOnly = true)
 	public LessonResponse getLesson(String token, Long classId, Long lessonId) {
 		User requester = userService.getAuthenticatedUserEntity(token);
-		ClassEntity clazz = loadClassWithTeachers(classId);
+		ClassEntity clazz = resolveClass(classId);
 		requireAccessToClass(requester, clazz);
 
-		Lesson lesson = lessonRepository.findByIdAndClazz_Id(lessonId, classId)
+		Long resolvedClassId = clazz.getId();
+		Lesson lesson = lessonRepository.findByIdAndClazz_Id(lessonId, resolvedClassId)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Lesson not found"));
 		return toResponseWithResources(lesson);
 	}
@@ -58,7 +61,7 @@ public class LessonService {
 	@Transactional
 	public LessonResponse createLesson(String token, Long classId, LessonCreateRequest request) {
 		User creator = userService.getAuthenticatedUserEntity(token);
-		ClassEntity clazz = loadClassWithTeachers(classId);
+		ClassEntity clazz = resolveClass(classId);
 		requireTeacherOrAdmin(creator, clazz);
 
 		Lesson lesson = Lesson.builder()
@@ -76,10 +79,11 @@ public class LessonService {
 	@Transactional
 	public LessonResponse updateLesson(String token, Long classId, Long lessonId, LessonUpdateRequest request) {
 		User updater = userService.getAuthenticatedUserEntity(token);
-		ClassEntity clazz = loadClassWithTeachers(classId);
+		ClassEntity clazz = resolveClass(classId);
 		requireTeacherOrAdmin(updater, clazz);
 
-		Lesson lesson = lessonRepository.findByIdAndClazz_Id(lessonId, classId)
+		Long resolvedClassId = clazz.getId();
+		Lesson lesson = lessonRepository.findByIdAndClazz_Id(lessonId, resolvedClassId)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Lesson not found"));
 
 		if (request.getTitle() != null) {
@@ -99,20 +103,22 @@ public class LessonService {
 	@Transactional
 	public void deleteLesson(String token, Long classId, Long lessonId) {
 		User deleter = userService.getAuthenticatedUserEntity(token);
-		ClassEntity clazz = loadClassWithTeachers(classId);
+		ClassEntity clazz = resolveClass(classId);
 		requireTeacherOrAdmin(deleter, clazz);
 
-		Lesson lesson = lessonRepository.findByIdAndClazz_Id(lessonId, classId)
+		Long resolvedClassId = clazz.getId();
+		Lesson lesson = lessonRepository.findByIdAndClazz_Id(lessonId, resolvedClassId)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Lesson not found"));
+		lessonResourceRepository.deleteByLesson_Id(lesson.getId());
 		lessonRepository.delete(lesson);
 	}
 
 	@Transactional(readOnly = true)
 	public List<LessonResourceResponse> getResources(String token, Long classId, Long lessonId) {
 		User requester = userService.getAuthenticatedUserEntity(token);
-		ClassEntity clazz = loadClassWithTeachers(classId);
+		ClassEntity clazz = resolveClass(classId);
 		requireAccessToClass(requester, clazz);
-		ensureLessonExists(lessonId, classId);
+		ensureLessonExists(lessonId, clazz.getId());
 
 		return lessonResourceRepository.findByLesson_Id(lessonId)
 				.stream()
@@ -123,10 +129,10 @@ public class LessonService {
 	@Transactional
 	public LessonResourceResponse addResource(String token, Long classId, Long lessonId, LessonResourceRequest request) {
 		User actor = userService.getAuthenticatedUserEntity(token);
-		ClassEntity clazz = loadClassWithTeachers(classId);
+		ClassEntity clazz = resolveClass(classId);
 		requireTeacherOrAdmin(actor, clazz);
 
-		Lesson lesson = ensureLessonExists(lessonId, classId);
+		Lesson lesson = ensureLessonExists(lessonId, clazz.getId());
 
 		LessonResource resource = LessonResource.builder()
 				.lesson(lesson)
@@ -144,10 +150,10 @@ public class LessonService {
 	@Transactional
 	public LessonResourceResponse updateResource(String token, Long classId, Long lessonId, Long resourceId, LessonResourceRequest request) {
 		User actor = userService.getAuthenticatedUserEntity(token);
-		ClassEntity clazz = loadClassWithTeachers(classId);
+		ClassEntity clazz = resolveClass(classId);
 		requireTeacherOrAdmin(actor, clazz);
 
-		ensureLessonExists(lessonId, classId);
+		ensureLessonExists(lessonId, clazz.getId());
 
 		LessonResource resource = lessonResourceRepository.findByIdAndLesson_Id(resourceId, lessonId)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource not found"));
@@ -175,10 +181,10 @@ public class LessonService {
 	@Transactional
 	public void deleteResource(String token, Long classId, Long lessonId, Long resourceId) {
 		User actor = userService.getAuthenticatedUserEntity(token);
-		ClassEntity clazz = loadClassWithTeachers(classId);
+		ClassEntity clazz = resolveClass(classId);
 		requireTeacherOrAdmin(actor, clazz);
 
-		ensureLessonExists(lessonId, classId);
+		ensureLessonExists(lessonId, clazz.getId());
 
 		LessonResource resource = lessonResourceRepository.findByIdAndLesson_Id(resourceId, lessonId)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource not found"));
@@ -194,6 +200,25 @@ public class LessonService {
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found"));
 	}
 
+	private ClassEntity resolveClass(Long classIdOrCourseId) {
+		ClassEntity clazz = classRepository.findById(classIdOrCourseId)
+				.orElseGet(() -> classRepository.findFirstByCourse_Id(classIdOrCourseId));
+		if (clazz == null) {
+			Course course = courseRepository.findById(classIdOrCourseId)
+					.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found"));
+			clazz = ClassEntity.builder()
+					.name(course.getName())
+					.description(course.getDescription())
+					.active(course.getActive())
+					.course(course)
+					.createdBy(course.getCreatedBy())
+					.build();
+			clazz = classRepository.save(clazz);
+		}
+		clazz.getTeachers().size(); // init teachers
+		return clazz;
+	}
+
 	private Lesson ensureLessonExists(Long lessonId, Long classId) {
 		return lessonRepository.findByIdAndClazz_Id(lessonId, classId)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Lesson not found"));
@@ -207,7 +232,10 @@ public class LessonService {
 		if (user.isTeacher() && isTeacher) {
 			return;
 		}
-		if (user.isStudent() && isStudentInCourse(user, clazz)) {
+		if (user.isTeacher() && isUserInCourse(user, clazz)) {
+			return;
+		}
+		if (user.isStudent() && isUserInCourse(user, clazz)) {
 			return;
 		}
 		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied for this class");
@@ -221,14 +249,17 @@ public class LessonService {
 		if (user.isTeacher() && isTeacher) {
 			return;
 		}
+		if (user.isTeacher() && isUserInCourse(user, clazz)) {
+			return;
+		}
 		throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Teacher or super_admin required for this class");
 	}
 
-	private boolean isStudentInCourse(User student, ClassEntity clazz) {
+	private boolean isUserInCourse(User user, ClassEntity clazz) {
 		if (clazz.getCourse() == null || clazz.getCourse().getId() == null) {
 			return false;
 		}
-		return courseRepository.findByIdAndStudents_Id(clazz.getCourse().getId(), student.getId()).isPresent();
+		return courseRepository.findByIdAndStudents_Id(clazz.getCourse().getId(), user.getId()).isPresent();
 	}
 
 	private LessonResponse toResponseWithResources(Lesson lesson) {
