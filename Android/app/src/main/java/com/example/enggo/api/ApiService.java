@@ -7,6 +7,10 @@ import com.example.enggo.admin.CreateCourseRequest;
 import com.example.enggo.admin.UpdateCourseRequest;
 import com.example.enggo.admin.UserAdmin;
 import com.example.enggo.teacher.ClassResponse;
+import com.example.enggo.teacher.LessonCreateRequest;
+import com.example.enggo.teacher.LessonResponse;
+import com.example.enggo.teacher.LessonResourceRequest;
+import com.example.enggo.teacher.LessonUpdateRequest;
 
 import java.util.List;
 
@@ -76,6 +80,37 @@ public interface ApiService {
     @GET("classes")
     Call<List<ClassResponse>> getClasses(
             @Header("X-Auth-Token") String token
+    );
+    @GET("classes/{classId}/lessons")
+    Call<List<LessonResponse>> getLessons(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId
+    );
+    @POST("classes/{classId}/lessons")
+    Call<LessonResponse> createLesson(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Body LessonCreateRequest request
+    );
+    @PUT("classes/{classId}/lessons/{lessonId}")
+    Call<LessonResponse> updateLesson(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Path("lessonId") Long lessonId,
+            @Body LessonUpdateRequest request
+    );
+    @DELETE("classes/{classId}/lessons/{lessonId}")
+    Call<Void> deleteLesson(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Path("lessonId") Long lessonId
+    );
+    @POST("classes/{classId}/lessons/{lessonId}/resources")
+    Call<Void> addLessonResource(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Path("lessonId") Long lessonId,
+            @Body LessonResourceRequest request
     );
     @GET("courses/{id}/participants")
     Call<List<CourseParticipant>> getCourseParticipants(

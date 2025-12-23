@@ -61,8 +61,11 @@ public class ClassCourseActivity extends BaseTeacherActivity {
 
         if (cardLessons != null) {
             cardLessons.setOnClickListener(v -> {
-                // Navigate to add lesson (in future: should show lesson list with add button)
-                Intent intent = new Intent(this, AddLessonTeacherActivity.class);
+                Intent intent = new Intent(this, ManageLessonsTeacherActivity.class);
+                intent.putExtra(ManageLessonsTeacherActivity.EXTRA_COURSE_ID,
+                        getIntent().getLongExtra("course_id", -1));
+                intent.putExtra(ManageLessonsTeacherActivity.EXTRA_COURSE_NAME,
+                        tvCourseName != null ? tvCourseName.getText().toString() : null);
                 startActivity(intent);
             });
         }

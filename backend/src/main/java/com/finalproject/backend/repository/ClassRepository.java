@@ -10,4 +10,5 @@ import java.util.List;
 public interface ClassRepository extends JpaRepository<ClassEntity, Long> {
 	List<ClassEntity> findDistinctByTeachers_Id(Long teacherId);
 	List<ClassEntity> findDistinctByCourse_IdIn(Iterable<Long> courseIds);
+	ClassEntity findFirstByCourse_Id(Long courseId);
 }

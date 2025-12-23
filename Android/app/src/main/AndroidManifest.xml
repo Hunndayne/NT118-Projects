@@ -151,6 +151,9 @@
             android:name=".teacher.AddLessonTeacherActivity"
             android:exported="false"/>
         <activity
+            android:name=".teacher.ManageLessonsTeacherActivity"
+            android:exported="false"/>
+        <activity
             android:name=".teacher.EditLessonTeacherActivity"
             android:exported="false"/>
         <activity
