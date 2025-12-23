@@ -19,6 +19,7 @@ public class Database {
         public static final String COLUMN_NAME_TITLE = "Token";
         public static final String COLUMN_NAME_DATE_TOKEN = "DateToken";
         public static final String COLUMN_NAME_IS_ADMIN = "IsAdmin";
+        public static final String COLUMN_NAME_ROLE = "Role";
     }
 
     /* ========================= Model ========================= */
@@ -28,14 +29,17 @@ public class Database {
         public String token;
         public long dateToken; // epoch millis
         public int isAdmin;    // 0/1
+        public String role;   // SUPER_ADMIN/TEACHER/STUDENT
 
-        public Item() {}
+        public Item() {
+        }
 
-        public Item(long id, String token, long dateToken, int isAdmin) {
+        public Item(long id, String token, long dateToken, int isAdmin, String role) {
             this.id = id;
             this.token = token;
             this.dateToken = dateToken;
             this.isAdmin = isAdmin;
+            this.role = role;
         }
     }
 
@@ -44,19 +48,20 @@ public class Database {
     public static class DbHelper extends SQLiteOpenHelper {
 
         private static final String DB_NAME = "app.db";
-        // v1: có cột URL; v2: bỏ cột URL
-        private static final int DB_VERSION = 2;
+        // v1: co cot URL; v2: bo cot URL
+        private static final int DB_VERSION = 3;
 
         public DbHelper(Context context) {
             super(context, DB_NAME, null, DB_VERSION);
         }
 
-        private static final String SQL_CREATE_ENTRIES_V2 =
+        private static final String SQL_CREATE_ENTRIES_V3 =
                 "CREATE TABLE " + FeedEntry.TABLE_NAME + " (" +
                         BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         FeedEntry.COLUMN_NAME_TITLE + " TEXT NOT NULL, " +
                         FeedEntry.COLUMN_NAME_DATE_TOKEN + " INTEGER NOT NULL, " +
-                        FeedEntry.COLUMN_NAME_IS_ADMIN + " INTEGER NOT NULL DEFAULT 0" +
+                        FeedEntry.COLUMN_NAME_IS_ADMIN + " INTEGER NOT NULL DEFAULT 0, " +
+                        FeedEntry.COLUMN_NAME_ROLE + " TEXT NOT NULL DEFAULT 'STUDENT'" +
                         ");";
 
         private static final String SQL_CREATE_INDEX_TOKEN =
@@ -69,7 +74,7 @@ public class Database {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(SQL_CREATE_ENTRIES_V2);
+            db.execSQL(SQL_CREATE_ENTRIES_V3);
             db.execSQL(SQL_CREATE_INDEX_TOKEN);
         }
 
@@ -77,6 +82,8 @@ public class Database {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             if (oldVersion < 2) {
                 migrateV1ToV2(db);
+            } else if (oldVersion < 3) {
+                migrateV2ToV3(db);
             }
         }
 
@@ -89,7 +96,8 @@ public class Database {
                         BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         FeedEntry.COLUMN_NAME_TITLE + " TEXT NOT NULL, " +
                         FeedEntry.COLUMN_NAME_DATE_TOKEN + " INTEGER NOT NULL, " +
-                        FeedEntry.COLUMN_NAME_IS_ADMIN + " INTEGER NOT NULL DEFAULT 0" +
+                        FeedEntry.COLUMN_NAME_IS_ADMIN + " INTEGER NOT NULL DEFAULT 0, " +
+                        FeedEntry.COLUMN_NAME_ROLE + " TEXT NOT NULL DEFAULT 'STUDENT'" +
                         ");");
 
                 // Copy the data from the old table to the new table.
@@ -110,15 +118,19 @@ public class Database {
                 db.execSQL("ALTER TABLE " + tempTable + " RENAME TO " + FeedEntry.TABLE_NAME);
 
                 db.execSQL(SQL_CREATE_INDEX_TOKEN);
-                
+
                 db.setTransactionSuccessful();
             } finally {
                 db.endTransaction();
             }
         }
+
+        private void migrateV2ToV3(SQLiteDatabase db) {
+            db.execSQL("ALTER TABLE " + FeedEntry.TABLE_NAME +
+                    " ADD COLUMN " + FeedEntry.COLUMN_NAME_ROLE +
+                    " TEXT NOT NULL DEFAULT 'STUDENT'");
+        }
     }
-
-
 
     public static class Dao {
 
@@ -128,14 +140,14 @@ public class Database {
             this.dbHelper = new DbHelper(context.getApplicationContext());
         }
 
-        // Thêm mới
+        // Them moi
         public long insert(Item item) {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             ContentValues values = toContentValues(item, false);
             return db.insert(FeedEntry.TABLE_NAME, null, values);
         }
 
-        // Cập nhật theo _ID
+        // Cap nhat theo _ID
         public int update(Item item) {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             ContentValues values = toContentValues(item, false);
@@ -144,7 +156,7 @@ public class Database {
             return db.update(FeedEntry.TABLE_NAME, values, where, args);
         }
 
-        // Xóa theo _ID
+        // Xoa theo _ID
         public int deleteById(long id) {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             String where = BaseColumns._ID + " = ?";
@@ -152,13 +164,13 @@ public class Database {
             return db.delete(FeedEntry.TABLE_NAME, where, args);
         }
 
-        // Xóa tất cả
+        // Xoa tat ca
         public int deleteAll() {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             return db.delete(FeedEntry.TABLE_NAME, null, null);
         }
 
-        // Lấy 1 bản ghi theo _ID
+        // Lay 1 ban ghi theo _ID
         public Item getById(long id) {
             SQLiteDatabase db = dbHelper.getReadableDatabase();
             String[] cols = projectionAll();
@@ -170,7 +182,7 @@ public class Database {
             return null;
         }
 
-        // Lấy theo Token
+        // Lay theo Token
         public Item getByToken(String token) {
             SQLiteDatabase db = dbHelper.getReadableDatabase();
             String[] cols = projectionAll();
@@ -194,7 +206,7 @@ public class Database {
             }
         }
 
-        // Lấy tất cả (mới nhất trước)
+        // Lay tat ca (moi nhat truoc)
         public List<Item> getAll() {
             SQLiteDatabase db = dbHelper.getReadableDatabase();
             String[] cols = projectionAll();
@@ -221,13 +233,13 @@ public class Database {
             return 0;
         }
 
-
         private static ContentValues toContentValues(Item item, boolean includeId) {
             ContentValues v = new ContentValues();
             if (includeId) v.put(BaseColumns._ID, item.id);
             v.put(FeedEntry.COLUMN_NAME_TITLE, item.token);
             v.put(FeedEntry.COLUMN_NAME_DATE_TOKEN, item.dateToken);
             v.put(FeedEntry.COLUMN_NAME_IS_ADMIN, item.isAdmin);
+            v.put(FeedEntry.COLUMN_NAME_ROLE, item.role == null ? "STUDENT" : item.role);
             return v;
         }
 
@@ -236,7 +248,8 @@ public class Database {
                     BaseColumns._ID,
                     FeedEntry.COLUMN_NAME_TITLE,
                     FeedEntry.COLUMN_NAME_DATE_TOKEN,
-                    FeedEntry.COLUMN_NAME_IS_ADMIN
+                    FeedEntry.COLUMN_NAME_IS_ADMIN,
+                    FeedEntry.COLUMN_NAME_ROLE
             };
         }
 
@@ -246,6 +259,7 @@ public class Database {
             item.token = c.getString(c.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_TITLE));
             item.dateToken = c.getLong(c.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_DATE_TOKEN));
             item.isAdmin = c.getInt(c.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_IS_ADMIN));
+            item.role = c.getString(c.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_ROLE));
             return item;
         }
     }

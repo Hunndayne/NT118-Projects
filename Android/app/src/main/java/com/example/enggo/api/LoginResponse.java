@@ -5,4 +5,5 @@ public class LoginResponse {
     public String tokenType;
     public String expiresAt;
     public boolean admin;
+    public String role;
 }

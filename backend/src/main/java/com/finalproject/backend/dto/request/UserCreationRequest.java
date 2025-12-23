@@ -35,6 +35,7 @@ public class UserCreationRequest {
 
 	private String interest;
     private Boolean admin;
+	private String role;
 
 	@NotBlank(message = "phoneNumber must not be blank")
 	@Pattern(regexp = "^\\d{1,14}$", message = "phoneNumber must follow E.164 format")
@@ -93,5 +94,13 @@ public class UserCreationRequest {
 	public String getAvatarUrl() {
 		return avatarUrl;
 	}
-    public Boolean getAdmin() {return admin;}
+	public Boolean getAdmin() {return admin;}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 }
