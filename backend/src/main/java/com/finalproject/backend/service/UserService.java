@@ -75,6 +75,13 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Phone already exists");
         }
 
+        UserRole requestedRole = UserRole.STUDENT;
+        if (request.getRole() != null) {
+            requestedRole = parseRole(request.getRole());
+        } else if (Boolean.TRUE.equals(request.getAdmin())) {
+            requestedRole = UserRole.SUPER_ADMIN;
+        }
+
         User user = User.builder()
                 .username(username)
                 .email(emailAddress)
@@ -92,8 +99,8 @@ public class UserService {
                 .phone(phoneNumber)
                 .passwordHash(passwordEncoder.encode(request.getPassword()))
                 .active(true)
-                .admin(false)
-                .role(UserRole.STUDENT)
+                .admin(requestedRole.isSuperAdmin())
+                .role(requestedRole)
                 .build();
 
         if (avatarUrl != null) {

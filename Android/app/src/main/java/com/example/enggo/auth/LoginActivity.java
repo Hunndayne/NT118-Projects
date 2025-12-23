@@ -22,6 +22,7 @@ import com.example.enggo.database.Database;
 import com.example.enggo.user.HomeUserActivity;
 
 import java.util.Date;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,16 +49,16 @@ public class LoginActivity extends AppCompatActivity {
 
         dao = new Database.Dao(this);
 
-        //API
-        // btnLogin.setOnClickListener(v -> loginUser());
-        
-        // 🔧 DEBUG MODE: Bỏ qua login, vào thẳng Admin, Teacher hoặc User
-        btnLogin.setOnClickListener(v -> {
-            // Chọn 1 trong 3 dòng dưới để debug:
-            // goToAdminDashboard();   // Debug Admin UI
-            goToTeacherDashboard(); // Debug Teacher UI
-            // goToUserHome();         // Debug User UI
-        });
+        // API
+        btnLogin.setOnClickListener(v -> loginUser());
+
+        // DEBUG MODE: Bỏ qua login, vào thẳng Admin, Teacher hoặc User
+        // btnLogin.setOnClickListener(v -> {
+        //     // Chọn 1 trong 3 dòng dưới để debug:
+        //     // goToAdminDashboard();   // Debug Admin UI
+        //     // goToTeacherDashboard(); // Debug Teacher UI
+        //     // goToUserHome();         // Debug User UI
+        // });
 
         tvForgetPassword.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, ChangePasswordActivity.class);
@@ -103,21 +104,58 @@ public class LoginActivity extends AppCompatActivity {
         // Clear old tokens
         dao.deleteAll();
 
+        boolean isAdmin = isRoleAdmin(loginResponse.role, loginResponse.admin);
+
         // Save new token + role
         Database.Item newItem = new Database.Item();
         newItem.token = loginResponse.token;
         newItem.dateToken = new Date().getTime();
-        newItem.isAdmin = loginResponse.admin ? 1 : 0;
+        newItem.isAdmin = isAdmin ? 1 : 0;
+        newItem.role = getStoredRole(loginResponse.role, loginResponse.admin);
         dao.insert(newItem);
 
         // Route by role from backend
-        if (loginResponse.admin) {
+        routeByRole(loginResponse.role, loginResponse.admin);
+    }
+
+    private String getStoredRole(String role, boolean adminFlag) {
+        if (isRoleAdmin(role, adminFlag)) {
+            return "SUPER_ADMIN";
+        }
+        if (isRoleTeacher(role)) {
+            return "TEACHER";
+        }
+        return "STUDENT";
+    }
+
+    private void routeByRole(String role, boolean adminFlag) {
+        if (isRoleAdmin(role, adminFlag)) {
             goToAdminDashboard();
+        } else if (isRoleTeacher(role)) {
+            goToTeacherDashboard();
         } else {
             goToUserHome();
         }
     }
 
+    private boolean isRoleAdmin(String role, boolean adminFlag) {
+        if (adminFlag) {
+            return true;
+        }
+        if (role == null) {
+            return false;
+        }
+        String normalized = role.trim().toUpperCase(Locale.US);
+        return "SUPER_ADMIN".equals(normalized) || "ADMIN".equals(normalized);
+    }
+
+    private boolean isRoleTeacher(String role) {
+        if (role == null) {
+            return false;
+        }
+        String normalized = role.trim().toUpperCase(Locale.US);
+        return "TEACHER".equals(normalized);
+    }
 
     private void goToUserHome() {
         Intent intent = new Intent(this, HomeUserActivity.class);

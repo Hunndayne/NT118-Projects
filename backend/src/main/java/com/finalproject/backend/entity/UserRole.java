@@ -32,6 +32,9 @@ public enum UserRole {
 			return STUDENT;
 		}
 		String normalized = value.trim().toLowerCase();
+		if ("admin".equals(normalized) || "superadmin".equals(normalized) || "super-admin".equals(normalized)) {
+			return SUPER_ADMIN;
+		}
 		for (UserRole role : values()) {
 			if (role.name().equalsIgnoreCase(normalized) || role.dbValue.equalsIgnoreCase(normalized)) {
 				return role;
