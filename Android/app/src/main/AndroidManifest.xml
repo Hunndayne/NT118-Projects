@@ -148,6 +148,9 @@
             android:name=".teacher.AddAssignmentTeacherActivity"
             android:exported="false"/>
         <activity
+            android:name=".teacher.ManageAssignmentsTeacherActivity"
+            android:exported="false"/>
+        <activity
             android:name=".teacher.AddLessonTeacherActivity"
             android:exported="false"/>
         <activity

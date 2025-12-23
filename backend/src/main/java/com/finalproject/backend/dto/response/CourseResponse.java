@@ -12,6 +12,7 @@ public class CourseResponse {
 	private final Boolean active;
 	private final Long createdBy;
 	private final Instant createdAt;
+	private final int lessonCount;
 
 	public CourseResponse(Long id,
 	                      String code,
@@ -20,7 +21,8 @@ public class CourseResponse {
 	                      String description,
 	                      Boolean active,
 	                      Long createdBy,
-	                      Instant createdAt) {
+	                      Instant createdAt,
+	                      int lessonCount) {
 		this.id = id;
 		this.code = code;
 		this.name = name;
@@ -29,6 +31,7 @@ public class CourseResponse {
 		this.active = active;
 		this.createdBy = createdBy;
 		this.createdAt = createdAt;
+		this.lessonCount = lessonCount;
 	}
 
 	public Long getId() {
@@ -61,5 +64,9 @@ public class CourseResponse {
 
 	public Instant getCreatedAt() {
 		return createdAt;
+	}
+
+	public int getLessonCount() {
+		return lessonCount;
 	}
 }

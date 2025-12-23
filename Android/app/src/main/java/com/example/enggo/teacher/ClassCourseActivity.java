@@ -72,7 +72,11 @@ public class ClassCourseActivity extends BaseTeacherActivity {
 
         if (cardAssignments != null) {
             cardAssignments.setOnClickListener(v -> {
-                Intent intent = new Intent(this, AddAssignmentTeacherActivity.class);
+                Intent intent = new Intent(this, ManageAssignmentsTeacherActivity.class);
+                intent.putExtra(ManageAssignmentsTeacherActivity.EXTRA_COURSE_ID,
+                        getIntent().getLongExtra("course_id", -1));
+                intent.putExtra(ManageAssignmentsTeacherActivity.EXTRA_COURSE_NAME,
+                        tvCourseName != null ? tvCourseName.getText().toString() : null);
                 startActivity(intent);
             });
         }
