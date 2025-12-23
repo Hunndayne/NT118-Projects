@@ -6,6 +6,7 @@ import com.example.enggo.admin.CourseParticipantsRequest;
 import com.example.enggo.admin.CreateCourseRequest;
 import com.example.enggo.admin.UpdateCourseRequest;
 import com.example.enggo.admin.UserAdmin;
+import com.example.enggo.teacher.ClassResponse;
 
 import java.util.List;
 
@@ -70,6 +71,10 @@ public interface ApiService {
     );
     @GET("courses")
     Call<List<CourseAdmin>> getAllCourses(
+            @Header("X-Auth-Token") String token
+    );
+    @GET("classes")
+    Call<List<ClassResponse>> getClasses(
             @Header("X-Auth-Token") String token
     );
     @GET("courses/{id}/participants")
