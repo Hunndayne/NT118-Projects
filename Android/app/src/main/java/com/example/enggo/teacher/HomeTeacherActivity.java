@@ -43,6 +43,12 @@ public class HomeTeacherActivity extends BaseTeacherActivity {
         loadTeacherCourses();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadTeacherCourses();
+    }
+
     private void setupScheduleItems() {
         LinearLayout scheduleItem1 = findViewById(R.id.scheduleItem1_teacher);
         LinearLayout scheduleItem2 = findViewById(R.id.scheduleItem2_teacher);

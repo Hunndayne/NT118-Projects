@@ -8,7 +8,7 @@ import com.finalproject.backend.dto.request.CourseParticipantsRequest;
 import com.finalproject.backend.entity.Course;
 import com.finalproject.backend.entity.User;
 import com.finalproject.backend.repository.CourseRepository;
-import com.finalproject.backend.repository.UserRepository;
+import com.finalproject.backend.repository.LessonRepository;
 import com.finalproject.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 public class CourseService {
 
 	private final CourseRepository courseRepository;
+	private final LessonRepository lessonRepository;
 	private final UserService userService;
 	private final UserRepository userRepository;
 
@@ -215,6 +216,7 @@ public class CourseService {
 
 	private CourseResponse toResponse(Course course) {
 		Long creatorId = course.getCreatedBy() != null ? course.getCreatedBy().getId() : null;
+		int lessonCount = Math.toIntExact(lessonRepository.countByClazz_Course_Id(course.getId()));
 		return new CourseResponse(
 				course.getId(),
 				course.getCode(),
@@ -223,7 +225,8 @@ public class CourseService {
 				trimToNull(course.getDescription()),
 				course.getActive(),
 				creatorId,
-				course.getCreatedAt()
+				course.getCreatedAt(),
+				lessonCount
 		);
 	}
 

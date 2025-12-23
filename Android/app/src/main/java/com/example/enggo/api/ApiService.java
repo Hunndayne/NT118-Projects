@@ -6,6 +6,9 @@ import com.example.enggo.admin.CourseParticipantsRequest;
 import com.example.enggo.admin.CreateCourseRequest;
 import com.example.enggo.admin.UpdateCourseRequest;
 import com.example.enggo.admin.UserAdmin;
+import com.example.enggo.teacher.AssignmentCreateRequest;
+import com.example.enggo.teacher.AssignmentResponse;
+import com.example.enggo.teacher.AssignmentUpdateRequest;
 import com.example.enggo.teacher.ClassResponse;
 import com.example.enggo.teacher.LessonCreateRequest;
 import com.example.enggo.teacher.LessonResponse;
@@ -86,11 +89,22 @@ public interface ApiService {
             @Header("X-Auth-Token") String token,
             @Path("classId") Long classId
     );
+    @GET("classes/{classId}/assignments")
+    Call<List<AssignmentResponse>> getAssignments(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId
+    );
     @POST("classes/{classId}/lessons")
     Call<LessonResponse> createLesson(
             @Header("X-Auth-Token") String token,
             @Path("classId") Long classId,
             @Body LessonCreateRequest request
+    );
+    @POST("classes/{classId}/assignments")
+    Call<AssignmentResponse> createAssignment(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Body AssignmentCreateRequest request
     );
     @PUT("classes/{classId}/lessons/{lessonId}")
     Call<LessonResponse> updateLesson(
@@ -99,11 +113,24 @@ public interface ApiService {
             @Path("lessonId") Long lessonId,
             @Body LessonUpdateRequest request
     );
+    @PUT("classes/{classId}/assignments/{assignmentId}")
+    Call<AssignmentResponse> updateAssignment(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Path("assignmentId") Long assignmentId,
+            @Body AssignmentUpdateRequest request
+    );
     @DELETE("classes/{classId}/lessons/{lessonId}")
     Call<Void> deleteLesson(
             @Header("X-Auth-Token") String token,
             @Path("classId") Long classId,
             @Path("lessonId") Long lessonId
+    );
+    @DELETE("classes/{classId}/assignments/{assignmentId}")
+    Call<Void> deleteAssignment(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Path("assignmentId") Long assignmentId
     );
     @POST("classes/{classId}/lessons/{lessonId}/resources")
     Call<Void> addLessonResource(
