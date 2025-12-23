@@ -46,6 +46,10 @@ public interface ApiService {
             @Header("X-Auth-Token") String token,
             @Path("id") long userId
     );
+    @GET("users")
+    Call<UserAdmin> getCurrentUser(
+            @Header("X-Auth-Token") String token
+    );
 
     @PUT("users/{id}")
     Call<UserAdmin> updateUser(
