@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
         dao = new Database.Dao(this);
 
-        // ✅ BẤM LOGIN LÀ GỌI API THẬT (KHÔNG HARDCODE)
+        //API
         // btnLogin.setOnClickListener(v -> loginUser());
         
         // 🔧 DEBUG MODE: Bỏ qua login, vào thẳng Admin, Teacher hoặc User
