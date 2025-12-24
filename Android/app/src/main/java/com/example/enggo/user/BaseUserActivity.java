@@ -17,6 +17,14 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 public abstract class BaseUserActivity extends AppCompatActivity {
 
+    protected String getTokenFromDb() {
+        Database.Dao dao = new Database.Dao(this);
+        if (dao.getAll().isEmpty()) {
+            return null;
+        }
+        return dao.getAll().get(0).token;
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

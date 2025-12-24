@@ -158,61 +158,13 @@
                             app:tint="@color/icon_tint" />
                     </LinearLayout>
 
-                    <HorizontalScrollView
-                        android:id="@+id/scrollCourses"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/layoutCourseList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:overScrollMode="never"
                         android:scrollbars="none"
-                        android:overScrollMode="never">
-
-                        <LinearLayout
-                            android:id="@+id/layoutCourseList"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/cardCourse1"
-                                style="@style/CourseCard"
-                                android:layout_width="160dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:backgroundTint="#A7DAE7">
-                                <TextView
-                                    style="@style/CourseCardText"
-                                    android:text="TOEIC READING LISTENING TA153GD"
-                                    android:textSize="16sp" />
-                            </androidx.cardview.widget.CardView>
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/cardCourse2"
-                                style="@style/CourseCard"
-                                android:layout_width="160dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:backgroundTint="#A7DAE7">
-
-                                <TextView
-                                    style="@style/CourseCardText"
-                                    android:text="TOEIC SPEAKING WRITING TB115"
-                                    android:textSize="16sp" />
-                            </androidx.cardview.widget.CardView>
-
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/cardCourse3"
-                                style="@style/CourseCard"
-                                android:layout_width="160dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:backgroundTint="#A7DAE7">
-
-                                <TextView
-                                    style="@style/CourseCardText"
-                                    android:text="IELTS BASIC COURSE 2024"
-                                    android:textSize="16sp" />
-                            </androidx.cardview.widget.CardView>
-                        </LinearLayout>
-                    </HorizontalScrollView>
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

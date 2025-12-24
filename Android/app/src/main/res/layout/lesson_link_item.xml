@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingVertical="6dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etLinkTitle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_edit_text_form"
+            android:paddingHorizontal="10dp"
+            android:textSize="12sp"
+            android:hint="Title" />
+
+        <EditText
+            android:id="@+id/etLinkUrl"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_edit_text_form"
+            android:paddingHorizontal="10dp"
+            android:textSize="12sp"
+            android:hint="https://..." />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnDeleteLink"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:text="Delete"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/enggo_grey_100" />
+</LinearLayout>
