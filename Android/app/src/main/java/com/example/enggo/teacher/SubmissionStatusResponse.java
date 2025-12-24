@@ -1,6 +1,7 @@
 package com.example.enggo.teacher;
 
 public class SubmissionStatusResponse {
+    public Long submissionId;
     public Long studentId;
     public String firstName;
     public String lastName;
