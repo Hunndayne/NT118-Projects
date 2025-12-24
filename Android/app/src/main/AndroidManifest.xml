@@ -165,6 +165,9 @@
         <activity
             android:name=".teacher.CourseStudentsTeacherActivity"
             android:exported="false"/>
+        <activity
+            android:name=".teacher.AssignmentsForSubmissionsTeacherActivity"
+            android:exported="false"/>
 
     </application>
 

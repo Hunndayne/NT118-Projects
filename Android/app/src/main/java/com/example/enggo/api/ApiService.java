@@ -14,6 +14,7 @@ import com.example.enggo.teacher.LessonCreateRequest;
 import com.example.enggo.teacher.LessonResponse;
 import com.example.enggo.teacher.LessonResourceRequest;
 import com.example.enggo.teacher.LessonUpdateRequest;
+import com.example.enggo.teacher.SubmissionStatusResponse;
 
 import java.util.List;
 
@@ -93,6 +94,12 @@ public interface ApiService {
     Call<List<AssignmentResponse>> getAssignments(
             @Header("X-Auth-Token") String token,
             @Path("classId") Long classId
+    );
+    @GET("classes/{classId}/assignments/{assignmentId}/submissions")
+    Call<List<SubmissionStatusResponse>> getSubmissionStatus(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Path("assignmentId") Long assignmentId
     );
     @POST("classes/{classId}/lessons")
     Call<LessonResponse> createLesson(

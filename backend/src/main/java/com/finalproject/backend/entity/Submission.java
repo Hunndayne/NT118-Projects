@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.time.Instant;
 
 @Entity
@@ -32,6 +33,7 @@ public class Submission {
 	private Integer attemptNo;
 
 	@Column(name = "submitted_at")
+	private OffsetDateTime submittedAt;
 	private Instant submittedAt;
 
 	@Column(name = "content", columnDefinition = "text")
@@ -40,6 +42,10 @@ public class Submission {
 	@Column(name = "file_url", columnDefinition = "text")
 	private String fileUrl;
 
+	@Column(name = "status", length = 24)
+	private String status;
+
+	@Column(name = "score")
 	@Column(name = "status", length = 32)
 	private String status;
 
@@ -54,5 +60,6 @@ public class Submission {
 	private User gradedBy;
 
 	@Column(name = "grade_at")
+	private OffsetDateTime gradeAt;
 	private Instant gradeAt;
 }

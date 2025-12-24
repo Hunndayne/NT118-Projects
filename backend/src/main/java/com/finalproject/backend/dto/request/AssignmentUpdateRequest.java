@@ -6,6 +6,7 @@ public class AssignmentUpdateRequest {
 	private String description;
 	private String attachmentUrl;
 	private String deadline;
+	private String startTime;
 
 	public AssignmentUpdateRequest() {
 	}
@@ -24,5 +25,9 @@ public class AssignmentUpdateRequest {
 
 	public String getDeadline() {
 		return deadline;
+	}
+
+	public String getStartTime() {
+		return startTime;
 	}
 }

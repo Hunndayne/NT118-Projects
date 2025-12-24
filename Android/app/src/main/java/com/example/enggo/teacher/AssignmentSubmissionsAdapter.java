@@ -16,15 +16,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class AssignmentTeacherAdapter extends RecyclerView.Adapter<AssignmentTeacherAdapter.ViewHolder> {
+public class AssignmentSubmissionsAdapter extends RecyclerView.Adapter<AssignmentSubmissionsAdapter.ViewHolder> {
 
-    public interface OnAssignmentActionListener {
-        void onEdit(AssignmentResponse assignment);
-        void onDelete(AssignmentResponse assignment);
+    public interface OnAssignmentClickListener {
+        void onClick(AssignmentResponse assignment);
     }
 
     private final List<AssignmentResponse> assignments;
-    private final OnAssignmentActionListener listener;
+    private final OnAssignmentClickListener listener;
     private final SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
     private final SimpleDateFormat[] inputFormats = new SimpleDateFormat[]{
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.getDefault()),
@@ -37,7 +36,7 @@ public class AssignmentTeacherAdapter extends RecyclerView.Adapter<AssignmentTea
             new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault())
     };
 
-    public AssignmentTeacherAdapter(List<AssignmentResponse> assignments, OnAssignmentActionListener listener) {
+    public AssignmentSubmissionsAdapter(List<AssignmentResponse> assignments, OnAssignmentClickListener listener) {
         this.assignments = assignments;
         this.listener = listener;
     }
@@ -46,31 +45,24 @@ public class AssignmentTeacherAdapter extends RecyclerView.Adapter<AssignmentTea
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.assignment_management_list_item, parent, false);
+                .inflate(R.layout.assignment_submission_list_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AssignmentResponse assignment = assignments.get(position);
-        holder.tvName.setText(safeText(assignment.title));
-        holder.tvDescription.setText(safeText(assignment.description));
-        holder.tvFromDate.setText("From: " + formatDate(assignment.createdAt));
-        holder.tvDueDate.setText("Due: " + formatDate(assignment.deadline));
-        holder.btnEdit.setOnClickListener(v -> listener.onEdit(assignment));
-        holder.btnDelete.setOnClickListener(v -> listener.onDelete(assignment));
-        holder.btnStatistic.setOnClickListener(v -> {
-            // placeholder
-        });
+        holder.tvTitle.setText(assignment.title == null ? "-" : assignment.title);
+        holder.tvDesc.setText(assignment.description == null || assignment.description.trim().isEmpty()
+                ? "No description"
+                : assignment.description);
+        holder.tvDue.setText("Due: " + formatDate(assignment.deadline));
+        holder.itemView.setOnClickListener(v -> listener.onClick(assignment));
     }
 
     @Override
     public int getItemCount() {
         return assignments.size();
-    }
-
-    private String safeText(String value) {
-        return value == null || value.trim().isEmpty() ? "-" : value;
     }
 
     private String formatDate(String value) {
@@ -91,23 +83,15 @@ public class AssignmentTeacherAdapter extends RecyclerView.Adapter<AssignmentTea
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView tvName;
-        final TextView tvFromDate;
-        final TextView tvDueDate;
-        final TextView tvDescription;
-        final TextView btnEdit;
-        final TextView btnDelete;
-        final TextView btnStatistic;
+        final TextView tvTitle;
+        final TextView tvDue;
+        final TextView tvDesc;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.tvAssignmentName_manageassitem);
-            tvFromDate = itemView.findViewById(R.id.tvFromDate_manageassitem);
-            tvDueDate = itemView.findViewById(R.id.tvDueDate_manageassitem);
-            tvDescription = itemView.findViewById(R.id.tvDescriptionAssignment_manageassitem);
-            btnEdit = itemView.findViewById(R.id.btnEdit_manageAssignmentitem);
-            btnDelete = itemView.findViewById(R.id.btnDelete_manageAssignmentitem);
-            btnStatistic = itemView.findViewById(R.id.btnStatistic_manageAssignmentitem);
+            tvTitle = itemView.findViewById(R.id.tvAssignmentTitle);
+            tvDue = itemView.findViewById(R.id.tvAssignmentDue);
+            tvDesc = itemView.findViewById(R.id.tvAssignmentDesc);
         }
     }
 }

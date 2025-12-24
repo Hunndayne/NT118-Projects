@@ -81,10 +81,10 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
                 etAttachLink.setText(attachLink);
             }
             if (startTime != null && etStartTime != null) {
-                etStartTime.setText(startTime);
+                etStartTime.setText(formatDateTime(startTime));
             }
             if (dueTime != null && etDueTime != null) {
-                etDueTime.setText(dueTime);
+                etDueTime.setText(formatDateTime(dueTime));
             }
         }
     }
@@ -143,6 +143,7 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
         String title = etTitle.getText().toString().trim();
         String description = etContent.getText().toString().trim();
         String attachLink = etAttachLink.getText().toString().trim();
+        String startTime = etStartTime.getText().toString().trim();
         String dueTime = etDueTime.getText().toString().trim();
 
         if (title.isEmpty()) {
@@ -163,7 +164,8 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
                 title,
                 description.isEmpty() ? null : description,
                 attachmentUrl,
-                dueTime.isEmpty() ? null : dueTime
+                dueTime.isEmpty() ? null : dueTime,
+                startTime.isEmpty() ? null : startTime
         );
 
         apiService.updateAssignment(token, courseId, assignmentId, request)
@@ -223,5 +225,33 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
                 calendar.get(Calendar.DAY_OF_MONTH)
         );
         datePicker.show();
+    }
+
+    private String formatDateTime(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return "";
+        }
+        java.text.SimpleDateFormat output = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault());
+        java.text.SimpleDateFormat[] inputs = new java.text.SimpleDateFormat[]{
+                new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", java.util.Locale.getDefault()),
+                new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", java.util.Locale.getDefault()),
+                new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mmX", java.util.Locale.getDefault()),
+                new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", java.util.Locale.getDefault()),
+                new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm", java.util.Locale.getDefault()),
+                new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.getDefault()),
+                new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault()),
+                new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", java.util.Locale.getDefault())
+        };
+        for (java.text.SimpleDateFormat input : inputs) {
+            try {
+                java.util.Date parsed = input.parse(value.trim());
+                if (parsed != null) {
+                    return output.format(parsed);
+                }
+            } catch (java.text.ParseException ignored) {
+                // try next
+            }
+        }
+        return value;
     }
 }
