@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.time.Instant;
 
 @Entity
 @Table(name = "submissions")
@@ -33,6 +34,7 @@ public class Submission {
 
 	@Column(name = "submitted_at")
 	private OffsetDateTime submittedAt;
+	private Instant submittedAt;
 
 	@Column(name = "content", columnDefinition = "text")
 	private String content;
@@ -44,6 +46,10 @@ public class Submission {
 	private String status;
 
 	@Column(name = "score")
+	@Column(name = "status", length = 32)
+	private String status;
+
+	@Column(name = "score", precision = 5, scale = 2)
 	private BigDecimal score;
 
 	@Column(name = "feedback", columnDefinition = "text")
@@ -55,4 +61,5 @@ public class Submission {
 
 	@Column(name = "grade_at")
 	private OffsetDateTime gradeAt;
+	private Instant gradeAt;
 }
