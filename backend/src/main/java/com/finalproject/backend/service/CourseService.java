@@ -235,7 +235,8 @@ public class CourseService {
 				user.getId(),
 				user.getFirstName(),
 				user.getLastName(),
-				user.getRole() != null ? user.getRole().name() : null
+				user.getRole() != null ? user.getRole().name() : null,
+				user.isActive()
 		);
 	}
 
