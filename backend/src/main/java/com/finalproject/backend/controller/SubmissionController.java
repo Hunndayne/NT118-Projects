@@ -7,6 +7,7 @@ import com.finalproject.backend.dto.response.SubmissionStatusResponse;
 import com.finalproject.backend.service.SubmissionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,12 @@ public class SubmissionController {
         return submissionService.getSubmissionStatus(token, classId, assignmentId);
     }
 
+    @GetMapping("/assignments/{assignmentId}/submissions/me")
+    public SubmissionResponse getMySubmission(@RequestHeader("X-Auth-Token") String token,
+                                              @PathVariable("assignmentId") Long assignmentId) {
+        return submissionService.getMySubmission(token, assignmentId);
+    }
+
     @PostMapping("/assignments/{assignmentId}/submissions")
     public SubmissionResponse submit(@RequestHeader("X-Auth-Token") String token,
                                      @PathVariable("assignmentId") Long assignmentId,
@@ -42,6 +49,12 @@ public class SubmissionController {
                                             @PathVariable("assignmentId") Long assignmentId,
                                             @PathVariable("submissionId") Long submissionId) {
         return submissionService.getSubmission(token, assignmentId, submissionId);
+    }
+
+    @DeleteMapping("/assignments/{assignmentId}/submissions/me")
+    public void deleteMySubmission(@RequestHeader("X-Auth-Token") String token,
+                                   @PathVariable("assignmentId") Long assignmentId) {
+        submissionService.deleteMySubmission(token, assignmentId);
     }
 
     @PutMapping("/assignments/{assignmentId}/submissions/{submissionId}/grade")

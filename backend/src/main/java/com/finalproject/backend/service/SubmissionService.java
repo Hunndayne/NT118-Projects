@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +68,10 @@ public class SubmissionService {
     public SubmissionResponse submitAssignment(String token, Long assignmentId, SubmissionRequest request) {
         User student = userService.getAuthenticatedUserEntity(token);
         Assignment assignment = loadAssignment(assignmentId);
+        if (assignment.getDeadline() != null
+                && OffsetDateTime.now().isAfter(assignment.getDeadline())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Assignment deadline has passed");
+        }
         ClassEntity clazz = assignment.getClazz();
         if (!canSubmit(student, clazz)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed to submit for this assignment");
@@ -78,6 +83,9 @@ public class SubmissionService {
                         .student(student)
                         .attemptNo(0)
                         .build());
+        if (submission.getScore() != null) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Submission already graded");
+        }
 
         submission.setAttemptNo(submission.getAttemptNo() + 1);
         submission.setContent(trimToNull(request.getContent()));
@@ -89,12 +97,52 @@ public class SubmissionService {
         return toResponse(saved);
     }
 
+    @Transactional(readOnly = true)
+    public SubmissionResponse getMySubmission(String token, Long assignmentId) {
+        User student = userService.getAuthenticatedUserEntity(token);
+        Assignment assignment = loadAssignment(assignmentId);
+        ClassEntity clazz = assignment.getClazz();
+        if (!canSubmit(student, clazz)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed to view this submission");
+        }
+        Submission submission = submissionRepository.findByAssignment_IdAndStudent_Id(assignmentId, student.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Submission not found"));
+        return toResponse(submission);
+    }
+
+    @Transactional
+    public void deleteMySubmission(String token, Long assignmentId) {
+        User student = userService.getAuthenticatedUserEntity(token);
+        Assignment assignment = loadAssignment(assignmentId);
+        ClassEntity clazz = assignment.getClazz();
+        if (!canSubmit(student, clazz)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed to remove submission");
+        }
+        if (assignment.getDeadline() != null
+                && OffsetDateTime.now().isAfter(assignment.getDeadline())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Assignment deadline has passed");
+        }
+        Submission submission = submissionRepository.findByAssignment_IdAndStudent_Id(assignmentId, student.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Submission not found"));
+        if (submission.getScore() != null) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Submission already graded");
+        }
+        submissionRepository.delete(submission);
+    }
+
     @Transactional
     public SubmissionResponse gradeSubmission(String token, Long assignmentId, Long submissionId, GradeRequest request) {
         User grader = userService.getAuthenticatedUserEntity(token);
         Assignment assignment = loadAssignment(assignmentId);
         ClassEntity clazz = assignment.getClazz();
-        if (!canGrade(grader, clazz)) {
+        boolean allowed = canGrade(grader, clazz);
+        if (!allowed && grader.isTeacher()
+                && assignment.getCreatedBy() != null
+                && assignment.getCreatedBy().getId() != null
+                && assignment.getCreatedBy().getId().equals(grader.getId())) {
+            allowed = true;
+        }
+        if (!allowed) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed to grade this assignment");
         }
 

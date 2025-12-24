@@ -1,13 +1,17 @@
 package com.finalproject.backend.service;
 
 import com.finalproject.backend.dto.request.AssignmentCreateRequest;
+import com.finalproject.backend.dto.request.AssignmentResourceRequest;
 import com.finalproject.backend.dto.request.AssignmentUpdateRequest;
 import com.finalproject.backend.dto.response.AssignmentResponse;
+import com.finalproject.backend.dto.response.AssignmentResourceResponse;
 import com.finalproject.backend.entity.Assignment;
+import com.finalproject.backend.entity.AssignmentResource;
 import com.finalproject.backend.entity.ClassEntity;
 import com.finalproject.backend.entity.Course;
 import com.finalproject.backend.entity.User;
 import com.finalproject.backend.repository.AssignmentRepository;
+import com.finalproject.backend.repository.AssignmentResourceRepository;
 import com.finalproject.backend.repository.ClassRepository;
 import com.finalproject.backend.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +48,7 @@ public class AssignmentService {
 	private static final ZoneId DEFAULT_ZONE = ZoneId.of("Asia/Ho_Chi_Minh");
 
 	private final AssignmentRepository assignmentRepository;
+	private final AssignmentResourceRepository assignmentResourceRepository;
 	private final ClassRepository classRepository;
 	private final CourseRepository courseRepository;
 	private final UserService userService;
@@ -69,6 +74,19 @@ public class AssignmentService {
 		Assignment assignment = assignmentRepository.findByIdAndClazz_Id(assignmentId, clazz.getId())
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assignment not found"));
 		return toResponse(assignment);
+	}
+
+	@Transactional(readOnly = true)
+	public List<AssignmentResourceResponse> getResources(String token, Long classId, Long assignmentId) {
+		User requester = userService.getAuthenticatedUserEntity(token);
+		ClassEntity clazz = resolveClass(classId);
+		requireAccessToClass(requester, clazz);
+		ensureAssignmentExists(assignmentId, clazz.getId());
+
+		return assignmentResourceRepository.findByAssignment_Id(assignmentId)
+				.stream()
+				.map(this::toResourceResponse)
+				.collect(Collectors.toList());
 	}
 
 	@Transactional
@@ -133,7 +151,67 @@ public class AssignmentService {
 
 		Assignment assignment = assignmentRepository.findByIdAndClazz_Id(assignmentId, clazz.getId())
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assignment not found"));
+		assignmentResourceRepository.deleteByAssignment_Id(assignment.getId());
 		assignmentRepository.delete(assignment);
+	}
+
+	@Transactional
+	public AssignmentResourceResponse addResource(String token, Long classId, Long assignmentId, AssignmentResourceRequest request) {
+		User actor = userService.getAuthenticatedUserEntity(token);
+		ClassEntity clazz = resolveClass(classId);
+		requireTeacherOrAdmin(actor, clazz);
+
+		Assignment assignment = ensureAssignmentExists(assignmentId, clazz.getId());
+		AssignmentResource resource = AssignmentResource.builder()
+				.assignment(assignment)
+				.type(trimToNull(request.getType()))
+				.title(trimToNull(request.getTitle()))
+				.content(trimToNull(request.getContent()))
+				.url(trimToNull(request.getUrl()))
+				.filePath(trimToNull(request.getFilePath()))
+				.build();
+		AssignmentResource saved = assignmentResourceRepository.save(resource);
+		return toResourceResponse(saved);
+	}
+
+	@Transactional
+	public AssignmentResourceResponse updateResource(String token, Long classId, Long assignmentId, Long resourceId, AssignmentResourceRequest request) {
+		User actor = userService.getAuthenticatedUserEntity(token);
+		ClassEntity clazz = resolveClass(classId);
+		requireTeacherOrAdmin(actor, clazz);
+		ensureAssignmentExists(assignmentId, clazz.getId());
+
+		AssignmentResource resource = assignmentResourceRepository.findByIdAndAssignment_Id(resourceId, assignmentId)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource not found"));
+		if (request.getType() != null) {
+			resource.setType(trimToNull(request.getType()));
+		}
+		if (request.getTitle() != null) {
+			resource.setTitle(trimToNull(request.getTitle()));
+		}
+		if (request.getContent() != null) {
+			resource.setContent(trimToNull(request.getContent()));
+		}
+		if (request.getUrl() != null) {
+			resource.setUrl(trimToNull(request.getUrl()));
+		}
+		if (request.getFilePath() != null) {
+			resource.setFilePath(trimToNull(request.getFilePath()));
+		}
+		AssignmentResource saved = assignmentResourceRepository.save(resource);
+		return toResourceResponse(saved);
+	}
+
+	@Transactional
+	public void deleteResource(String token, Long classId, Long assignmentId, Long resourceId) {
+		User actor = userService.getAuthenticatedUserEntity(token);
+		ClassEntity clazz = resolveClass(classId);
+		requireTeacherOrAdmin(actor, clazz);
+		ensureAssignmentExists(assignmentId, clazz.getId());
+
+		AssignmentResource resource = assignmentResourceRepository.findByIdAndAssignment_Id(resourceId, assignmentId)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource not found"));
+		assignmentResourceRepository.delete(resource);
 	}
 
 	private AssignmentResponse toResponse(Assignment assignment) {
@@ -151,6 +229,24 @@ public class AssignmentService {
 				createdBy,
 				createdAt
 		);
+	}
+
+	private AssignmentResourceResponse toResourceResponse(AssignmentResource resource) {
+		return AssignmentResourceResponse.builder()
+				.id(resource.getId())
+				.type(trimToNull(resource.getType()))
+				.title(trimToNull(resource.getTitle()))
+				.content(trimToNull(resource.getContent()))
+				.url(trimToNull(resource.getUrl()))
+				.filePath(trimToNull(resource.getFilePath()))
+				.createdAt(resource.getCreatedAt())
+				.updatedAt(resource.getUpdatedAt())
+				.build();
+	}
+
+	private Assignment ensureAssignmentExists(Long assignmentId, Long classId) {
+		return assignmentRepository.findByIdAndClazz_Id(assignmentId, classId)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assignment not found"));
 	}
 
 	private ClassEntity resolveClass(Long classIdOrCourseId) {
