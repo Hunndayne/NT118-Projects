@@ -5,25 +5,28 @@ import java.time.OffsetDateTime;
 
 public class SubmissionStatusResponse {
 
+	private final Long submissionId;
 	private final Long studentId;
 	private final String firstName;
 	private final String lastName;
 	private final boolean submitted;
-	private final OffsetDateTime submittedAt;
+	private final java.time.Instant submittedAt;
 	private final BigDecimal score;
 	private final String status;
 	private final String fileUrl;
 	private final OffsetDateTime deadline;
 
-	public SubmissionStatusResponse(Long studentId,
+	public SubmissionStatusResponse(Long submissionId,
+	                                Long studentId,
 	                                String firstName,
 	                                String lastName,
 	                                boolean submitted,
-	                                OffsetDateTime submittedAt,
+	                                java.time.Instant submittedAt,
 	                                BigDecimal score,
 	                                String status,
 	                                String fileUrl,
 	                                OffsetDateTime deadline) {
+		this.submissionId = submissionId;
 		this.studentId = studentId;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -39,6 +42,10 @@ public class SubmissionStatusResponse {
 		return studentId;
 	}
 
+	public Long getSubmissionId() {
+		return submissionId;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -51,7 +58,7 @@ public class SubmissionStatusResponse {
 		return submitted;
 	}
 
-	public OffsetDateTime getSubmittedAt() {
+	public java.time.Instant getSubmittedAt() {
 		return submittedAt;
 	}
 

@@ -23,6 +23,7 @@ public class SubmissionListActivity extends BaseTeacherActivity {
     public static final String EXTRA_COURSE_ID = "course_id";
     public static final String EXTRA_ASSIGNMENT_ID = "assignment_id";
     public static final String EXTRA_ASSIGNMENT_TITLE = "assignment_title";
+    private static final int REQ_GRADE = 3001;
 
     private TextView tvBack;
     private TextView tvAssignmentTitle;
@@ -45,6 +46,14 @@ public class SubmissionListActivity extends BaseTeacherActivity {
         initViews();
         setupListeners();
         loadData();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ_GRADE && resultCode == RESULT_OK) {
+            loadData();
+        }
     }
 
     private void initViews() {
@@ -137,7 +146,11 @@ public class SubmissionListActivity extends BaseTeacherActivity {
                 statusLabel = "No submission";
             }
         } else {
-            statusLabel = "Submitted";
+            if (submission.score != null) {
+                statusLabel = formatScore(submission.score) + "/100";
+            } else {
+                statusLabel = "Submitted";
+            }
         }
         Intent intent = new Intent(this, GradingSubmissionActivity.class);
         intent.putExtra("student_name", submission.getDisplayName());
@@ -146,7 +159,24 @@ public class SubmissionListActivity extends BaseTeacherActivity {
         intent.putExtra("submitted_at", submission.submittedAt);
         intent.putExtra("file_url", submission.fileUrl);
         intent.putExtra("deadline", submission.deadline);
-        startActivity(intent);
+        intent.putExtra("assignment_id", assignmentId);
+        if (submission.submissionId != null) {
+            intent.putExtra("submission_id", submission.submissionId);
+        }
+        if (submission.score != null) {
+            intent.putExtra("score_value", submission.score);
+        }
+        startActivityForResult(intent, REQ_GRADE);
+    }
+
+    private String formatScore(Double score) {
+        if (score == null) {
+            return "";
+        }
+        if (score == Math.floor(score)) {
+            return String.valueOf(score.intValue());
+        }
+        return String.valueOf(score);
     }
 
     private boolean isPastDeadline(String deadline) {

@@ -57,6 +57,11 @@ public class SubmissionStatusAdapter extends RecyclerView.Adapter<SubmissionStat
                 holder.tvGradeStatus.setTextColor(0xFF6A1B9A);
             }
             holder.layoutFile.setVisibility(View.GONE);
+        } else if (submission.score != null) {
+            holder.tvGradeStatus.setText(formatScore(submission.score) + "/100");
+            holder.tvGradeStatus.setBackgroundColor(0xFFE8F5E9);
+            holder.tvGradeStatus.setTextColor(0xFF2E7D32);
+            bindFileName(holder, submission.fileUrl);
         } else {
             holder.tvGradeStatus.setText("Submitted");
             holder.tvGradeStatus.setBackgroundColor(0xFFE8F5E9);
