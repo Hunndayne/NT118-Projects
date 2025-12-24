@@ -5,6 +5,7 @@ public class CourseParticipant {
     private String firstName;
     private String lastName;
     private String role;
+    private boolean active;
 
     public Long getId() {
         return id;
@@ -20,6 +21,10 @@ public class CourseParticipant {
 
     public String getRole() {
         return role;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     public String getDisplayName() {

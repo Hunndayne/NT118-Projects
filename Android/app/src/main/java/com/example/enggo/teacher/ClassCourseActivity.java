@@ -86,6 +86,7 @@ public class ClassCourseActivity extends BaseTeacherActivity {
                 Intent intent = new Intent(this, CourseStudentsTeacherActivity.class);
                 // Pass course data
                 intent.putExtra("course_name", tvCourseName != null ? tvCourseName.getText().toString() : "Course");
+                intent.putExtra("course_id", getIntent().getLongExtra("course_id", -1));
                 startActivity(intent);
             });
         }
