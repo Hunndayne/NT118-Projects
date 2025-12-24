@@ -93,7 +93,11 @@ public class ClassCourseActivity extends BaseTeacherActivity {
 
         if (cardSubmissions != null) {
             cardSubmissions.setOnClickListener(v -> {
-                Intent intent = new Intent(this, SubmissionListActivity.class);
+                Intent intent = new Intent(this, AssignmentsForSubmissionsTeacherActivity.class);
+                intent.putExtra(AssignmentsForSubmissionsTeacherActivity.EXTRA_COURSE_ID,
+                        getIntent().getLongExtra("course_id", -1));
+                intent.putExtra(AssignmentsForSubmissionsTeacherActivity.EXTRA_COURSE_NAME,
+                        tvCourseName != null ? tvCourseName.getText().toString() : null);
                 startActivity(intent);
             });
         }

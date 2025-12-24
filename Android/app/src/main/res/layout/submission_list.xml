@@ -75,6 +75,7 @@
                 android:padding="16dp">
 
                 <TextView
+                    android:id="@+id/tvAssignmentTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="HW 1.1: Reading &amp; Vocab"
@@ -98,9 +99,10 @@
                         android:gravity="center"
                         android:orientation="vertical">
                         <TextView
+                            android:id="@+id/tvParticipantsCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="30"
+                            android:text="0"
                             android:textStyle="bold"
                             android:textSize="18sp"
                             android:textColor="@color/text_primary"/>
@@ -124,9 +126,10 @@
                         android:gravity="center"
                         android:orientation="vertical">
                         <TextView
+                            android:id="@+id/tvSubmittedCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="25"
+                            android:text="0"
                             android:textStyle="bold"
                             android:textSize="18sp"
                             android:textColor="#2E7D32"/>
@@ -150,9 +153,10 @@
                         android:gravity="center"
                         android:orientation="vertical">
                         <TextView
+                            android:id="@+id/tvNeedsGradingCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="5"
+                            android:text="0"
                             android:textStyle="bold"
                             android:textSize="18sp"
                             android:textColor="#EF6C00"/>
@@ -203,142 +207,12 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="8dp"/>
 
-                <include
-                    android:id="@+id/cardSubmission0"
-                    layout="@layout/item_submission" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardSubmission1"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerSubmissions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/background_card">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="12dp"
-                        android:gravity="center_vertical">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/ic_account_student"/>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="12dp"
-                            android:orientation="vertical">
-                            <TextView
-                                android:text="Tran Thi B"
-                                android:textColor="@color/text_primary"
-                                android:textStyle="bold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="14sp" />
-                            <TextView
-                                android:text="Graded: Sep 2"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="12sp"
-                                android:layout_marginTop="2dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-                        </LinearLayout>
-
-                        <TextView
-                            android:text="85/100"
-                            android:minWidth="90dp"
-                            android:gravity="center"
-                            android:background="#E8F5E9"
-                            android:textColor="#2E7D32"
-                            android:paddingHorizontal="8dp"
-                            android:paddingVertical="6dp"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:layout_marginEnd="12dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_arrow_right"
-                            app:tint="@color/text_secondary"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardSubmission2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="2dp"
-                    app:cardBackgroundColor="@color/background_card">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="12dp"
-                        android:gravity="center_vertical">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/ic_account_student"
-                            app:tint="@color/text_secondary"/>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="12dp"
-                            android:orientation="vertical">
-                            <TextView
-                                android:text="Le Van C"
-                                android:textColor="@color/text_secondary"
-                                android:textStyle="bold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="14sp" />
-                            <TextView
-                                android:text="No submission"
-                                android:textColor="#D32F2F"
-                                android:textSize="12sp"
-                                android:layout_marginTop="2dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-                        </LinearLayout>
-
-                        <TextView
-                            android:text="Missing"
-                            android:minWidth="90dp"
-                            android:gravity="center"
-                            android:background="#FFEBEE"
-                            android:textColor="#D32F2F"
-                            android:paddingHorizontal="8dp"
-                            android:paddingVertical="6dp"
-                            android:textSize="11sp"
-                            android:textStyle="bold"
-                            android:layout_marginEnd="12dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_arrow_right"
-                            app:tint="@color/text_secondary"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
             </LinearLayout>

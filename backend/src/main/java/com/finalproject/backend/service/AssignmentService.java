@@ -41,6 +41,7 @@ public class AssignmentService {
 			DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"),
 			DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
 	};
+	private static final ZoneId DEFAULT_ZONE = ZoneId.of("Asia/Ho_Chi_Minh");
 
 	private final AssignmentRepository assignmentRepository;
 	private final ClassRepository classRepository;
@@ -114,6 +115,10 @@ public class AssignmentService {
 		}
 		if (request.getDeadline() != null) {
 			assignment.setDeadline(parseDateTime(request.getDeadline()));
+		}
+		if (request.getStartTime() != null) {
+			OffsetDateTime startTime = parseDateTime(request.getStartTime());
+			assignment.setCreatedAt(startTime != null ? startTime.toInstant() : null);
 		}
 
 		Assignment saved = assignmentRepository.save(assignment);
@@ -218,26 +223,26 @@ public class AssignmentService {
 		for (DateTimeFormatter formatter : LOCAL_DATE_TIME_FORMATTERS) {
 			try {
 				LocalDateTime localDateTime = LocalDateTime.parse(trimmed, formatter);
-				return localDateTime.atZone(ZoneId.systemDefault()).toOffsetDateTime();
+				return localDateTime.atZone(DEFAULT_ZONE).toOffsetDateTime();
 			} catch (DateTimeParseException ignored) {
 				// try next
 			}
 		}
 		try {
 			LocalDate localDate = LocalDate.parse(trimmed, DateTimeFormatter.ISO_LOCAL_DATE);
-			return localDate.atStartOfDay(ZoneId.systemDefault()).toOffsetDateTime();
+			return localDate.atStartOfDay(DEFAULT_ZONE).toOffsetDateTime();
 		} catch (DateTimeParseException ignored) {
 			// try next
 		}
 		try {
 			LocalDate localDate = LocalDate.parse(trimmed, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-			return localDate.atStartOfDay(ZoneId.systemDefault()).toOffsetDateTime();
+			return localDate.atStartOfDay(DEFAULT_ZONE).toOffsetDateTime();
 		} catch (DateTimeParseException ignored) {
 			// try next
 		}
 		try {
 			LocalDate localDate = LocalDate.parse(trimmed, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-			return localDate.atStartOfDay(ZoneId.systemDefault()).toOffsetDateTime();
+			return localDate.atStartOfDay(DEFAULT_ZONE).toOffsetDateTime();
 		} catch (DateTimeParseException ignored) {
 			// try next
 		}
