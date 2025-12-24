@@ -129,6 +129,13 @@
                     android:textColorHint="@color/text_secondary" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerAllCourses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <TextView
                 android:id="@+id/tvRecently"
@@ -141,7 +148,7 @@
                 android:fontFamily="@font/nunito_extra_bold" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerCourses"
+                android:id="@+id/recyclerRecentCourses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

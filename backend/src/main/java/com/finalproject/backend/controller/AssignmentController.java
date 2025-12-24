@@ -1,8 +1,10 @@
 package com.finalproject.backend.controller;
 
 import com.finalproject.backend.dto.request.AssignmentCreateRequest;
+import com.finalproject.backend.dto.request.AssignmentResourceRequest;
 import com.finalproject.backend.dto.request.AssignmentUpdateRequest;
 import com.finalproject.backend.dto.response.AssignmentResponse;
+import com.finalproject.backend.dto.response.AssignmentResourceResponse;
 import com.finalproject.backend.service.AssignmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,13 @@ public class AssignmentController {
 		return assignmentService.getAssignment(token, classId, assignmentId);
 	}
 
+	@GetMapping("/{assignmentId}/resources")
+	public List<AssignmentResourceResponse> getResources(@RequestHeader("X-Auth-Token") String token,
+	                                                     @PathVariable("classId") Long classId,
+	                                                     @PathVariable("assignmentId") Long assignmentId) {
+		return assignmentService.getResources(token, classId, assignmentId);
+	}
+
 	@PostMapping
 	public AssignmentResponse createAssignment(@RequestHeader("X-Auth-Token") String token,
 	                                           @PathVariable("classId") Long classId,
@@ -43,6 +52,31 @@ public class AssignmentController {
 	                                           @PathVariable("assignmentId") Long assignmentId,
 	                                           @Valid @RequestBody AssignmentUpdateRequest request) {
 		return assignmentService.updateAssignment(token, classId, assignmentId, request);
+	}
+
+	@PostMapping("/{assignmentId}/resources")
+	public AssignmentResourceResponse addResource(@RequestHeader("X-Auth-Token") String token,
+	                                              @PathVariable("classId") Long classId,
+	                                              @PathVariable("assignmentId") Long assignmentId,
+	                                              @Valid @RequestBody AssignmentResourceRequest request) {
+		return assignmentService.addResource(token, classId, assignmentId, request);
+	}
+
+	@PutMapping("/{assignmentId}/resources/{resourceId}")
+	public AssignmentResourceResponse updateResource(@RequestHeader("X-Auth-Token") String token,
+	                                                 @PathVariable("classId") Long classId,
+	                                                 @PathVariable("assignmentId") Long assignmentId,
+	                                                 @PathVariable("resourceId") Long resourceId,
+	                                                 @Valid @RequestBody AssignmentResourceRequest request) {
+		return assignmentService.updateResource(token, classId, assignmentId, resourceId, request);
+	}
+
+	@DeleteMapping("/{assignmentId}/resources/{resourceId}")
+	public void deleteResource(@RequestHeader("X-Auth-Token") String token,
+	                           @PathVariable("classId") Long classId,
+	                           @PathVariable("assignmentId") Long assignmentId,
+	                           @PathVariable("resourceId") Long resourceId) {
+		assignmentService.deleteResource(token, classId, assignmentId, resourceId);
 	}
 
 	@DeleteMapping("/{assignmentId}")

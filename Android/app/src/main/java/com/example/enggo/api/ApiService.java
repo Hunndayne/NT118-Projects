@@ -8,6 +8,8 @@ import com.example.enggo.admin.UpdateCourseRequest;
 import com.example.enggo.admin.UserAdmin;
 import com.example.enggo.teacher.AssignmentCreateRequest;
 import com.example.enggo.teacher.AssignmentResponse;
+import com.example.enggo.teacher.AssignmentResourceRequest;
+import com.example.enggo.teacher.AssignmentResourceResponse;
 import com.example.enggo.teacher.AssignmentUpdateRequest;
 import com.example.enggo.teacher.ClassResponse;
 import com.example.enggo.teacher.LessonCreateRequest;
@@ -17,6 +19,8 @@ import com.example.enggo.teacher.LessonResourceResponse;
 import com.example.enggo.teacher.LessonUpdateRequest;
 import com.example.enggo.teacher.GradeSubmissionRequest;
 import com.example.enggo.teacher.SubmissionStatusResponse;
+import com.example.enggo.user.SubmissionRequest;
+import com.example.enggo.user.SubmissionResponse;
 
 import java.util.List;
 
@@ -133,10 +137,60 @@ public interface ApiService {
             @Header("X-Auth-Token") String token,
             @Path("classId") Long classId
     );
+    @GET("classes/{classId}/assignments/{assignmentId}")
+    Call<AssignmentResponse> getAssignment(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Path("assignmentId") Long assignmentId
+    );
+    @GET("classes/{classId}/assignments/{assignmentId}/resources")
+    Call<List<AssignmentResourceResponse>> getAssignmentResources(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Path("assignmentId") Long assignmentId
+    );
+    @POST("classes/{classId}/assignments/{assignmentId}/resources")
+    Call<AssignmentResourceResponse> addAssignmentResource(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Path("assignmentId") Long assignmentId,
+            @Body AssignmentResourceRequest request
+    );
+    @PUT("classes/{classId}/assignments/{assignmentId}/resources/{resourceId}")
+    Call<AssignmentResourceResponse> updateAssignmentResource(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Path("assignmentId") Long assignmentId,
+            @Path("resourceId") Long resourceId,
+            @Body AssignmentResourceRequest request
+    );
+    @DELETE("classes/{classId}/assignments/{assignmentId}/resources/{resourceId}")
+    Call<Void> deleteAssignmentResource(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Path("assignmentId") Long assignmentId,
+            @Path("resourceId") Long resourceId
+    );
     @GET("classes/{classId}/assignments/{assignmentId}/submissions")
     Call<List<SubmissionStatusResponse>> getSubmissionStatus(
             @Header("X-Auth-Token") String token,
             @Path("classId") Long classId,
+            @Path("assignmentId") Long assignmentId
+    );
+    @POST("assignments/{assignmentId}/submissions")
+    Call<SubmissionResponse> submitAssignment(
+            @Header("X-Auth-Token") String token,
+            @Path("assignmentId") Long assignmentId,
+            @Body SubmissionRequest request
+    );
+    @GET("assignments/{assignmentId}/submissions/me")
+    Call<SubmissionResponse> getMySubmission(
+            @Header("X-Auth-Token") String token,
+            @Path("assignmentId") Long assignmentId
+    );
+    @DELETE("assignments/{assignmentId}/submissions/me")
+    Call<Void> deleteMySubmission(
+            @Header("X-Auth-Token") String token,
             @Path("assignmentId") Long assignmentId
     );
     @PUT("assignments/{assignmentId}/submissions/{submissionId}/grade")

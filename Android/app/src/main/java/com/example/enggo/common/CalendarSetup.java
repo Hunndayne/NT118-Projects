@@ -120,6 +120,11 @@ public class CalendarSetup {
         });
     }
 
+    public void updateEvents(Map<LocalDate, List<String>> updatedEvents) {
+        this.events = updatedEvents != null ? updatedEvents : new HashMap<>();
+        calendarView.notifyCalendarChanged();
+    }
+
     private void onDayClicked(LocalDate date) {
         List<String> dailyEvents = events.get(date);
 
