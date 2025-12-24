@@ -10,165 +10,158 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EngGo"
-        android:usesCleartextTraffic="true">
-
-
+        tools:targetApi="31">
         <activity
-            android:name=".auth.LoginActivity"
+            android:name="com.example.enggo.teacher.AssignmentsForSubmissionsTeacherActivity"
             android:exported="false" />
-
-
         <activity
-            android:name=".user.HomeUserActivity"
-            android:exported="false"/>
+            android:name="com.example.enggo.teacher.SubmissionListActivity"
+            android:exported="false" />
         <activity
-            android:name=".user.CourseUserActivity"
-            android:exported="false"/>
+            android:name="com.example.enggo.teacher.GradingSubmissionActivity"
+            android:exported="false" />
         <activity
-            android:name=".user.MenuUserActivity"
-            android:exported="false"/>
+            android:name="com.example.enggo.user.ClassUserActivity"
+            android:exported="false" />
         <activity
-            android:name=".user.EditInformationUserActivity"
-            android:exported="false"/>
+            android:name="com.example.enggo.user.LessonDetailUserActivity"
+            android:exported="false" />
         <activity
-            android:name=".user.ProfileUserActivity"
-            android:exported="false"/>
+            android:name="com.example.enggo.teacher.EditAssignmentTeacherActivity"
+            android:exported="false" />
         <activity
-            android:name=".user.NotificationUserActivity"
-            android:exported="false"/>
+            android:name="com.example.enggo.teacher.AddAssignmentTeacherActivity"
+            android:exported="false" />
         <activity
-            android:name=".user.ClassUserActivity"
-            android:exported="false"/>
+            android:name="com.example.enggo.teacher.ManageAssignmentsTeacherActivity"
+            android:exported="false" />
         <activity
-            android:name=".common.ChangeAvatarActivity"
-            android:exported="false"/>
+            android:name="com.example.enggo.teacher.EditLessonTeacherActivity"
+            android:exported="false" />
         <activity
-            android:name=".auth.ChangePasswordActivity"
-            android:exported="false"/>
+            android:name="com.example.enggo.teacher.AddLessonTeacherActivity"
+            android:exported="false" />
         <activity
-            android:name=".user.SubmitHomeworkUserActivity"
-            android:exported="false"/>
+            android:name="com.example.enggo.teacher.ManageLessonsTeacherActivity"
+            android:exported="false" />
         <activity
-            android:name=".admin.HomeAdminActivity"
-            android:exported="false"/>
+            android:name="com.example.enggo.teacher.CourseStudentsTeacherActivity"
+            android:exported="false" />
         <activity
-            android:name=".admin.MenuAdminActivity"
-            android:exported="false"/>
-
-
+            android:name="com.example.enggo.teacher.ClassCourseActivity"
+            android:exported="false" />
         <activity
-            android:name=".user.MainActivity"
+            android:name="com.example.enggo.admin.AssignmentsManagementAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.EditAssignmentAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.AddAssignmentAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.teacher.ManageCoursesTeacherActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.AddNewLessonAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.EditLessonAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.ManageLessonsAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.AvailableUserAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.CreateCourseAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.CoursesParticipantAdmin"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.EditCourseAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.ManageCoursesAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.AddUserAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.EditUserAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.teacher.EditUserTeacherActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.ManageAccountAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.ReportAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.MenuAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.HomeAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.teacher.ReportTeacherActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.teacher.MenuTeacherActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.teacher.HomeTeacherActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.common.ChangeAvatarActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.user.EditInformationUserActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.user.ProfileUserActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.user.NotificationUserActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.user.MenuUserActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.user.CourseUserActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.user.SubmitHomeworkUserActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.user.HomeUserActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.auth.ForgetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.auth.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.auth.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.user.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-        <activity
-            android:name=".admin.ManageCoursesAdminActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".admin.ManageAccountAdminActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".admin.ManageLessonsAdminActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".admin.EditLessonAdminActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".admin.CreateCourseAdminActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".admin.AddUserAdminActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".admin.AvailableUserAdminActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".admin.CoursesParticipantAdmin"
-            android:exported="false"/>
-        <activity
-            android:name=".admin.AddNewLessonAdminActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".admin.ManageReportsAdminActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".admin.AssignmentsManagementAdminActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".admin.AddAssignmentAdminActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".admin.EditAssignmentAdminActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".admin.EditCourseAdminActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".admin.EditUserAdminActivity"
-            android:exported="false"/>
-
-        <!-- Teacher Activities -->
-        <activity
-            android:name=".teacher.HomeTeacherActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".teacher.MenuTeacherActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".teacher.ManageCoursesTeacherActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".teacher.GradingSubmissionActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".teacher.ClassCourseActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".teacher.ReportTeacherActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".teacher.ScheduleTeacherActivity"
-            android:exported="false"/>
-
-        <activity
-            android:name=".teacher.SubmissionListActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".teacher.EditUserTeacherActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".teacher.AddAssignmentTeacherActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".teacher.ManageAssignmentsTeacherActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".teacher.AddLessonTeacherActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".teacher.ManageLessonsTeacherActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".teacher.EditLessonTeacherActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".teacher.EditAssignmentTeacherActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".teacher.CourseStudentsTeacherActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".teacher.AssignmentsForSubmissionsTeacherActivity"
-            android:exported="false"/>
-
     </application>
 
 </manifest>

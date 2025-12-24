@@ -13,12 +13,14 @@ import com.example.enggo.teacher.ClassResponse;
 import com.example.enggo.teacher.LessonCreateRequest;
 import com.example.enggo.teacher.LessonResponse;
 import com.example.enggo.teacher.LessonResourceRequest;
+import com.example.enggo.teacher.LessonResourceResponse;
 import com.example.enggo.teacher.LessonUpdateRequest;
 import com.example.enggo.teacher.GradeSubmissionRequest;
 import com.example.enggo.teacher.SubmissionStatusResponse;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -27,6 +29,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Multipart;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ApiService {
@@ -90,6 +94,39 @@ public interface ApiService {
     Call<List<LessonResponse>> getLessons(
             @Header("X-Auth-Token") String token,
             @Path("classId") Long classId
+    );
+    @GET("classes/{classId}/lessons/{lessonId}")
+    Call<LessonResponse> getLesson(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Path("lessonId") Long lessonId
+    );
+    @GET("classes/{classId}/lessons/{lessonId}/resources")
+    Call<List<LessonResourceResponse>> getLessonResources(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Path("lessonId") Long lessonId
+    );
+    @DELETE("classes/{classId}/lessons/{lessonId}/resources/{resourceId}")
+    Call<Void> deleteLessonResource(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Path("lessonId") Long lessonId,
+            @Path("resourceId") Long resourceId
+    );
+    @PUT("classes/{classId}/lessons/{lessonId}/resources/{resourceId}")
+    Call<LessonResourceResponse> updateLessonResource(
+            @Header("X-Auth-Token") String token,
+            @Path("classId") Long classId,
+            @Path("lessonId") Long lessonId,
+            @Path("resourceId") Long resourceId,
+            @Body LessonResourceRequest request
+    );
+    @Multipart
+    @POST("files")
+    Call<FileUploadResponse> uploadFile(
+            @Header("X-Auth-Token") String token,
+            @Part MultipartBody.Part file
     );
     @GET("classes/{classId}/assignments")
     Call<List<AssignmentResponse>> getAssignments(

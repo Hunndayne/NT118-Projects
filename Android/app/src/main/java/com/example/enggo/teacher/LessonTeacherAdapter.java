@@ -43,6 +43,11 @@ public class LessonTeacherAdapter extends RecyclerView.Adapter<LessonTeacherAdap
         holder.tvDate.setText(orderText);
         holder.tvPoster.setText("Teacher");
         holder.tvDescription.setText(lesson.description == null ? "" : lesson.description);
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onEdit(lesson);
+            }
+        });
         holder.btnEdit.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onEdit(lesson);

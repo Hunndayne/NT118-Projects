@@ -60,9 +60,6 @@ public class ScheduleTeacherActivity extends BaseTeacherActivity {
             }
         });
 
-        LinearLayout card1Content = findViewById(R.id.card1Content);
-        LinearLayout card2Content = findViewById(R.id.card2Content);
-
     }
 
     private void initViews() {
