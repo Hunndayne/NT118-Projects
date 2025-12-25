@@ -1,6 +1,9 @@
 package com.example.enggo.user;
 import com.example.enggo.R;
 import com.example.enggo.database.Database;
+import com.example.enggo.api.ApiClient;
+import com.example.enggo.api.ApiService;
+import com.example.enggo.admin.UserAdmin;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -10,10 +13,15 @@ import android.widget.ImageButton; // Hoặc Button, tùy vào view của bạn
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public abstract class BaseUserActivity extends AppCompatActivity {
 
@@ -77,6 +85,7 @@ public abstract class BaseUserActivity extends AppCompatActivity {
         ImageButton btnTheme = findViewById(R.id.btnThemeSwitch);
         ImageView imgAvatar = findViewById(R.id.iconAvatar);
         ImageView imgDropdown = findViewById(R.id.imgDropdown);
+        TextView tvStudentName = findViewById(R.id.tvStudentName);
 
         btnTheme.setOnClickListener(v -> {
             // Xử lý đổi chế độ nền sáng tối
@@ -91,6 +100,42 @@ public abstract class BaseUserActivity extends AppCompatActivity {
         // Avatar - Show popup menu
         imgAvatar.setOnClickListener(v -> {
             showAvatarMenu(v);
+        });
+
+        if (tvStudentName != null) {
+            loadStudentName(tvStudentName);
+        }
+    }
+
+    protected void loadStudentName(TextView tvStudentName) {
+        String token = getTokenFromDb();
+        if (token == null) {
+            return;
+        }
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.getCurrentUser(token).enqueue(new Callback<UserAdmin>() {
+            @Override
+            public void onResponse(Call<UserAdmin> call, Response<UserAdmin> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String name = response.body().getFullName();
+                    if (name == null || name.trim().isEmpty()) {
+                        String first = response.body().getFirstName();
+                        String last = response.body().getLastName();
+                        name = ((first == null ? "" : first.trim()) + " " + (last == null ? "" : last.trim())).trim();
+                    }
+                    if (name == null || name.trim().isEmpty()) {
+                        name = response.body().getUsername();
+                    }
+                    if (name != null && !name.trim().isEmpty()) {
+                        tvStudentName.setText(name);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserAdmin> call, Throwable t) {
+                // no-op
+            }
         });
     }
 
