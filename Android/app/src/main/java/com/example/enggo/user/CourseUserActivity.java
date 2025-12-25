@@ -21,6 +21,8 @@ import com.kizitonwose.calendar.core.CalendarMonth;
 import com.kizitonwose.calendar.view.CalendarView;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -329,7 +331,9 @@ public class CourseUserActivity extends BaseUserActivity {
             return null;
         }
         try {
-            return OffsetDateTime.parse(deadline.trim()).toLocalDate();
+            OffsetDateTime parsed = OffsetDateTime.parse(deadline.trim());
+            ZonedDateTime vietnam = parsed.atZoneSameInstant(ZoneId.of("Asia/Ho_Chi_Minh"));
+            return vietnam.toLocalDate();
         } catch (Exception ignored) {
         }
         try {
@@ -356,7 +360,9 @@ public class CourseUserActivity extends BaseUserActivity {
         }
         try {
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-            return OffsetDateTime.parse(deadline.trim()).toLocalTime().format(timeFormatter);
+            OffsetDateTime parsed = OffsetDateTime.parse(deadline.trim());
+            ZonedDateTime vietnam = parsed.atZoneSameInstant(ZoneId.of("Asia/Ho_Chi_Minh"));
+            return vietnam.toLocalTime().format(timeFormatter);
         } catch (Exception ignored) {
             return null;
         }

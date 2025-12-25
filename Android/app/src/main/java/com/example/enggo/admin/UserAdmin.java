@@ -11,10 +11,17 @@ public class UserAdmin {
     private String fullName;
 
     private String emailAddress;
+    private String emailVisibility;
+    private String city;
+    private String country;
+    private String timezone;
+    private String description;
+    private String interest;
     private String phoneNumber;
 
     private boolean admin;
     private boolean active;
+    private String role;
 
     // ===== GETTERS =====
     public long getId() {
@@ -41,6 +48,30 @@ public class UserAdmin {
         return emailAddress;
     }
 
+    public String getEmailVisibility() {
+        return emailVisibility;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getTimezone() {
+        return timezone;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getInterest() {
+        return interest;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -51,6 +82,10 @@ public class UserAdmin {
 
     public boolean isActive() {
         return active;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     // ===== HELPER =====

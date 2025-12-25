@@ -239,22 +239,24 @@
                                     android:orientation="vertical">
 
                                     <TextView
-                                        android:text="[TA153GD] TOEIC R&amp;L"
+                                        android:id="@+id/tvAdminCourseTitle1"
                                         android:textSize="14sp"
                                         android:textStyle="bold"
                                         android:textColor="@color/text_primary"
                                         android:maxLines="1"
                                         android:ellipsize="end"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content" />
+                                        android:layout_height="wrap_content"
+                                        tools:text="[TA153GD] TOEIC R&amp;L" />
 
                                     <TextView
-                                        android:text="Toiec • 45 Students"
+                                        android:id="@+id/tvAdminCourseMeta1"
                                         android:textSize="12sp"
                                         android:textColor="#808080"
                                         android:layout_marginTop="2dp"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"/>
+                                        android:layout_height="wrap_content"
+                                        tools:text="Toiec • 45 Students"/>
                                 </LinearLayout>
 
                                 <ImageView
@@ -293,22 +295,24 @@
                                     android:orientation="vertical">
 
                                     <TextView
-                                        android:text="[TB115] TOEIC S&amp;W"
+                                        android:id="@+id/tvAdminCourseTitle2"
                                         android:textSize="14sp"
                                         android:textStyle="bold"
                                         android:textColor="@color/text_primary"
                                         android:maxLines="1"
                                         android:ellipsize="end"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content" />
+                                        android:layout_height="wrap_content"
+                                        tools:text="[TB115] TOEIC S&amp;W" />
 
                                     <TextView
-                                        android:text="Toiec • 30 Students"
+                                        android:id="@+id/tvAdminCourseMeta2"
                                         android:textSize="12sp"
                                         android:textColor="#808080"
                                         android:layout_marginTop="2dp"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"/>
+                                        android:layout_height="wrap_content"
+                                        tools:text="Toiec • 30 Students"/>
                                 </LinearLayout>
 
                                 <ImageView
@@ -419,21 +423,23 @@
                                     android:layout_marginStart="12dp">
 
                                     <TextView
-                                        android:text="Trần Thanh Hùng"
+                                        android:id="@+id/tvAdminAccountName1"
                                         android:textSize="15sp"
                                         android:textColor="@color/text_primary"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content" />
+                                        android:layout_height="wrap_content"
+                                        tools:text="Trần Thanh Hùng" />
 
                                     <TextView
-                                        android:text="SV001 • hungtt@gmail.com"
+                                        android:id="@+id/tvAdminAccountMeta1"
                                         android:textSize="12sp"
                                         android:textColor="#808080"
                                         android:layout_marginTop="2dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:maxLines="1"
-                                        android:ellipsize="end"/>
+                                        android:ellipsize="end"
+                                        tools:text="Student"/>
                                 </LinearLayout>
 
                                 <ImageView
@@ -490,21 +496,23 @@
                                     android:layout_marginStart="12dp">
 
                                     <TextView
-                                        android:text="Nguyễn Tài Quang"
+                                        android:id="@+id/tvAdminAccountName2"
                                         android:textSize="15sp"
                                         android:textColor="@color/text_primary"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content" />
+                                        android:layout_height="wrap_content"
+                                        tools:text="Nguyễn Tài Quang" />
 
                                     <TextView
-                                        android:text="SV002 • quangnt@gmail.com"
+                                        android:id="@+id/tvAdminAccountMeta2"
                                         android:textSize="12sp"
                                         android:textColor="#808080"
                                         android:layout_marginTop="2dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:maxLines="1"
-                                        android:ellipsize="end"/>
+                                        android:ellipsize="end"
+                                        tools:text="Teacher"/>
                                 </LinearLayout>
 
                                 <ImageView

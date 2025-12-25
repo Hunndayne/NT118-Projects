@@ -213,6 +213,23 @@ public class UserService {
     }
 
     /**
+     * ✅ ADMIN: List all users
+     */
+    @Transactional(readOnly = true)
+    public List<UserResponse> getAllUsers(String rawToken) {
+        User admin = resolveAuthenticatedUser(rawToken);
+
+        if (!admin.isSuperAdmin()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
+        }
+
+        return userRepository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    /**
      * ✅ ADMIN: Delete user
      * - Requires super admin
      * - Prevent deleting admin

@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MenuUserActivity extends BaseUserActivity {
@@ -21,6 +22,10 @@ public class MenuUserActivity extends BaseUserActivity {
         setContentView(R.layout.menu);
         setupHeader();
         setupFooter();
+        TextView tvUserName = findViewById(R.id.tvUserName);
+        if (tvUserName != null) {
+            loadStudentName(tvUserName);
+        }
         // 1. Tìm ListView trong layout bằng ID của nó
         ListView userAccountListView = findViewById(R.id.userAccountListView);
 

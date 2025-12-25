@@ -49,6 +49,10 @@ public interface ApiService {
     Call<List<UserAdmin>> getAllStudents(
             @Header("X-Auth-Token") String token
     );
+    @GET("admin/users")
+    Call<List<UserAdmin>> getAllUsers(
+            @Header("X-Auth-Token") String token
+    );
     @POST("users")
     Call<UserAdmin> createUser(
             @Header("X-Auth-Token") String token,
@@ -73,6 +77,11 @@ public interface ApiService {
     Call<UserAdmin> updateUser(
             @Header("X-Auth-Token") String token,
             @Path("id") long userId,
+            @Body UserUpdateRequest request
+    );
+    @PUT("users")
+    Call<UserAdmin> updateCurrentUser(
+            @Header("X-Auth-Token") String token,
             @Body UserUpdateRequest request
     );
     @PUT("admin/users/{id}/lock")

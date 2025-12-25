@@ -21,10 +21,10 @@
             android:id="@+id/tvCourseName_manageusritem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Introduction of Vietnamese"
             android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold"
+            tools:text="Introduction of Vietnamese"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,8 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="VIE01"
             android:textColor="@color/text_secondary"
+            tools:text="VIE01"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCourseName_manageusritem" />
 
@@ -43,8 +43,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="2 lesson"
             android:textColor="@color/text_secondary"
+            tools:text="2 lesson"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvClassCode_manageusritem" />
 
