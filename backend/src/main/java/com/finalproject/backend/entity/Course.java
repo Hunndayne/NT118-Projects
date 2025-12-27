@@ -54,6 +54,15 @@ public class Course {
 	@Builder.Default
 	private Set<User> students = new HashSet<>();
 
+	@ManyToMany
+	@JoinTable(
+			name = "courses_teachers",
+			joinColumns = @JoinColumn(name = "course_id"),
+			inverseJoinColumns = @JoinColumn(name = "teacher_id")
+	)
+	@Builder.Default
+	private Set<User> teachers = new HashSet<>();
+
 	@PrePersist
 	void onCreate() {
 		if (createdAt == null) {

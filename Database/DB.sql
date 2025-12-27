@@ -150,3 +150,10 @@ create table courses_students (
     student_id  bigint references users(user_id),
     primary key (course_id, student_id)
 );
+
+-- ===== courses_teachers =====
+create table courses_teachers (
+    course_id   bigint references courses(course_id),
+    teacher_id  bigint references users(user_id),
+    primary key (course_id, teacher_id)
+);

@@ -34,8 +34,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("SELECT u FROM User u LEFT JOIN FETCH u.profile WHERE u.legacyUserId = :legacyId")
 	Optional<User> findWithProfileByLegacyUserId(@Param("legacyId") Long legacyId);
 
-	@Query("SELECT u FROM User u WHERE u.active = true AND u.id NOT IN (" +
-			"SELECT s.id FROM Course c JOIN c.students s WHERE c.id = :courseId)")
+	@Query("SELECT u FROM User u WHERE u.active = true " +
+			"AND u.id NOT IN (SELECT s.id FROM Course c JOIN c.students s WHERE c.id = :courseId) " +
+			"AND u.id NOT IN (SELECT t.id FROM Course c JOIN c.teachers t WHERE c.id = :courseId)")
 	List<User> findActiveUsersNotInCourse(@Param("courseId") Long courseId);
     @Query("SELECT u FROM User u WHERE u.admin = false AND u.active = true")
     List<User> findAllStudents();
