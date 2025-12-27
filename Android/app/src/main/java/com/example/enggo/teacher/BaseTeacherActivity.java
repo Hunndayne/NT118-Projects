@@ -52,7 +52,7 @@ public abstract class BaseTeacherActivity extends AppCompatActivity {
 
         // 2. Nút thông báo
         btnNotification.setOnClickListener(v -> {
-            Intent intent = new Intent(this, NotificationTeacherActivity.class);
+            Intent intent = new Intent(this, SendNotificationActivity.class);
             startActivity(intent);
         });
 

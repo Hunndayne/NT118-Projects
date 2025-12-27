@@ -1,7 +1,7 @@
 package com.example.enggo.user;
 
 import com.example.enggo.R;
-import com.example.enggo.adapter.NotificationAdapter;
+import com.example.enggo.adapter.NotificationSectionAdapter;
 import com.example.enggo.api.ApiClient;
 import com.example.enggo.api.ApiService;
 import com.example.enggo.model.Notification;
@@ -26,7 +26,7 @@ import retrofit2.Response;
 public class NotificationUserActivity extends BaseUserActivity {
 
     private RecyclerView rvNotifications;
-    private NotificationAdapter adapter;
+    private NotificationSectionAdapter adapter;
     private EditText etSearch;
     private TextView tvBack;
     private List<Notification> notificationList;
@@ -50,7 +50,7 @@ public class NotificationUserActivity extends BaseUserActivity {
 
         rvNotifications.setLayoutManager(new LinearLayoutManager(this));
         notificationList = new ArrayList<>();
-        adapter = new NotificationAdapter(this, notificationList);
+        adapter = new NotificationSectionAdapter(this, notificationList);
         rvNotifications.setAdapter(adapter);
     }
 

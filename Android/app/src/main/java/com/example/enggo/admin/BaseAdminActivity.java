@@ -54,7 +54,7 @@ public abstract class BaseAdminActivity extends AppCompatActivity {
 
         // 2. Nút thông báo
         btnNotification.setOnClickListener(v -> {
-            Intent intent = new Intent(this, NotificationAdminActivity.class);
+            Intent intent = new Intent(this, SendNotificationAdminActivity.class);
             startActivity(intent);
         });
 
