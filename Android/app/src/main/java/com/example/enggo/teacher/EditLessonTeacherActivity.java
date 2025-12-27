@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -50,6 +51,7 @@ public class EditLessonTeacherActivity extends BaseTeacherActivity {
     private Button btnAddLink;
     private LinearLayout fileListContainer;
     private LinearLayout linkListContainer;
+    private TextView tvSelectedFileName;
     private Long courseId;
     private Long lessonId;
     private ActivityResultLauncher<String[]> filePickerLauncher;
@@ -78,6 +80,7 @@ public class EditLessonTeacherActivity extends BaseTeacherActivity {
         btnAddLink = findViewById(R.id.btnAddLink);
         fileListContainer = findViewById(R.id.fileListContainer);
         linkListContainer = findViewById(R.id.linkListContainer);
+        tvSelectedFileName = findViewById(R.id.tvSelectedFileName);
     }
 
     private void setupFilePicker() {
@@ -140,6 +143,10 @@ public class EditLessonTeacherActivity extends BaseTeacherActivity {
         }
         selectedFileUri = uri.toString();
         String fileName = getFileName(uri);
+        if (tvSelectedFileName != null) {
+            tvSelectedFileName.setText(fileName);
+            tvSelectedFileName.setVisibility(android.view.View.VISIBLE);
+        }
         Log.d("EditLessonTeacher", "Selected file: " + selectedFileUri + " name=" + fileName);
         String token = getTokenFromDb();
         if (token == null) {
@@ -436,6 +443,10 @@ public class EditLessonTeacherActivity extends BaseTeacherActivity {
                                                     return;
                                                 }
                                                 Log.d("EditLessonTeacher", "Attach success");
+                                                if (tvSelectedFileName != null) {
+                                                    tvSelectedFileName.setText("");
+                                                    tvSelectedFileName.setVisibility(android.view.View.GONE);
+                                                }
                                                 loadResources();
                                             }
 
@@ -476,7 +487,7 @@ public class EditLessonTeacherActivity extends BaseTeacherActivity {
     }
 
     private String resolveContentType(Uri uri) {
-        String mimeType = resolveContentType(uri);
+        String mimeType = getContentResolver().getType(uri);
         if (mimeType != null) {
             return mimeType;
         }
@@ -494,7 +505,7 @@ public class EditLessonTeacherActivity extends BaseTeacherActivity {
         return "application/octet-stream";
     }
     private RequestBody createRequestBody(Uri uri) {
-        String mimeType = resolveContentType(uri);
+        String mimeType = getContentResolver().getType(uri);
         MediaType mediaType = mimeType != null
                 ? MediaType.parse(mimeType)
                 : MediaType.parse("application/octet-stream");
@@ -568,7 +579,7 @@ public class EditLessonTeacherActivity extends BaseTeacherActivity {
     }
 
     private String getExtension(Uri uri) {
-        String mimeType = resolveContentType(uri);
+        String mimeType = getContentResolver().getType(uri);
         if (mimeType == null) {
             return null;
         }

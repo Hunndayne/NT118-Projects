@@ -11,6 +11,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -41,6 +42,7 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
     private Button btnCancel;
     private Button btnCreate;
     private Button btnUpload;
+    private TextView tvSelectedFileName;
     private Long courseId;
     private ActivityResultLauncher<String[]> filePickerLauncher;
     private String selectedFileUri;
@@ -66,6 +68,7 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
         btnCancel = findViewById(R.id.buttonCancelUpLesson_Admin);
         btnCreate = findViewById(R.id.buttonUpLesson_Admin);
         btnUpload = findViewById(R.id.buttonUploadAttachmentAdmin);
+        tvSelectedFileName = findViewById(R.id.tvSelectedFileName);
     }
 
     private void setupFilePicker() {
@@ -106,8 +109,9 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
         }
         selectedFileUri = uri.toString();
         String fileName = getFileName(uri);
-        if (btnUpload != null) {
-            btnUpload.setText(fileName);
+        if (tvSelectedFileName != null) {
+            tvSelectedFileName.setText(fileName);
+            tvSelectedFileName.setVisibility(android.view.View.VISIBLE);
         }
         Log.d("AddLessonTeacher", "Selected file: " + selectedFileUri + " name=" + fileName);
     }
@@ -313,7 +317,7 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
     }
 
     private String resolveContentType(Uri uri) {
-        String mimeType = resolveContentType(uri);
+        String mimeType = getContentResolver().getType(uri);
         if (mimeType != null) {
             return mimeType;
         }
@@ -331,7 +335,7 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
         return "application/octet-stream";
     }
     private RequestBody createRequestBody(Uri uri) {
-        String mimeType = resolveContentType(uri);
+        String mimeType = getContentResolver().getType(uri);
         MediaType mediaType = mimeType != null
                 ? MediaType.parse(mimeType)
                 : MediaType.parse("application/octet-stream");
@@ -394,7 +398,7 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
     }
 
     private String getExtension(Uri uri) {
-        String mimeType = resolveContentType(uri);
+        String mimeType = getContentResolver().getType(uri);
         if (mimeType == null) {
             return null;
         }
