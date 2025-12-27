@@ -25,6 +25,7 @@ import com.example.enggo.user.SubmissionResponse;
 import java.util.List;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -33,6 +34,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Url;
 import retrofit2.http.Multipart;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
@@ -144,6 +146,17 @@ public interface ApiService {
     Call<FileUploadResponse> uploadFile(
             @Header("X-Auth-Token") String token,
             @Part MultipartBody.Part file
+    );
+    @POST("files/presign-upload")
+    Call<PresignUploadResponse> presignUpload(
+            @Header("X-Auth-Token") String token,
+            @Body PresignUploadRequest request
+    );
+    @PUT
+    Call<Void> uploadToPresignedUrl(
+            @Url String uploadUrl,
+            @Header("Content-Type") String contentType,
+            @Body RequestBody file
     );
     @GET("classes/{classId}/assignments")
     Call<List<AssignmentResponse>> getAssignments(
