@@ -9,10 +9,12 @@ import com.finalproject.backend.dto.response.UserResponse;
 import com.finalproject.backend.entity.AuthToken;
 import com.finalproject.backend.entity.TokenType;
 import com.finalproject.backend.entity.User;
-    import com.finalproject.backend.entity.UserProfile;
+import com.finalproject.backend.entity.UserProfile;
 import com.finalproject.backend.entity.UserRole;
 import com.finalproject.backend.repository.AuthTokenRepository;
 import com.finalproject.backend.repository.UserRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -39,11 +41,14 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UserService {
 
-    private static final Duration ACCESS_TOKEN_TTL = Duration.ofDays(1);
+	private static final Duration ACCESS_TOKEN_TTL = Duration.ofDays(1);
 
-    private final UserRepository userRepository;
-    private final AuthTokenRepository authTokenRepository;
-    private final PasswordEncoder passwordEncoder;
+	private final UserRepository userRepository;
+	private final AuthTokenRepository authTokenRepository;
+	private final PasswordEncoder passwordEncoder;
+
+	@PersistenceContext
+	private EntityManager entityManager;
 
     @Transactional
     public UserResponse createUser(UserCreationRequest request) {
@@ -261,6 +266,7 @@ public class UserService {
 		boolean actorIsAdmin = actingUser.isSuperAdmin();
 		String avatarUrlForLog = null;
 		boolean profileCreated = false;
+		UserProfile profileToPersist = null;
 
         if (request.getUsername() != null && !request.getUsername().equalsIgnoreCase(targetUser.getUsername())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username cannot be changed");
@@ -335,6 +341,7 @@ public class UserService {
 				profile.setUser(targetUser);
 				targetUser.setProfile(profile);
 				profileCreated = true;
+				profileToPersist = profile;
 			}
 			profile.setAvatarUrl(avatarUrl);
 			avatarUrlForLog = avatarUrl;
@@ -367,9 +374,13 @@ public class UserService {
             recomputeFullName(targetUser);
         }
 
+		if (profileToPersist != null) {
+			entityManager.persist(profileToPersist);
+		}
+
 		try {
-			User saved = userRepository.save(targetUser);
-			User hydrated = loadUserWithProfile(saved.getId());
+			entityManager.flush();
+			User hydrated = loadUserWithProfile(targetUser.getId());
 			return toResponse(hydrated);
 		} catch (RuntimeException ex) {
 			if (avatarUrlForLog != null) {
