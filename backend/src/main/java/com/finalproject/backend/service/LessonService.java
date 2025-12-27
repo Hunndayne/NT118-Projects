@@ -206,16 +206,24 @@ public class LessonService {
 		if (clazz == null) {
 			Course course = courseRepository.findById(classIdOrCourseId)
 					.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found"));
+			// Initialize lazy collections
+			if (course.getTeachers() != null) course.getTeachers().size();
+			if (course.getStudents() != null) course.getStudents().size();
 			clazz = ClassEntity.builder()
 					.name(course.getName())
 					.description(course.getDescription())
 					.active(course.getActive())
 					.course(course)
 					.createdBy(course.getCreatedBy())
+					.teachers(course.getTeachers() != null ? new java.util.HashSet<>(course.getTeachers()) : new java.util.HashSet<>())
+					.students(course.getStudents() != null ? new java.util.HashSet<>(course.getStudents()) : new java.util.HashSet<>())
 					.build();
 			clazz = classRepository.save(clazz);
 		}
-		clazz.getTeachers().size(); // init teachers
+		// Init teachers - with null check
+		if (clazz.getTeachers() != null) {
+			clazz.getTeachers().size();
+		}
 		return clazz;
 	}
 
@@ -228,7 +236,8 @@ public class LessonService {
 		if (user.isSuperAdmin()) {
 			return;
 		}
-		boolean isTeacher = clazz.getTeachers().stream().anyMatch(t -> t.getId().equals(user.getId()));
+		java.util.Set<com.finalproject.backend.entity.User> teachers = clazz.getTeachers();
+		boolean isTeacher = teachers != null && teachers.stream().anyMatch(t -> t.getId().equals(user.getId()));
 		if (user.isTeacher() && isTeacher) {
 			return;
 		}
@@ -245,7 +254,8 @@ public class LessonService {
 		if (user.isSuperAdmin()) {
 			return;
 		}
-		boolean isTeacher = clazz.getTeachers().stream().anyMatch(t -> t.getId().equals(user.getId()));
+		java.util.Set<com.finalproject.backend.entity.User> teachers = clazz.getTeachers();
+		boolean isTeacher = teachers != null && teachers.stream().anyMatch(t -> t.getId().equals(user.getId()));
 		if (user.isTeacher() && isTeacher) {
 			return;
 		}
@@ -259,7 +269,10 @@ public class LessonService {
 		if (clazz.getCourse() == null || clazz.getCourse().getId() == null) {
 			return false;
 		}
-		return courseRepository.findByIdAndStudents_Id(clazz.getCourse().getId(), user.getId()).isPresent();
+		Long courseId = clazz.getCourse().getId();
+		Long userId = user.getId();
+		return courseRepository.findByIdAndStudents_Id(courseId, userId).isPresent()
+				|| courseRepository.findByIdAndTeachers_Id(courseId, userId).isPresent();
 	}
 
 	private LessonResponse toResponseWithResources(Lesson lesson) {

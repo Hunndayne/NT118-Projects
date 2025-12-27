@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -130,6 +131,7 @@ public class AddAssignmentTeacherActivity extends BaseTeacherActivity {
         }
 
         String token = getTokenFromDb();
+        Log.d("AddAssignment", "Creating assignment for courseId: " + courseId + ", title: " + title + ", dueTime: " + dueTime);
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         AssignmentCreateRequest request = new AssignmentCreateRequest(
                 title,
@@ -143,13 +145,24 @@ public class AddAssignmentTeacherActivity extends BaseTeacherActivity {
                 .enqueue(new Callback<AssignmentResponse>() {
                     @Override
                     public void onResponse(Call<AssignmentResponse> call, Response<AssignmentResponse> response) {
+                        Log.d("AddAssignment", "Response code: " + response.code());
                         if (response.isSuccessful()) {
+                            Log.d("AddAssignment", "Assignment created successfully");
                             setResult(RESULT_OK);
                             finish();
                         } else {
+                            String errorBody = "";
+                            try {
+                                if (response.errorBody() != null) {
+                                    errorBody = response.errorBody().string();
+                                }
+                            } catch (Exception e) {
+                                errorBody = e.getMessage();
+                            }
+                            Log.e("AddAssignment", "Create failed: " + response.code() + " - " + errorBody);
                             Toast.makeText(
                                     AddAssignmentTeacherActivity.this,
-                                    "Create assignment failed",
+                                    "Create assignment failed: " + response.code(),
                                     Toast.LENGTH_SHORT
                             ).show();
                         }
@@ -157,9 +170,10 @@ public class AddAssignmentTeacherActivity extends BaseTeacherActivity {
 
                     @Override
                     public void onFailure(Call<AssignmentResponse> call, Throwable t) {
+                        Log.e("AddAssignment", "Network error: " + t.getMessage(), t);
                         Toast.makeText(
                                 AddAssignmentTeacherActivity.this,
-                                "Cannot connect to server",
+                                "Cannot connect to server: " + t.getMessage(),
                                 Toast.LENGTH_SHORT
                         ).show();
                     }
