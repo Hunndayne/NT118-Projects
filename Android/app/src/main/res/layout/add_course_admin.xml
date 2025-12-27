@@ -88,7 +88,6 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="Toeic Listening + Writing TA113"
                     android:hint="Course name"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -112,7 +111,6 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="TA113"
                     android:hint="Class code"
                     android:textSize="14sp" />
             </LinearLayout>

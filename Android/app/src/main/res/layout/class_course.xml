@@ -225,7 +225,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="[TA153G0] Thông báo nghỉ học vào ngày 04/09/2025.\n[TA153G6] Lịch kiểm tra giữa khóa."
+                        android:text=""
+                        tools:text="[TA153G0] Thông báo nghỉ học vào ngày 04/09/2025.\n[TA153G6] Lịch kiểm tra giữa khóa."
                         android:textSize="14sp" />
 
                     <View

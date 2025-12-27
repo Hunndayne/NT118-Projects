@@ -50,18 +50,8 @@ public class HomeTeacherActivity extends BaseTeacherActivity {
     }
 
     private void setupScheduleItems() {
-        LinearLayout scheduleItem1 = findViewById(R.id.scheduleItem1_teacher);
-        LinearLayout scheduleItem2 = findViewById(R.id.scheduleItem2_teacher);
-        
-        scheduleItem1.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ReportTeacherActivity.class);
-            startActivity(intent);
-        });
-        
-        scheduleItem2.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ReportTeacherActivity.class);
-            startActivity(intent);
-        });
+        // Schedule items will be loaded from API in future implementation
+        // For now, the static schedule card is hidden in the layout (android:visibility="gone")
     }
 
     private void setupGradingCards() {

@@ -1,10 +1,9 @@
-package com.example.enggo.teacher;
+package com.example.enggo.admin;
 
 import com.example.enggo.R;
 import com.example.enggo.api.ApiClient;
 import com.example.enggo.api.ApiService;
 import com.example.enggo.api.UserUpdateRequest;
-import com.example.enggo.admin.UserAdmin;
 import com.example.enggo.common.ChangeAvatarActivity;
 
 import android.content.Intent;
@@ -18,7 +17,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditUserTeacherActivity extends BaseTeacherActivity {
+public class EditProfileAdminActivity extends BaseAdminActivity {
     private TextView tvBack;
     private TextView tvUserName;
     private EditText etFirstName;
@@ -35,17 +34,20 @@ public class EditUserTeacherActivity extends BaseTeacherActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_profile_teacher);
+        setContentView(R.layout.edit_profile_admin);
 
-        setupTeacherHeader();
-        setupTeacherFooter();
+        tvBack = findViewById(R.id.tvBack);
+        tvBack.setOnClickListener(v -> finish());
+        
+        setupAdminHeader();
+        setupAdminFooter();
+        
         initViews();
         setupListeners();
         loadProfileInfo();
     }
 
     private void initViews() {
-        tvBack = findViewById(R.id.tvBack);
         tvUserName = findViewById(R.id.tvUserName);
         etFirstName = findViewById(R.id.etFirstName);
         etLastName = findViewById(R.id.etLastName);
@@ -60,18 +62,14 @@ public class EditUserTeacherActivity extends BaseTeacherActivity {
     }
 
     private void setupListeners() {
-        if (tvBack != null) {
-            tvBack.setOnClickListener(v -> finish());
-        }
-        
         LinearLayout userInfoLayout = findViewById(R.id.userInfoLayout);
         if (userInfoLayout != null) {
             userInfoLayout.setOnClickListener(v -> {
-                Intent intent = new Intent(EditUserTeacherActivity.this, ChangeAvatarActivity.class);
+                Intent intent = new Intent(EditProfileAdminActivity.this, ChangeAvatarActivity.class);
                 startActivity(intent);
             });
         }
-        
+
         findViewById(R.id.btnUpdateProfile).setOnClickListener(v -> updateProfile());
     }
 
@@ -85,7 +83,7 @@ public class EditUserTeacherActivity extends BaseTeacherActivity {
             @Override
             public void onResponse(Call<UserAdmin> call, Response<UserAdmin> response) {
                 if (!response.isSuccessful() || response.body() == null) {
-                    Toast.makeText(EditUserTeacherActivity.this, "Load profile failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfileAdminActivity.this, "Load profile failed", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 UserAdmin user = response.body();
@@ -104,7 +102,7 @@ public class EditUserTeacherActivity extends BaseTeacherActivity {
 
             @Override
             public void onFailure(Call<UserAdmin> call, Throwable t) {
-                Toast.makeText(EditUserTeacherActivity.this, "Cannot connect to server", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditProfileAdminActivity.this, "Cannot connect to server", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -131,17 +129,17 @@ public class EditUserTeacherActivity extends BaseTeacherActivity {
             @Override
             public void onResponse(Call<UserAdmin> call, Response<UserAdmin> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Toast.makeText(EditUserTeacherActivity.this, "Profile updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfileAdminActivity.this, "Profile updated", Toast.LENGTH_SHORT).show();
                     UserAdmin user = response.body();
                     setText(tvUserName, buildDisplayName(user));
                 } else {
-                    Toast.makeText(EditUserTeacherActivity.this, "Update failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfileAdminActivity.this, "Update failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<UserAdmin> call, Throwable t) {
-                Toast.makeText(EditUserTeacherActivity.this, "Cannot connect to server", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditProfileAdminActivity.this, "Cannot connect to server", Toast.LENGTH_SHORT).show();
             }
         });
     }

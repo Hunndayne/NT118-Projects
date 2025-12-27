@@ -1,6 +1,8 @@
 package com.example.enggo.teacher;
 
 import com.example.enggo.R;
+import com.example.enggo.api.ApiClient;
+import com.example.enggo.api.ApiService;
 import com.example.enggo.common.CalendarSetup;
 import com.kizitonwose.calendar.core.CalendarMonth;
 import com.kizitonwose.calendar.view.CalendarView;
@@ -11,13 +13,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ScheduleTeacherActivity extends BaseTeacherActivity {
     private TextView tvBack;
+    private CalendarSetup calendarSetup;
+    private final Map<LocalDate, List<String>> events = new HashMap<>();
+    private int loadGeneration = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,19 +43,13 @@ public class ScheduleTeacherActivity extends BaseTeacherActivity {
         ImageButton previousMonthButton = findViewById(R.id.previousMonthButton);
         ImageButton nextMonthButton = findViewById(R.id.nextMonthButton);
 
-        // Create some sample events
-        Map<LocalDate, List<String>> events = new HashMap<>();
-        events.put(LocalDate.now(), new ArrayList<String>() {{
-            add("Meeting");
-            add("Lunch");
-        }});
-        events.put(LocalDate.now().plusDays(2), new ArrayList<String>() {{
-            add("Dentist");
-        }});
-
-        // Setup the calendar
-        CalendarSetup calendarSetup = new CalendarSetup(this, calendarView, monthYearText, previousMonthButton, nextMonthButton, events);
+        // Setup the calendar with empty events (will be loaded from API)
+        calendarSetup = new CalendarSetup(this, calendarView, monthYearText, previousMonthButton, nextMonthButton, events);
         calendarSetup.setup();
+        
+        // Load schedule events from API
+        loadScheduleEvents();
+        
         previousMonthButton.setOnClickListener(v -> {
             CalendarMonth currentMonth = calendarView.findFirstVisibleMonth();
             if (currentMonth != null) {
@@ -70,5 +74,117 @@ public class ScheduleTeacherActivity extends BaseTeacherActivity {
         if (tvBack != null) {
             tvBack.setOnClickListener(v -> finish());
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadScheduleEvents();
+    }
+
+    private void loadScheduleEvents() {
+        String token = getTokenFromDb();
+        if (token == null) {
+            return;
+        }
+        int generation = ++loadGeneration;
+        events.clear();
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.getClasses(token).enqueue(new Callback<List<ClassResponse>>() {
+            @Override
+            public void onResponse(Call<List<ClassResponse>> call,
+                                   Response<List<ClassResponse>> response) {
+                if (generation != loadGeneration) {
+                    return;
+                }
+                if (!response.isSuccessful() || response.body() == null) {
+                    calendarSetup.updateEvents(events);
+                    return;
+                }
+                List<ClassResponse> classes = response.body();
+                if (classes.isEmpty()) {
+                    calendarSetup.updateEvents(events);
+                    return;
+                }
+                final int[] pending = {classes.size()};
+                for (ClassResponse clazz : classes) {
+                    // Load assignments for each class
+                    apiService.getAssignments(token, clazz.id).enqueue(new Callback<List<AssignmentResponse>>() {
+                        @Override
+                        public void onResponse(Call<List<AssignmentResponse>> call,
+                                               Response<List<AssignmentResponse>> response) {
+                            if (generation != loadGeneration) {
+                                return;
+                            }
+                            if (response.isSuccessful() && response.body() != null) {
+                                for (AssignmentResponse assignment : response.body()) {
+                                    LocalDate date = parseDate(assignment.deadline);
+                                    if (date != null) {
+                                        addEvent(date, formatAssignmentLabel(assignment, clazz));
+                                    }
+                                }
+                            }
+                            finishPending();
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<AssignmentResponse>> call, Throwable t) {
+                            if (generation != loadGeneration) {
+                                return;
+                            }
+                            finishPending();
+                        }
+
+                        private void finishPending() {
+                            pending[0] -= 1;
+                            if (pending[0] <= 0) {
+                                calendarSetup.updateEvents(events);
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ClassResponse>> call, Throwable t) {
+                if (generation != loadGeneration) {
+                    return;
+                }
+                calendarSetup.updateEvents(events);
+            }
+        });
+    }
+
+    private LocalDate parseDate(String dateStr) {
+        if (dateStr == null || dateStr.isEmpty()) {
+            return null;
+        }
+        try {
+            // Try ISO format first (yyyy-MM-dd)
+            if (dateStr.contains("T")) {
+                dateStr = dateStr.split("T")[0];
+            }
+            return LocalDate.parse(dateStr, DateTimeFormatter.ISO_LOCAL_DATE);
+        } catch (Exception e) {
+            try {
+                // Try dd/MM/yyyy format
+                return LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            } catch (Exception e2) {
+                return null;
+            }
+        }
+    }
+
+    private void addEvent(LocalDate date, String eventLabel) {
+        if (!events.containsKey(date)) {
+            events.put(date, new ArrayList<>());
+        }
+        events.get(date).add(eventLabel);
+    }
+
+    private String formatAssignmentLabel(AssignmentResponse assignment, ClassResponse clazz) {
+        String className = clazz.name != null ? clazz.name : ("Class " + clazz.id);
+        String title = assignment.title != null ? assignment.title : "Assignment";
+        return "[" + className + "] " + title;
     }
 }

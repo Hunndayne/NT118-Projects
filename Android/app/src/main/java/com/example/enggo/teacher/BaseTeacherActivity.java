@@ -47,6 +47,7 @@ public abstract class BaseTeacherActivity extends AppCompatActivity {
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }
+            recreate(); // Recreate activity để áp dụng theme ngay lập tức
         });
 
         // 2. Nút thông báo

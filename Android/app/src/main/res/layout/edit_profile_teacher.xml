@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_primary"
-    tools:context=".UserAccount_xoadcr">
+    tools:context=".teacher.EditUserTeacherActivity">
 
     <include
-        android:id="@id/headerStudent"
-        layout="@layout/header_student"
+        android:id="@id/headerAdmin"
+        layout="@layout/header_admin_teacher"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:paddingHorizontal="12dp"
@@ -23,8 +23,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
     <include
-        android:id="@id/footerStudent"
-        layout="@layout/footer_student"
+        android:id="@id/footerTeacher"
+        layout="@layout/footer_teacher"
         android:layout_width="match_parent"
         android:layout_height="74dp"
         android:orientation="horizontal"
@@ -45,11 +45,11 @@
         android:paddingHorizontal="16dp"
         android:paddingTop="8dp"
         android:background="@color/background_primary"
-        app:layout_constraintBottom_toTopOf="@id/footerStudent"
+        app:layout_constraintBottom_toTopOf="@id/footerTeacher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerStudent"
+        app:layout_constraintTop_toBottomOf="@id/headerAdmin"
         app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -101,7 +101,8 @@
                         android:id="@+id/tvUserName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/user_name"
+                        android:text=""
+                        tools:text="Teacher Name"
                         android:textColor="@color/text_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -110,7 +111,7 @@
                         android:id="@+id/tvUserRole"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/label_student_role"
+                        android:text="Teacher"
                         android:textColor="@color/text_secondary"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -146,7 +147,8 @@
                         android:layout_height="48dp"
                         android:background="@drawable/bg_edit_text_form"
                         android:paddingHorizontal="12dp"
-                        android:text="Huynh Ngoc Ngan"
+                        android:text=""
+                        tools:text="First Name"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -171,7 +173,8 @@
                         android:layout_height="48dp"
                         android:background="@drawable/bg_edit_text_form"
                         android:paddingHorizontal="12dp"
-                        android:text="Tuyen"
+                        android:text=""
+                        tools:text="Last Name"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -198,6 +201,7 @@
                         android:inputType="textEmailAddress"
                         android:paddingHorizontal="12dp"
                         android:text=""
+                        tools:text="teacher@example.com"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -222,7 +226,8 @@
                         android:layout_height="48dp"
                         android:background="@drawable/bg_edit_text_form"
                         android:paddingHorizontal="12dp"
-                        android:text="text"
+                        android:text=""
+                        tools:text="Public"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -247,7 +252,8 @@
                         android:layout_height="48dp"
                         android:background="@drawable/bg_edit_text_form"
                         android:paddingHorizontal="12dp"
-                        android:text="Thu Duc"
+                        android:text=""
+                        tools:text="City"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -273,7 +279,8 @@
                         android:layout_height="48dp"
                         android:background="@drawable/bg_edit_text_form"
                         android:paddingHorizontal="12dp"
-                        android:text="Viet Nam"
+                        android:text=""
+                        tools:text="Country"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -298,7 +305,8 @@
                         android:layout_height="48dp"
                         android:background="@drawable/bg_edit_text_form"
                         android:paddingHorizontal="12dp"
-                        android:text="Asia/Ho_Chi_Minh"
+                        android:text=""
+                        tools:text="Asia/Ho_Chi_Minh"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -327,7 +335,8 @@
                         android:inputType="textMultiLine"
                         android:minHeight="120dp"
                         android:padding="12dp"
-                        android:text="Text"
+                        android:text=""
+                        tools:text="Description"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -352,7 +361,8 @@
                         android:layout_height="48dp"
                         android:background="@drawable/bg_edit_text_form"
                         android:paddingHorizontal="12dp"
-                        android:text="text"
+                        android:text=""
+                        tools:text="Interests"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -377,7 +387,8 @@
                         android:layout_height="48dp"
                         android:background="@drawable/bg_edit_text_form"
                         android:paddingHorizontal="12dp"
-                        android:text="text"
+                        android:text=""
+                        tools:text="Phone"
                         android:textSize="14sp" />
                 </LinearLayout>
 

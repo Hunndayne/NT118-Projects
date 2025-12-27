@@ -159,7 +159,8 @@
                         android:id="@+id/tvTotalStudents"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="30"
+                        android:text=""
+                        tools:text="30"
                         android:textStyle="bold"
                         android:textSize="18sp"
                         android:textColor="@color/text_primary"/>
@@ -186,7 +187,8 @@
                         android:id="@+id/tvActiveStudents"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="28"
+                        android:text=""
+                        tools:text="28"
                         android:textStyle="bold"
                         android:textSize="18sp"
                         android:textColor="#2E7D32"/>

@@ -49,26 +49,15 @@ public class MenuUserActivity extends BaseUserActivity {
         userAccountListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Lấy nội dung của mục được chọn
-                String selectedItem = (String) parent.getItemAtPosition(position);
-
-                // Hiển thị một thông báo nhanh (Toast)
-                Toast.makeText(MenuUserActivity.this, "Bạn đã chọn: " + selectedItem, Toast.LENGTH_SHORT).show();
-
-                // Dùng switch-case để xử lý logic cho từng mục
                 switch (position) {
                     case 0: // Edit Profile
-                        // Viết code để mở màn hình chỉnh sửa profile ở đây
                         Intent intent = new Intent(MenuUserActivity.this, EditInformationUserActivity.class);
-                        // Khởi chạy Activity mới
                         startActivity(intent);
                         break;
                     case 1: // Change Password
                         Intent intent1 = new Intent(MenuUserActivity.this, ChangePasswordActivity.class);
-                        // Khởi chạy Activity mới
                         startActivity(intent1);
                         break;
-                    // ... và các trường hợp khác
                 }
             }
         });
