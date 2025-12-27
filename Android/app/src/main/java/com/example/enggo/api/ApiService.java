@@ -297,4 +297,34 @@ public interface ApiService {
             @Path("id") Long courseId,
             @Body CourseParticipantsRequest request
     );
+
+    // Notification endpoints
+    @GET("notifications")
+    Call<List<com.example.enggo.model.Notification>> getNotifications(
+            @Header("X-Auth-Token") String token
+    );
+
+    @GET("notifications/{id}")
+    Call<com.example.enggo.model.Notification> getNotification(
+            @Header("X-Auth-Token") String token,
+            @Path("id") Long notificationId
+    );
+
+    @POST("notifications")
+    Call<com.example.enggo.model.Notification> sendNotification(
+            @Header("X-Auth-Token") String token,
+            @Body com.example.enggo.model.NotificationRequest request
+    );
+
+    @PUT("notifications/{id}/read")
+    Call<Void> markNotificationAsRead(
+            @Header("X-Auth-Token") String token,
+            @Path("id") Long notificationId
+    );
+
+    @DELETE("notifications/{id}")
+    Call<Void> deleteNotification(
+            @Header("X-Auth-Token") String token,
+            @Path("id") Long notificationId
+    );
 }

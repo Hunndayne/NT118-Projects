@@ -23,4 +23,10 @@
     <color name="divider_color">#D3D3D3</color>
     <color name="icon_tint">#000000</color>
     <color name="card_stroke">#D3D3D3</color>
+
+    <!-- Notification colors -->
+    <color name="notification_event">#4CAF50</color>
+    <color name="notification_remind">#FF9800</color>
+    <color name="notification_warning">#F44336</color>
+    <color name="notification_unread_bg">#E3F2FD</color>
 </resources>

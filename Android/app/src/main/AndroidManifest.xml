@@ -103,6 +103,12 @@
             android:name="com.example.enggo.admin.ReportAdminActivity"
             android:exported="false" />
         <activity
+            android:name="com.example.enggo.admin.SendNotificationAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.admin.NotificationAdminActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.enggo.admin.ManageReportsAdminActivity"
             android:exported="false" />
         <activity
@@ -116,6 +122,12 @@
             android:exported="false" />
         <activity
             android:name="com.example.enggo.teacher.ScheduleTeacherActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.teacher.SendNotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.teacher.NotificationTeacherActivity"
             android:exported="false" />
         <activity
             android:name="com.example.enggo.teacher.EditUserTeacherActivity"
@@ -137,6 +149,9 @@
             android:exported="false" />
         <activity
             android:name="com.example.enggo.user.NotificationUserActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.user.NotificationDetailActivity"
             android:exported="false" />
         <activity
             android:name="com.example.enggo.user.MenuUserActivity"
