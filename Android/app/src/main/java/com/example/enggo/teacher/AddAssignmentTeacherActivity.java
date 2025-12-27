@@ -57,8 +57,9 @@ public class AddAssignmentTeacherActivity extends BaseTeacherActivity {
     private Button btnCreate;
     private Long courseId;
     private Long classIdForUpload;
-    private ActivityResultLauncher<String> filePickerLauncher;
+    private ActivityResultLauncher<String[]> filePickerLauncher;
     private String selectedFileUri;
+    private boolean isSaving;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -584,5 +585,33 @@ public class AddAssignmentTeacherActivity extends BaseTeacherActivity {
             return null;
         }
         return null;
+    }
+
+    private void setSaving(boolean saving) {
+        isSaving = saving;
+        if (btnCreate != null) {
+            btnCreate.setEnabled(!saving);
+        }
+        if (btnCancel != null) {
+            btnCancel.setEnabled(!saving);
+        }
+        if (btnAddAttachment != null) {
+            btnAddAttachment.setEnabled(!saving);
+        }
+        if (etTitle != null) {
+            etTitle.setEnabled(!saving);
+        }
+        if (etContent != null) {
+            etContent.setEnabled(!saving);
+        }
+        if (etAttachLink != null) {
+            etAttachLink.setEnabled(!saving);
+        }
+        if (etStartTime != null) {
+            etStartTime.setEnabled(!saving);
+        }
+        if (etDueTime != null) {
+            etDueTime.setEnabled(!saving);
+        }
     }
 }
