@@ -16,9 +16,20 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            val storeFilePath = project.findProperty("ENGGO_STORE_FILE") as String
+            storeFile = file(storeFilePath)
+            storePassword = project.findProperty("ENGGO_STORE_PASSWORD") as String
+            keyAlias = project.findProperty("ENGGO_KEY_ALIAS") as String
+            keyPassword = project.findProperty("ENGGO_KEY_PASSWORD") as String
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
