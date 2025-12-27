@@ -96,8 +96,16 @@ public class SendNotificationActivity extends BaseTeacherActivity {
                         "Notification sent successfully!", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
+                    String errorMsg = "Failed to send notification";
+                    try {
+                        if (response.errorBody() != null) {
+                            errorMsg = response.errorBody().string();
+                        }
+                    } catch (Exception e) {
+                        errorMsg = "Error code: " + response.code();
+                    }
                     Toast.makeText(SendNotificationActivity.this, 
-                        "Failed to send notification", Toast.LENGTH_SHORT).show();
+                        errorMsg, Toast.LENGTH_LONG).show();
                 }
             }
 
