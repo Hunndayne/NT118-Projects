@@ -2,6 +2,7 @@ package com.example.enggo.teacher;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,18 +73,30 @@ public class AssignmentsForSubmissionsTeacherActivity extends BaseTeacherActivit
 
     private void loadAssignments() {
         String token = getTokenFromDb();
+        Log.d("AssignmentsForSubmissions", "Loading assignments for courseId: " + courseId);
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         apiService.getAssignments(token, courseId).enqueue(new Callback<List<AssignmentResponse>>() {
             @Override
             public void onResponse(Call<List<AssignmentResponse>> call, Response<List<AssignmentResponse>> response) {
+                Log.d("AssignmentsForSubmissions", "Response code: " + response.code());
                 if (response.isSuccessful() && response.body() != null) {
                     assignments.clear();
                     assignments.addAll(response.body());
+                    Log.d("AssignmentsForSubmissions", "Loaded " + assignments.size() + " assignments");
                     adapter.notifyDataSetChanged();
                 } else {
+                    String errorBody = "";
+                    try {
+                        if (response.errorBody() != null) {
+                            errorBody = response.errorBody().string();
+                        }
+                    } catch (Exception e) {
+                        errorBody = e.getMessage();
+                    }
+                    Log.e("AssignmentsForSubmissions", "Load failed: " + response.code() + " - " + errorBody);
                     Toast.makeText(
                             AssignmentsForSubmissionsTeacherActivity.this,
-                            "Load assignments failed",
+                            "Load assignments failed: " + response.code(),
                             Toast.LENGTH_SHORT
                     ).show();
                 }
@@ -91,9 +104,10 @@ public class AssignmentsForSubmissionsTeacherActivity extends BaseTeacherActivit
 
             @Override
             public void onFailure(Call<List<AssignmentResponse>> call, Throwable t) {
+                Log.e("AssignmentsForSubmissions", "Network error: " + t.getMessage(), t);
                 Toast.makeText(
                         AssignmentsForSubmissionsTeacherActivity.this,
-                        "Cannot connect to server",
+                        "Cannot connect to server: " + t.getMessage(),
                         Toast.LENGTH_SHORT
                 ).show();
             }

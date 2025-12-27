@@ -129,6 +129,7 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
         }
 
         String token = getTokenFromDb();
+        Log.d("AddLesson", "Creating lesson for courseId: " + courseId + ", title: " + title);
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         LessonCreateRequest request = new LessonCreateRequest(title, description, null);
 
@@ -136,17 +137,28 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
                 .enqueue(new Callback<LessonResponse>() {
                     @Override
                     public void onResponse(Call<LessonResponse> call, Response<LessonResponse> response) {
+                        Log.d("AddLesson", "Response code: " + response.code());
                         if (response.isSuccessful()) {
                             LessonResponse lesson = response.body();
                             if (lesson != null) {
+                                Log.d("AddLesson", "Lesson created with id: " + lesson.id);
                                 attachResources(token, lesson.id, link);
                             }
                             setResult(RESULT_OK);
                             finish();
                         } else {
+                            String errorBody = "";
+                            try {
+                                if (response.errorBody() != null) {
+                                    errorBody = response.errorBody().string();
+                                }
+                            } catch (Exception e) {
+                                errorBody = e.getMessage();
+                            }
+                            Log.e("AddLesson", "Create failed: " + response.code() + " - " + errorBody);
                             Toast.makeText(
                                     AddLessonTeacherActivity.this,
-                                    "Create lesson failed",
+                                    "Create lesson failed: " + response.code(),
                                     Toast.LENGTH_SHORT
                             ).show();
                         }
@@ -154,9 +166,10 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
 
                     @Override
                     public void onFailure(Call<LessonResponse> call, Throwable t) {
+                        Log.e("AddLesson", "Network error: " + t.getMessage(), t);
                         Toast.makeText(
                                 AddLessonTeacherActivity.this,
-                                "Cannot connect to server",
+                                "Cannot connect to server: " + t.getMessage(),
                                 Toast.LENGTH_SHORT
                         ).show();
                     }

@@ -123,8 +123,6 @@ public class AddUserAdminActivity extends BaseAdminActivity {
                                     AddUserAdminActivity.this,
                                     "Create user failed (" + response.code() + ")",
                                     Toast.LENGTH_SHORT
-                                    errorMsg,
-                                    Toast.LENGTH_LONG
                             ).show();
                         }
                     }
