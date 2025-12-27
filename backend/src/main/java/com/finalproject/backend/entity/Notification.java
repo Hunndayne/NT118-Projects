@@ -1,6 +1,11 @@
 package com.finalproject.backend.entity;
 
 import jakarta.persistence.*;
+<<<<<<< HEAD
+=======
+import lombok.*;
+
+>>>>>>> 15646fcd7e4282cf39290213b2b470e2c7dd21be
 import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +22,7 @@ import lombok.Setter;
 @Builder
 public class Notification {
 
+<<<<<<< HEAD
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id")
@@ -55,4 +61,44 @@ public class Notification {
             createdAt = Instant.now();
         }
     }
+=======
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "notification_id")
+	private Long id;
+
+	@Column(name = "type", length = 32, nullable = false)
+	private String type;
+
+	@Column(name = "title", length = 255, nullable = false)
+	private String title;
+
+	@Column(name = "content", columnDefinition = "text")
+	private String content;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "created_by")
+	private User createdBy;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "target_user_id")
+	private User targetUser;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "target_class_id")
+	private ClassEntity targetClass;
+
+	@Column(name = "is_read", nullable = false)
+	private boolean read;
+
+	@Column(name = "created_at", nullable = false)
+	private Instant createdAt;
+
+	@PrePersist
+	void onCreate() {
+		if (createdAt == null) {
+			createdAt = Instant.now();
+		}
+	}
+>>>>>>> 15646fcd7e4282cf39290213b2b470e2c7dd21be
 }
