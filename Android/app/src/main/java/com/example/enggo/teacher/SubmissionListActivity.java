@@ -6,6 +6,7 @@ import com.example.enggo.api.ApiService;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,21 +90,33 @@ public class SubmissionListActivity extends BaseTeacherActivity {
             return;
         }
         String token = getTokenFromDb();
+        Log.d("SubmissionList", "Loading submissions for courseId: " + courseId + ", assignmentId: " + assignmentId);
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         apiService.getSubmissionStatus(token, courseId, assignmentId)
                 .enqueue(new Callback<List<SubmissionStatusResponse>>() {
                     @Override
                     public void onResponse(Call<List<SubmissionStatusResponse>> call,
                                            Response<List<SubmissionStatusResponse>> response) {
+                        Log.d("SubmissionList", "Response code: " + response.code());
                         if (response.isSuccessful() && response.body() != null) {
                             submissions.clear();
                             submissions.addAll(response.body());
+                            Log.d("SubmissionList", "Loaded " + submissions.size() + " submissions");
                             adapter.notifyDataSetChanged();
                             updateStats();
                         } else {
+                            String errorBody = "";
+                            try {
+                                if (response.errorBody() != null) {
+                                    errorBody = response.errorBody().string();
+                                }
+                            } catch (Exception e) {
+                                errorBody = e.getMessage();
+                            }
+                            Log.e("SubmissionList", "Load failed: " + response.code() + " - " + errorBody);
                             Toast.makeText(
                                     SubmissionListActivity.this,
-                                    "Load submissions failed",
+                                    "Load submissions failed: " + response.code(),
                                     Toast.LENGTH_SHORT
                             ).show();
                         }
@@ -111,9 +124,10 @@ public class SubmissionListActivity extends BaseTeacherActivity {
 
                     @Override
                     public void onFailure(Call<List<SubmissionStatusResponse>> call, Throwable t) {
+                        Log.e("SubmissionList", "Network error: " + t.getMessage(), t);
                         Toast.makeText(
                                 SubmissionListActivity.this,
-                                "Cannot connect to server",
+                                "Cannot connect to server: " + t.getMessage(),
                                 Toast.LENGTH_SHORT
                         ).show();
                     }

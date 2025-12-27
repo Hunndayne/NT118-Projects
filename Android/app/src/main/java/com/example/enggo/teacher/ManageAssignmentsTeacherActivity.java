@@ -2,6 +2,7 @@ package com.example.enggo.teacher;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -109,18 +110,30 @@ public class ManageAssignmentsTeacherActivity extends BaseTeacherActivity {
 
     private void loadAssignments() {
         String token = getTokenFromDb();
+        Log.d("ManageAssignments", "Loading assignments for courseId: " + courseId + ", token: " + (token != null ? "present" : "null"));
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         apiService.getAssignments(token, courseId).enqueue(new Callback<List<AssignmentResponse>>() {
             @Override
             public void onResponse(Call<List<AssignmentResponse>> call, Response<List<AssignmentResponse>> response) {
+                Log.d("ManageAssignments", "Response code: " + response.code());
                 if (response.isSuccessful() && response.body() != null) {
                     assignments.clear();
                     assignments.addAll(response.body());
+                    Log.d("ManageAssignments", "Loaded " + assignments.size() + " assignments");
                     adapter.notifyDataSetChanged();
                 } else {
+                    String errorBody = "";
+                    try {
+                        if (response.errorBody() != null) {
+                            errorBody = response.errorBody().string();
+                        }
+                    } catch (Exception e) {
+                        errorBody = e.getMessage();
+                    }
+                    Log.e("ManageAssignments", "Load failed: " + response.code() + " - " + errorBody);
                     Toast.makeText(
                             ManageAssignmentsTeacherActivity.this,
-                            "Load assignments failed",
+                            "Load assignments failed: " + response.code(),
                             Toast.LENGTH_SHORT
                     ).show();
                 }
@@ -128,9 +141,10 @@ public class ManageAssignmentsTeacherActivity extends BaseTeacherActivity {
 
             @Override
             public void onFailure(Call<List<AssignmentResponse>> call, Throwable t) {
+                Log.e("ManageAssignments", "Network error: " + t.getMessage(), t);
                 Toast.makeText(
                         ManageAssignmentsTeacherActivity.this,
-                        "Cannot connect to server",
+                        "Cannot connect to server: " + t.getMessage(),
                         Toast.LENGTH_SHORT
                 ).show();
             }
@@ -148,18 +162,29 @@ public class ManageAssignmentsTeacherActivity extends BaseTeacherActivity {
 
     private void deleteAssignment(AssignmentResponse assignment) {
         String token = getTokenFromDb();
+        Log.d("ManageAssignments", "Deleting assignment id: " + assignment.id + " from courseId: " + courseId);
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         apiService.deleteAssignment(token, courseId, assignment.id)
                 .enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
+                        Log.d("ManageAssignments", "Delete response code: " + response.code());
                         if (response.isSuccessful()) {
                             assignments.remove(assignment);
                             adapter.notifyDataSetChanged();
                         } else {
+                            String errorBody = "";
+                            try {
+                                if (response.errorBody() != null) {
+                                    errorBody = response.errorBody().string();
+                                }
+                            } catch (Exception e) {
+                                errorBody = e.getMessage();
+                            }
+                            Log.e("ManageAssignments", "Delete failed: " + response.code() + " - " + errorBody);
                             Toast.makeText(
                                     ManageAssignmentsTeacherActivity.this,
-                                    "Delete assignment failed",
+                                    "Delete assignment failed: " + response.code(),
                                     Toast.LENGTH_SHORT
                             ).show();
                         }
@@ -167,9 +192,10 @@ public class ManageAssignmentsTeacherActivity extends BaseTeacherActivity {
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("ManageAssignments", "Delete network error: " + t.getMessage(), t);
                         Toast.makeText(
                                 ManageAssignmentsTeacherActivity.this,
-                                "Cannot connect to server",
+                                "Cannot connect to server: " + t.getMessage(),
                                 Toast.LENGTH_SHORT
                         ).show();
                     }

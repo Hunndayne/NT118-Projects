@@ -6,6 +6,7 @@ import com.example.enggo.api.ApiService;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -101,18 +102,30 @@ public class ManageLessonsTeacherActivity extends BaseTeacherActivity {
 
     private void loadLessons() {
         String token = getTokenFromDb();
+        Log.d("ManageLessons", "Loading lessons for courseId: " + courseId + ", token: " + (token != null ? "present" : "null"));
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         apiService.getLessons(token, courseId).enqueue(new Callback<List<LessonResponse>>() {
             @Override
             public void onResponse(Call<List<LessonResponse>> call, Response<List<LessonResponse>> response) {
+                Log.d("ManageLessons", "Response code: " + response.code());
                 if (response.isSuccessful() && response.body() != null) {
                     lessons.clear();
                     lessons.addAll(response.body());
+                    Log.d("ManageLessons", "Loaded " + lessons.size() + " lessons");
                     adapter.notifyDataSetChanged();
                 } else {
+                    String errorBody = "";
+                    try {
+                        if (response.errorBody() != null) {
+                            errorBody = response.errorBody().string();
+                        }
+                    } catch (Exception e) {
+                        errorBody = e.getMessage();
+                    }
+                    Log.e("ManageLessons", "Load failed: " + response.code() + " - " + errorBody);
                     Toast.makeText(
                             ManageLessonsTeacherActivity.this,
-                            "Load lessons failed",
+                            "Load lessons failed: " + response.code(),
                             Toast.LENGTH_SHORT
                     ).show();
                 }
@@ -120,9 +133,10 @@ public class ManageLessonsTeacherActivity extends BaseTeacherActivity {
 
             @Override
             public void onFailure(Call<List<LessonResponse>> call, Throwable t) {
+                Log.e("ManageLessons", "Network error: " + t.getMessage(), t);
                 Toast.makeText(
                         ManageLessonsTeacherActivity.this,
-                        "Cannot connect to server",
+                        "Cannot connect to server: " + t.getMessage(),
                         Toast.LENGTH_SHORT
                 ).show();
             }
@@ -140,18 +154,29 @@ public class ManageLessonsTeacherActivity extends BaseTeacherActivity {
 
     private void deleteLesson(LessonResponse lesson) {
         String token = getTokenFromDb();
+        Log.d("ManageLessons", "Deleting lesson id: " + lesson.id + " from courseId: " + courseId);
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         apiService.deleteLesson(token, courseId, lesson.id)
                 .enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
+                        Log.d("ManageLessons", "Delete response code: " + response.code());
                         if (response.isSuccessful()) {
                             lessons.remove(lesson);
                             adapter.notifyDataSetChanged();
                         } else {
+                            String errorBody = "";
+                            try {
+                                if (response.errorBody() != null) {
+                                    errorBody = response.errorBody().string();
+                                }
+                            } catch (Exception e) {
+                                errorBody = e.getMessage();
+                            }
+                            Log.e("ManageLessons", "Delete failed: " + response.code() + " - " + errorBody);
                             Toast.makeText(
                                     ManageLessonsTeacherActivity.this,
-                                    "Delete lesson failed",
+                                    "Delete lesson failed: " + response.code(),
                                     Toast.LENGTH_SHORT
                             ).show();
                         }
@@ -159,9 +184,10 @@ public class ManageLessonsTeacherActivity extends BaseTeacherActivity {
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("ManageLessons", "Delete network error: " + t.getMessage(), t);
                         Toast.makeText(
                                 ManageLessonsTeacherActivity.this,
-                                "Cannot connect to server",
+                                "Cannot connect to server: " + t.getMessage(),
                                 Toast.LENGTH_SHORT
                         ).show();
                     }

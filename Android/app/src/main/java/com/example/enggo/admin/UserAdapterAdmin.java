@@ -44,7 +44,6 @@ public class UserAdapterAdmin extends RecyclerView.Adapter<UserAdapterAdmin.User
         UserAdmin user = userList.get(position);
 
         holder.tvUserName.setText(user.getFullName());
-        holder.tvUserEmail.setText(user.getEmailAddress());
         holder.tvUserStatus.setText(user.getStatusText());
 
         holder.btnEdit.setOnClickListener(v -> {
@@ -66,13 +65,12 @@ public class UserAdapterAdmin extends RecyclerView.Adapter<UserAdapterAdmin.User
 
     // Class ViewHolder để giữ các View trong item layout
     public static class UserViewHolder extends RecyclerView.ViewHolder {
-        TextView tvUserName, tvUserEmail, tvUserStatus;
+        TextView tvUserName, tvUserStatus;
         TextView btnEdit, btnDelete, btnLock;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUserName = itemView.findViewById(R.id.tvUserName_manageusritem);
-            tvUserEmail = itemView.findViewById(R.id.tvUserEmail_manageusritem);
             tvUserStatus = itemView.findViewById(R.id.tvUserStatus_manageusritem);
 
             btnEdit = itemView.findViewById(R.id.btnEdit_manageusritem);
