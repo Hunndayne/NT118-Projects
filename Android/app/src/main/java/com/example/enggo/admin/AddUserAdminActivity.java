@@ -72,7 +72,17 @@ public class AddUserAdminActivity extends BaseAdminActivity {
             return;
         }
 
-        String token = dao.getAll().get(0).token;
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Password is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        java.util.List<Database.Item> tokens = dao.getAll();
+        if (tokens.isEmpty() || TextUtils.isEmpty(tokens.get(0).token)) {
+            Toast.makeText(this, "Session expired. Please log in again.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String token = tokens.get(0).token;
 
         CreateUserRequest req = new CreateUserRequest();
         req.username = username;
@@ -103,7 +113,7 @@ public class AddUserAdminActivity extends BaseAdminActivity {
                         } else {
                             Toast.makeText(
                                     AddUserAdminActivity.this,
-                                    "Create user failed",
+                                    "Create user failed (" + response.code() + ")",
                                     Toast.LENGTH_SHORT
                             ).show();
                         }
