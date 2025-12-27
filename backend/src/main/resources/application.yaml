@@ -4,10 +4,12 @@ server:
     context-path: /api
 
 spring:
+  config:
+    import: optional:file:.env[.properties],optional:file:env[.properties]
   datasource:
-    url: jdbc:postgresql://localhost:5432/nt118_db
-    username: postgres
-    password: '201204'
+    url: jdbc:postgresql://192.168.1.35:5432/nt118_db
+    username: nt118_user
+    password: 'nt118_db'
     hikari:
       data-source-properties:
         TimeZone: UTC
