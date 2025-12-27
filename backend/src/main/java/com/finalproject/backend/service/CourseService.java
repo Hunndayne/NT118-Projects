@@ -88,7 +88,7 @@ public class CourseService {
 	@Transactional(readOnly = true)
 	public List<CourseParticipantResponse> getEligibleParticipants(String rawToken, Long courseId) {
 		User admin = userService.getAuthenticatedUserEntity(rawToken);
-		if (!admin.isSuperAdmin()) {
+		if (!admin.isSuperAdmin() && !admin.isAdmin()) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
 		}
 
@@ -170,7 +170,7 @@ public class CourseService {
 	@Transactional
 	public CourseResponse addParticipants(String rawToken, Long courseId, CourseParticipantsRequest request) {
 		User admin = userService.getAuthenticatedUserEntity(rawToken);
-		if (!admin.isSuperAdmin()) {
+		if (!admin.isSuperAdmin() && !admin.isAdmin()) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
 		}
 
@@ -207,7 +207,7 @@ public class CourseService {
 	@Transactional
 	public CourseResponse removeParticipants(String rawToken, Long courseId, CourseParticipantsRequest request) {
 		User admin = userService.getAuthenticatedUserEntity(rawToken);
-		if (!admin.isSuperAdmin()) {
+		if (!admin.isSuperAdmin() && !admin.isAdmin()) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
 		}
 
