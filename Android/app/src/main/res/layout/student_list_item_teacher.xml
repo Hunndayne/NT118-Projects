@@ -32,7 +32,8 @@
                 android:id="@+id/tvStudentName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Student Name"
+                android:text=""
+                tools:text="Student Name"
                 android:textColor="@color/text_primary"
                 android:textStyle="bold"
                 android:textSize="14sp" />
@@ -41,7 +42,8 @@
                 android:id="@+id/tvStudentId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ID: -"
+                android:text=""
+                tools:text="ID: -"
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp"
                 android:layout_marginTop="2dp" />
@@ -57,7 +59,8 @@
             android:textColor="#2E7D32"
             android:paddingHorizontal="8dp"
             android:paddingVertical="6dp"
-            android:text="Active"
+            android:text=""
+            tools:text="Active"
             android:textSize="11sp"
             android:textStyle="bold"
             android:layout_marginEnd="12dp" />

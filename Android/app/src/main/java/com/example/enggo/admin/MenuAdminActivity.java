@@ -17,6 +17,8 @@ import com.example.enggo.R;
 import com.example.enggo.api.ApiClient;
 import com.example.enggo.api.ApiService;
 import com.example.enggo.admin.UserAdmin;
+import com.example.enggo.user.EditInformationUserActivity;
+import com.example.enggo.auth.ChangePasswordActivity;
 
 public class MenuAdminActivity extends BaseAdminActivity {
 
@@ -41,21 +43,29 @@ public class MenuAdminActivity extends BaseAdminActivity {
         adminMenuListView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
             String selectedItem = (String) parent.getItemAtPosition(position);
             Toast.makeText(MenuAdminActivity.this, selectedItem, Toast.LENGTH_SHORT).show();
-            if (position == 0) {
-                Intent intent = new Intent(MenuAdminActivity.this, ManageAccountAdminActivity.class);
-                startActivity(intent);
+            
+            switch (position) {
+                case 0: // Edit Profile
+                    Intent intent = new Intent(MenuAdminActivity.this, EditInformationUserActivity.class);
+                    startActivity(intent);
+                    break;
+                case 1: // Change Password
+                    Intent intent1 = new Intent(MenuAdminActivity.this, ChangePasswordActivity.class);
+                    startActivity(intent1);
+                    break;
+                // Add more cases for other options if needed
             }
         });
 
         ImageView imAdminAvatar = findViewById(R.id.imAdminAvatar);
         imAdminAvatar.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuAdminActivity.this, ManageAccountAdminActivity.class);
+            Intent intent = new Intent(MenuAdminActivity.this, EditInformationUserActivity.class);
             startActivity(intent);
         });
 
         LinearLayout adminInfoLayout = findViewById(R.id.adminInfoLayout);
         adminInfoLayout.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuAdminActivity.this, ManageAccountAdminActivity.class);
+            Intent intent = new Intent(MenuAdminActivity.this, EditInformationUserActivity.class);
             startActivity(intent);
         });
 

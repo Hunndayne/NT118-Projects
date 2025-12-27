@@ -45,17 +45,15 @@ public class ManageLessonsAdminActivity extends BaseAdminActivity {
 
         lessonsRecyclerView = findViewById(R.id.lessonsRecyclerView);
 
-        // Tạo dữ liệu mới (sử dụng LessonItem)
+        // Initialize empty list - data will be loaded from API
         lessonItems = new ArrayList<>();
-        lessonItems.add(new LessonItem("Basic Grammar", "20/05/2024", "Admin 1", "An introduction to the basic grammar rules."));
-        lessonItems.add(new LessonItem("Advanced Grammar", "21/05/2024", "Admin 2", "A deeper dive into complex grammar topics."));
-        lessonItems.add(new LessonItem("Vocabulary Lesson 1", "22/05/2024", "Admin 1", "Learn the first 50 essential vocabulary words."));
-
-        // Khởi tạo Adapter với danh sách mới
-        // LƯU Ý: Bạn cần cập nhật LessonAdminAdapter để chấp nhận List<LessonItem>
+        
+        // Initialize Adapter with empty list
         lessonAdminAdapter = new LessonAdminAdapter(this, lessonItems);
-
         lessonsRecyclerView.setAdapter(lessonAdminAdapter);
+        
+        // TODO: Load lessons from API
+        // loadLessons();
 
         Button btnAddLesson = findViewById(R.id.btnAddLesson);
         btnAddLesson.setOnClickListener(v -> {

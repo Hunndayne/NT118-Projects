@@ -30,7 +30,7 @@
         android:layout_height="74dp"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@android:color/white"
+        android:background="@color/background_secondary"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:paddingTop="4dp"
@@ -44,7 +44,7 @@
         android:id="@+id/contentScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#FFFFFF"
+        android:background="@color/background_secondary"
         app:layout_constraintBottom_toTopOf="@id/footerAdmin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,7 @@
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/nunito_extra_bold"
                 android:text="Edit user information "
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -88,7 +88,7 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="hungnt"
+                    android:hint="Username"
                     android:textSize="14sp" />
                 <TextView
                     android:layout_width="match_parent"
@@ -103,7 +103,6 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="Hung"
                     android:hint="A"
                     android:textSize="14sp" />
                 <TextView
@@ -119,7 +118,6 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="Tran Thanh"
                     android:hint="Nguyen Van"
                     android:textSize="14sp" />
 
@@ -136,7 +134,6 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="hunnt@suctremmt.com"
                     android:hint="name@example.com"
                     android:textSize="14sp" />
 
@@ -153,7 +150,7 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="0912345678"
+                    android:hint="0912345678"
                     android:textSize="14sp" />
 
 
@@ -170,7 +167,6 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="**********"
                     android:hint="**********"
                     android:textSize="14sp"
                     android:inputType="textPassword"
@@ -194,7 +190,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Cancel"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_primary"
                     android:textSize="12sp"
                     android:layout_marginEnd="5dp"
                     android:backgroundTint="@color/enggo_grey_300"

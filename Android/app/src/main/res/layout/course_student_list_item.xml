@@ -23,7 +23,8 @@
             android:id="@+id/tvCourseName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Course Name"
+            android:text=""
+            tools:text="Course Name"
             android:textStyle="bold"
             android:textSize="12dp"
             android:textColor="@color/text_primary" />
@@ -32,7 +33,8 @@
             android:id="@+id/tvCourseCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CODE"
+            android:text=""
+            tools:text="CODE"
             android:textStyle="bold"
             android:textSize="12dp"
             android:textColor="@color/text_primary" />

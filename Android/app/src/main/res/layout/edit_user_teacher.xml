@@ -72,7 +72,7 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="hungnt"
+                    android:hint="Username"
                     android:textSize="14sp" />
 
                 <TextView
@@ -88,7 +88,6 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="Hung"
                     android:hint="A"
                     android:textSize="14sp" />
 
@@ -105,7 +104,6 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="Tran Thanh"
                     android:hint="Nguyen Van"
                     android:textSize="14sp" />
 
@@ -122,7 +120,6 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="hunnt@suctremmt.com"
                     android:hint="name@example.com"
                     android:textSize="14sp" />
 
@@ -139,7 +136,7 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="0912345678"
+                    android:hint="0912345678"
                     android:textSize="14sp" />
 
 
@@ -156,7 +153,6 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text_form"
                     android:paddingHorizontal="12dp"
-                    android:text="**********"
                     android:hint="**********"
                     android:textSize="14sp"
                     android:inputType="textPassword" />

@@ -101,7 +101,8 @@
                             android:id="@+id/tvTotalStudentsCount_admin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="120"
+                            android:text=""
+                            tools:text="120"
                             android:textSize="24sp"
                             android:textStyle="bold"
                             android:textColor="@color/text_primary"/>
@@ -164,7 +165,8 @@
                             android:id="@+id/tvTotalClassesCount_admin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="20"
+                            android:text=""
+                            tools:text="20"
                             android:textSize="24sp"
                             android:textStyle="bold"
                             android:textColor="@color/text_primary"/>
@@ -195,7 +197,8 @@
                             android:id="@+id/tvTotalModulesCount_admin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="44"
+                            android:text=""
+                            tools:text="44"
                             android:textSize="24sp"
                             android:textStyle="bold"
                             android:textColor="@color/text_primary"/>
@@ -242,7 +245,8 @@
                             android:id="@+id/tvOnTimeCount_admin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="85"
+                            android:text=""
+                            tools:text="85"
                             android:textSize="16sp"
                             android:layout_alignParentEnd="true"
                             android:textColor="@color/text_primary"/>
@@ -267,7 +271,8 @@
                             android:id="@+id/tvLateCount_admin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="21"
+                            android:text=""
+                            tools:text="21"
                             android:textSize="16sp"
                             android:layout_alignParentEnd="true"
                             android:textColor="@color/text_primary"/>
@@ -292,7 +297,8 @@
                             android:id="@+id/tvMissingCount_admin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="14"
+                            android:text=""
+                            tools:text="14"
                             android:textSize="16sp"
                             android:layout_alignParentEnd="true"
                             android:textColor="@color/text_primary"/>
@@ -317,7 +323,8 @@
                             android:id="@+id/tvSubmissionRate_admin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="86%"
+                            android:text=""
+                            tools:text="86%"
                             android:textSize="16sp"
                             android:layout_alignParentEnd="true"
                             android:textColor="@color/text_primary"/>

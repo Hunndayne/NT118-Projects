@@ -20,7 +20,8 @@
             android:id="@+id/tvLessonName_manageusritem"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Basic Vietnamese Grammar"
+            android:text=""
+            tools:text="Basic Vietnamese Grammar"
             android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -41,7 +42,8 @@
                 android:id="@+id/tvLessonDate_manageusritem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="20/05/2024"
+                android:text=""
+                tools:text="20/05/2024"
                 android:textColor="@color/text_secondary" />
 
             <TextView
@@ -49,7 +51,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Admin 1"
+                android:text=""
+                tools:text="Admin"
                 android:textColor="@color/text_secondary" />
         </LinearLayout>
 
@@ -58,7 +61,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="An introduction to the basic grammar rules."
+            android:text=""
+            tools:text="An introduction to the basic grammar rules."
             android:textColor="@color/text_secondary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dateAndPosterLayout"

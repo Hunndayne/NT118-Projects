@@ -101,7 +101,8 @@
                             android:textColor="#757575"/>
 
                         <TextView
-                            android:text="2 classes scheduled"
+                            android:text=""
+                            tools:text="2 classes scheduled"
                             android:textSize="16sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -153,7 +154,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="09:30"
+                                android:text=""
+                                tools:text="09:30"
                                 android:textStyle="bold"
                                 android:textSize="16sp"
                                 android:textColor="@color/text_primary"/>
@@ -181,7 +183,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="[TB115] Basic Grammar"
+                                android:text=""
+                                tools:text="[TB115] Basic Grammar"
                                 android:textStyle="bold"
                                 android:textSize="15sp"
                                 android:textColor="@color/text_primary"/>
@@ -189,7 +192,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Online via Zoom • 30 Students"
+                                android:text=""
+                                tools:text="Online via Zoom • 30 Students"
                                 android:textSize="13sp"
                                 android:textColor="#808080"/>
                         </LinearLayout>

@@ -81,7 +81,8 @@
                         android:id="@+id/tvTeacherName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Teacher Name"
+                        android:text=""
+                        tools:text="Teacher Name"
                         android:textColor="@color/text_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />

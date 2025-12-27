@@ -78,7 +78,8 @@
                     android:id="@+id/tvAssignmentTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="HW 1.1: Reading &amp; Vocab"
+                    android:text=""
+                    tools:text="HW 1.1: Reading &amp; Vocab"
                     android:textColor="@color/text_primary"
                     android:textSize="22sp"
                     android:textStyle="bold" />

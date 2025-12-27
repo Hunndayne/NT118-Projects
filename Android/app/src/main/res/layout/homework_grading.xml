@@ -137,7 +137,8 @@
                             android:id="@+id/tvStudentName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nguyen Van A"
+                            android:text=""
+                            tools:text="Nguyen Van A"
                             android:fontFamily="@font/nunito_extra_bold"
                             android:textColor="@color/text_primary"
                             android:textSize="16sp"/>
@@ -237,7 +238,7 @@
                         android:padding="8dp"
                         android:inputType="numberDecimal"
                         android:gravity="center"
-                        android:text="85"
+                        android:text=""
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="@color/text_primary"/>

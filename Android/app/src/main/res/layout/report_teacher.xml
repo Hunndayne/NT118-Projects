@@ -98,7 +98,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lecturer: Mr. Nguyen Van Teacher"
+                    android:text=""
+                    tools:text="Lecturer: Mr. Teacher Name"
                     android:textColor="@color/text_secondary"
                     android:textSize="14sp"
                     android:layout_marginTop="2dp"/>
@@ -135,7 +136,8 @@
                                 android:id="@+id/tvClassStudentCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="30"
+                                android:text=""
+                                tools:text="30"
                                 android:textSize="22sp"
                                 android:textStyle="bold"
                                 android:textColor="@color/text_primary"/>
@@ -195,7 +197,8 @@
                                 android:id="@+id/tvClassAttendanceRate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="95%"
+                                android:text=""
+                                tools:text="95%"
                                 android:textSize="22sp"
                                 android:textStyle="bold"
                                 android:textColor="@color/text_primary"/>
@@ -225,7 +228,8 @@
                                 android:id="@+id/tvClassPassRate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="100%"
+                                android:text=""
+                                tools:text="100%"
                                 android:textSize="22sp"
                                 android:textStyle="bold"
                                 android:textColor="@color/black"/>
@@ -277,7 +281,8 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="12 Students"
+                                    android:text=""
+                                    tools:text="12 Students"
                                     android:textSize="12sp"
                                     android:layout_alignParentEnd="true"
                                     android:textStyle="bold"
@@ -317,7 +322,8 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="10 Students"
+                                        android:text=""
+                                        tools:text="10 Students"
                                         android:textSize="12sp"
                                         android:layout_alignParentEnd="true"
                                         android:textStyle="bold"
@@ -355,7 +361,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="5 Students"
+                                android:text=""
+                                tools:text="5 Students"
                                 android:textSize="12sp"
                                 android:layout_alignParentEnd="true"
                                 android:textStyle="bold"
@@ -391,7 +398,8 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="3 Students"
+                                    android:text=""
+                                    tools:text="3 Students"
                                     android:textSize="12sp"
                                     android:layout_alignParentEnd="true"
                                     android:textStyle="bold"
@@ -463,7 +471,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Nguyen Van A"
+                                android:text=""
+                                tools:text="Student Name"
                                 android:layout_marginStart="12dp"
                                 android:textColor="@color/text_primary"/>
                             <TextView
@@ -490,7 +499,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Tran Thi B"
+                                android:text=""
+                                tools:text="Student Name"
                                 android:layout_marginStart="12dp"
                                 android:textColor="@color/text_primary"/>
                             <TextView

@@ -35,7 +35,8 @@
                 android:id="@+id/tvStudentName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nguyen Van A"
+                android:text=""
+                tools:text="Student Name"
                 android:textColor="@color/text_primary"
                 android:textStyle="bold"
                 android:textSize="14sp" />
