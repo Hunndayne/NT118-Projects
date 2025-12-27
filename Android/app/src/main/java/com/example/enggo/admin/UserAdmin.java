@@ -18,6 +18,7 @@ public class UserAdmin {
     private String description;
     private String interest;
     private String phoneNumber;
+    private String avatarUrl;
 
     private boolean admin;
     private boolean active;
@@ -74,6 +75,10 @@ public class UserAdmin {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
     public boolean isAdmin() {

@@ -9,11 +9,12 @@ import com.finalproject.backend.dto.response.UserResponse;
 import com.finalproject.backend.entity.AuthToken;
 import com.finalproject.backend.entity.TokenType;
 import com.finalproject.backend.entity.User;
-import com.finalproject.backend.entity.UserProfile;
+    import com.finalproject.backend.entity.UserProfile;
 import com.finalproject.backend.entity.UserRole;
 import com.finalproject.backend.repository.AuthTokenRepository;
 import com.finalproject.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
     private static final Duration ACCESS_TOKEN_TTL = Duration.ofDays(1);
@@ -255,8 +257,10 @@ public class UserService {
         userRepository.delete(target);
     }
 
-    private UserResponse applyUserUpdates(User actingUser, User targetUser, UserUpdateRequest request) {
-        boolean actorIsAdmin = actingUser.isSuperAdmin();
+	private UserResponse applyUserUpdates(User actingUser, User targetUser, UserUpdateRequest request) {
+		boolean actorIsAdmin = actingUser.isSuperAdmin();
+		String avatarUrlForLog = null;
+		boolean profileCreated = false;
 
         if (request.getUsername() != null && !request.getUsername().equalsIgnoreCase(targetUser.getUsername())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username cannot be changed");
@@ -323,16 +327,25 @@ public class UserService {
             }
         }
 
-        if (request.getAvatarUrl() != null) {
-            String avatarUrl = trimToNull(request.getAvatarUrl());
-            UserProfile profile = targetUser.getProfile();
-            if (profile == null) {
-                profile = new UserProfile();
-                profile.setUser(targetUser);
-                targetUser.setProfile(profile);
-            }
-            profile.setAvatarUrl(avatarUrl);
-        }
+		if (request.getAvatarUrl() != null) {
+			String avatarUrl = trimToNull(request.getAvatarUrl());
+			UserProfile profile = targetUser.getProfile();
+			if (profile == null) {
+				profile = new UserProfile();
+				profile.setUser(targetUser);
+				profile.setUserId(targetUser.getId());
+				targetUser.setProfile(profile);
+				profileCreated = true;
+			}
+			profile.setAvatarUrl(avatarUrl);
+			avatarUrlForLog = avatarUrl;
+			log.info(
+					"User avatar update: userId={} createdProfile={} avatarUrlLength={}",
+					targetUser.getId(),
+					profileCreated,
+					avatarUrl == null ? 0 : avatarUrl.length()
+			);
+		}
 
         if (request.getPassword() != null) {
             String rawPassword = request.getPassword();
@@ -355,10 +368,25 @@ public class UserService {
             recomputeFullName(targetUser);
         }
 
-        User saved = userRepository.save(targetUser);
-        User hydrated = loadUserWithProfile(saved.getId());
-        return toResponse(hydrated);
-    }
+		try {
+			User saved = userRepository.save(targetUser);
+			User hydrated = loadUserWithProfile(saved.getId());
+			return toResponse(hydrated);
+		} catch (RuntimeException ex) {
+			if (avatarUrlForLog != null) {
+				log.error(
+						"Failed to save user update: userId={} createdProfile={} avatarUrlLength={}",
+						targetUser.getId(),
+						profileCreated,
+						avatarUrlForLog.length(),
+						ex
+				);
+			} else {
+				log.error("Failed to save user update: userId={}", targetUser.getId(), ex);
+			}
+			throw ex;
+		}
+	}
 
     @Transactional
     public LoginResponse login(LoginRequest request) {
