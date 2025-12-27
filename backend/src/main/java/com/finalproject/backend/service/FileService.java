@@ -119,6 +119,44 @@ public class FileService {
 
 				yield "lesson-resources/" + resolvedClassId + "/" + lessonId + "/" + randomPart + "-" + safeFileName;
 			}
+			case ASSIGNMENT_ATTACHMENT -> {
+				Long assignmentId = request.getAssignmentId();
+				ClassEntity clazz;
+				Long resolvedClassId;
+
+				if (assignmentId != null) {
+					Assignment assignment = assignmentRepository.findById(assignmentId)
+							.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assignment not found"));
+					clazz = assignment.getClazz();
+					if (clazz == null || clazz.getId() == null) {
+						throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Assignment is not linked to a class");
+					}
+					resolvedClassId = clazz.getId();
+				} else {
+					Long classIdOrCourseId = request.getClassId();
+					if (classIdOrCourseId == null) {
+						throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "classId or assignmentId is required");
+					}
+					clazz = resolveClass(classIdOrCourseId);
+					resolvedClassId = clazz.getId();
+				}
+
+				if (!role.isSuperAdmin()) {
+					if (!role.isTeacher()) {
+						throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only teacher can upload assignment attachment");
+					}
+					boolean isTeacherOfClass = classRepository.existsByIdAndTeachers_Id(resolvedClassId, user.getId());
+					Long courseId = clazz.getCourse() != null ? clazz.getCourse().getId() : null;
+					boolean isTeacherOfCourse = courseId != null
+							&& courseRepository.findByIdAndTeachers_Id(courseId, user.getId()).isPresent();
+					if (!isTeacherOfClass && !isTeacherOfCourse) {
+						throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed to upload attachment for this class");
+					}
+				}
+
+				String prefix = assignmentId != null ? String.valueOf(assignmentId) : String.valueOf(resolvedClassId);
+				yield "assignment-attachments/" + prefix + "/" + randomPart + "-" + safeFileName;
+			}
 			case ASSIGNMENT_RESOURCE -> {
 				Long classIdOrCourseId = request.getClassId();
 				Long assignmentId = request.getAssignmentId();
