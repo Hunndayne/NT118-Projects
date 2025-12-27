@@ -119,6 +119,32 @@ public class FileService {
 
 				yield "lesson-resources/" + resolvedClassId + "/" + lessonId + "/" + randomPart + "-" + safeFileName;
 			}
+			case ASSIGNMENT_RESOURCE -> {
+				Long classIdOrCourseId = request.getClassId();
+				Long assignmentId = request.getAssignmentId();
+				if (classIdOrCourseId == null || assignmentId == null) {
+					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "classId and assignmentId are required");
+				}
+
+				ClassEntity clazz = resolveClass(classIdOrCourseId);
+				Long resolvedClassId = clazz.getId();
+
+				if (!role.isSuperAdmin()) {
+					boolean isTeacherOfClass = role.isTeacher()
+							&& classRepository.existsByIdAndTeachers_Id(resolvedClassId, user.getId());
+					if (!isTeacherOfClass) {
+						throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed to upload resources for this class");
+					}
+				}
+
+				boolean assignmentBelongsToClass = assignmentRepository.findByIdAndClazz_Id(assignmentId, resolvedClassId).isPresent();
+				if (!assignmentBelongsToClass) {
+					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "assignmentId does not belong to classId");
+				}
+
+				yield "assignment-resources/" + resolvedClassId + "/" + assignmentId + "/" + randomPart + "-" + safeFileName;
+			}
+
 			case SUBMISSION -> {
 				Long assignmentId = request.getAssignmentId();
 				if (assignmentId == null) {
@@ -225,6 +251,7 @@ public class FileService {
 	private enum UploadPurpose {
 		AVATAR,
 		LESSON_RESOURCE,
+		ASSIGNMENT_RESOURCE,
 		SUBMISSION
 	}
 }

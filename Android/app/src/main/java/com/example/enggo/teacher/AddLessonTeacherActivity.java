@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -209,7 +210,12 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
     }
 
     private void uploadAndAttachFile(ApiService apiService, String token, Long lessonId, Uri fileUri) {
-        RequestBody requestBody = createRequestBody(fileUri);
+        long contentLength = resolveContentLength(fileUri);
+        if (contentLength <= 0) {
+            Toast.makeText(this, "Cannot determine file size for upload", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        RequestBody requestBody = createRequestBody(fileUri, contentLength);
         if (requestBody == null) {
             Toast.makeText(this, "Cannot read file for upload", Toast.LENGTH_SHORT).show();
             return;
@@ -244,7 +250,7 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
                 String uploadContentType = presign.contentType != null ? presign.contentType : contentType;
                 Log.d("AddLessonTeacher", "Uploading to presigned url");
 
-                apiService.uploadToPresignedUrl(presign.uploadUrl, uploadContentType, requestBody)
+                apiService.uploadToPresignedUrl(presign.uploadUrl, uploadContentType, contentLength, requestBody)
                         .enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> uploadResponse) {
@@ -316,6 +322,44 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
         });
     }
 
+    private long resolveContentLength(Uri uri) {
+        long size = -1;
+        if ("content".equals(uri.getScheme())) {
+            try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
+                    if (sizeIndex >= 0) {
+                        size = cursor.getLong(sizeIndex);
+                    }
+                }
+            } catch (Exception ignored) {
+                // best effort
+            }
+        }
+        if (size <= 0) {
+            DocumentFile doc = DocumentFile.fromSingleUri(this, uri);
+            if (doc != null) {
+                long docSize = doc.length();
+                if (docSize > 0) {
+                    size = docSize;
+                }
+            }
+        }
+        if (size <= 0) {
+            try (AssetFileDescriptor afd = getContentResolver().openAssetFileDescriptor(uri, "r")) {
+                if (afd != null) {
+                    long afdSize = afd.getLength();
+                    if (afdSize > 0) {
+                        size = afdSize;
+                    }
+                }
+            } catch (Exception ignored) {
+                // best effort
+            }
+        }
+        return size;
+    }
+
     private String resolveContentType(Uri uri) {
         String mimeType = getContentResolver().getType(uri);
         if (mimeType != null) {
@@ -334,7 +378,7 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
         }
         return "application/octet-stream";
     }
-    private RequestBody createRequestBody(Uri uri) {
+    private RequestBody createRequestBody(Uri uri, long contentLength) {
         String mimeType = getContentResolver().getType(uri);
         MediaType mediaType = mimeType != null
                 ? MediaType.parse(mimeType)
@@ -343,6 +387,11 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
             @Override
             public MediaType contentType() {
                 return mediaType;
+            }
+
+            @Override
+            public long contentLength() {
+                return contentLength;
             }
 
             @Override

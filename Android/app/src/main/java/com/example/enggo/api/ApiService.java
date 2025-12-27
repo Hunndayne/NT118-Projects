@@ -156,6 +156,7 @@ public interface ApiService {
     Call<Void> uploadToPresignedUrl(
             @Url String uploadUrl,
             @Header("Content-Type") String contentType,
+            @Header("Content-Length") long contentLength,
             @Body RequestBody file
     );
     @GET("classes/{classId}/assignments")
