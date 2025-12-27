@@ -333,7 +333,6 @@ public class UserService {
 			if (profile == null) {
 				profile = new UserProfile();
 				profile.setUser(targetUser);
-				profile.setUserId(targetUser.getId());
 				targetUser.setProfile(profile);
 				profileCreated = true;
 			}
