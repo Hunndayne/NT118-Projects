@@ -73,9 +73,16 @@ public class CourseService {
 	public List<CourseParticipantResponse> getParticipantsForCourse(String rawToken, Long courseId) {
 		User requester = userService.getAuthenticatedUserEntity(rawToken);
 		Course course = ensureCourseAccess(requester, courseId);
-		return course.getStudents().stream()
+		
+		// Combine students and teachers
+		List<CourseParticipantResponse> participants = new java.util.ArrayList<>();
+		participants.addAll(course.getStudents().stream()
 				.map(this::toParticipantResponse)
-				.collect(Collectors.toList());
+				.collect(Collectors.toList()));
+		participants.addAll(course.getTeachers().stream()
+				.map(this::toParticipantResponse)
+				.collect(Collectors.toList()));
+		return participants;
 	}
 
 	@Transactional(readOnly = true)
@@ -98,6 +105,8 @@ public class CourseService {
 		List<Course> courses;
 		if (requester.isSuperAdmin()) {
 			courses = courseRepository.findAll();
+		} else if (requester.isTeacher()) {
+			courses = courseRepository.findDistinctByTeachers_Id(requester.getId());
 		} else {
 			courses = courseRepository.findDistinctByStudents_Id(requester.getId());
 		}
@@ -165,7 +174,7 @@ public class CourseService {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
 		}
 
-		Course course = loadCourseWithStudents(courseId);
+		Course course = loadCourseWithParticipants(courseId);
 		List<Long> userIds = request.getUserIds();
 		if (userIds == null || userIds.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "userIds must not be empty");
@@ -176,9 +185,18 @@ public class CourseService {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "userId must not be null");
 			}
 			User participant = userService.loadUserEntity(userId);
-			boolean added = course.getStudents().add(participant);
-			if (!added) {
-				throw new ResponseStatusException(HttpStatus.CONFLICT, "User " + userId + " already enrolled in this course");
+			
+			// Add to appropriate collection based on role
+			if (participant.isTeacher()) {
+				boolean added = course.getTeachers().add(participant);
+				if (!added) {
+					throw new ResponseStatusException(HttpStatus.CONFLICT, "Teacher " + userId + " already assigned to this course");
+				}
+			} else {
+				boolean added = course.getStudents().add(participant);
+				if (!added) {
+					throw new ResponseStatusException(HttpStatus.CONFLICT, "User " + userId + " already enrolled in this course");
+				}
 			}
 		}
 
@@ -193,7 +211,7 @@ public class CourseService {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
 		}
 
-		Course course = loadCourseWithStudents(courseId);
+		Course course = loadCourseWithParticipants(courseId);
 		List<Long> userIds = request.getUserIds();
 		if (userIds == null || userIds.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "userIds must not be empty");
@@ -204,9 +222,18 @@ public class CourseService {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "userId must not be null");
 			}
 			User participant = userService.loadUserEntity(userId);
-			boolean removed = course.getStudents().remove(participant);
-			if (!removed) {
-				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User " + userId + " is not enrolled in this course");
+			
+			// Remove from appropriate collection based on role
+			if (participant.isTeacher()) {
+				boolean removed = course.getTeachers().remove(participant);
+				if (!removed) {
+					throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Teacher " + userId + " is not assigned to this course");
+				}
+			} else {
+				boolean removed = course.getStudents().remove(participant);
+				if (!removed) {
+					throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User " + userId + " is not enrolled in this course");
+				}
 			}
 		}
 
@@ -254,13 +281,37 @@ public class CourseService {
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found"));
 	}
 
+	private Course loadCourseWithParticipants(Long courseId) {
+		return courseRepository.findById(courseId)
+				.map(course -> {
+					course.getStudents().size(); // initialize students
+					course.getTeachers().size(); // initialize teachers
+					return course;
+				})
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found"));
+	}
+
 	private Course ensureCourseAccess(User requester, Long courseId) {
 		if (requester.isSuperAdmin()) {
-			return loadCourseWithStudents(courseId);
+			return loadCourseWithParticipants(courseId);
 		}
+		
+		// Check if user is a teacher in this course
+		if (requester.isTeacher()) {
+			return courseRepository.findByIdAndTeachers_Id(courseId, requester.getId())
+					.map(course -> {
+						course.getStudents().size();
+						course.getTeachers().size();
+						return course;
+					})
+					.orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied for this course"));
+		}
+		
+		// Check if user is a student in this course
 		return courseRepository.findByIdAndStudents_Id(courseId, requester.getId())
 				.map(course -> {
 					course.getStudents().size();
+					course.getTeachers().size();
 					return course;
 				})
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied for this course"));

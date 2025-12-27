@@ -111,10 +111,20 @@ public class AddUserAdminActivity extends BaseAdminActivity {
                             setResult(RESULT_OK);
                             finish();
                         } else {
+                            String errorMsg = "Create user failed";
+                            try {
+                                if (response.errorBody() != null) {
+                                    errorMsg = response.errorBody().string();
+                                }
+                            } catch (Exception e) {
+                                errorMsg = "Error code: " + response.code();
+                            }
                             Toast.makeText(
                                     AddUserAdminActivity.this,
                                     "Create user failed (" + response.code() + ")",
                                     Toast.LENGTH_SHORT
+                                    errorMsg,
+                                    Toast.LENGTH_LONG
                             ).show();
                         }
                     }
