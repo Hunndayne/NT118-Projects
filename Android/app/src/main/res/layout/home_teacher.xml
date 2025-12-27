@@ -171,7 +171,9 @@
                         android:padding="12dp">
 
                         <TextView
-                            android:text="5"
+                            android:id="@+id/tvPendingReviewCount"
+                            android:text=""
+                            tools:text="5"
                             android:textSize="24sp"
                             android:textStyle="bold"
                             android:textColor="@color/text_primary"

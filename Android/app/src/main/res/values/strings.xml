@@ -53,12 +53,6 @@
     <string-array name="user_account_options">
         <item>Edit profile</item>
         <item>Change password</item>
-        <item>Preferred language</item>
-        <item>Forum preferences</item>
-        <item>Calendar preference</item>
-        <item>Message preferences</item>
-        <item>Notification preferences</item>
-        <item>Linked logins</item>
     </string-array>
     //editin4
     <string name="label_first_name">First name</string>

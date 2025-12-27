@@ -97,9 +97,6 @@
             android:name="com.example.enggo.admin.EditUserAdminActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.enggo.teacher.EditUserTeacherActivity"
-            android:exported="false" />
-        <activity
             android:name="com.example.enggo.admin.ManageAccountAdminActivity"
             android:exported="false" />
         <activity
@@ -119,6 +116,9 @@
             android:exported="false" />
         <activity
             android:name="com.example.enggo.teacher.ScheduleTeacherActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.enggo.teacher.EditUserTeacherActivity"
             android:exported="false" />
         <activity
             android:name="com.example.enggo.teacher.MenuTeacherActivity"
@@ -158,6 +158,8 @@
             android:exported="false" />
         <activity
             android:name="com.example.enggo.auth.LoginActivity"
+            android:exported="false" />
+        <activity android:name=".admin.EditProfileAdminActivity"
             android:exported="false" />
         <activity
             android:name="com.example.enggo.user.MainActivity"

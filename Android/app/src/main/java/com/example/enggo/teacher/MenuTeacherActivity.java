@@ -1,7 +1,9 @@
 package com.example.enggo.teacher;
 
 import com.example.enggo.R;
-import com.example.enggo.user.EditInformationUserActivity;
+import com.example.enggo.api.ApiClient;
+import com.example.enggo.api.ApiService;
+import com.example.enggo.admin.UserAdmin;
 import com.example.enggo.user.ProfileUserActivity;
 import com.example.enggo.auth.ChangePasswordActivity;
 
@@ -46,6 +48,39 @@ public class MenuTeacherActivity extends BaseTeacherActivity {
 
         // Setup menu list
         setupMenuOptions();
+        
+        // Load teacher name
+        TextView tvTeacherName = findViewById(R.id.tvTeacherName);
+        loadTeacherName(tvTeacherName);
+    }
+
+    private void loadTeacherName(TextView tvTeacherName) {
+        String token = getTokenFromDb();
+        if (token == null) {
+            return;
+        }
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.getCurrentUser(token).enqueue(new retrofit2.Callback<UserAdmin>() {
+            @Override
+            public void onResponse(retrofit2.Call<UserAdmin> call,
+                                   retrofit2.Response<UserAdmin> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String name = response.body().getFullName();
+                    if (name == null || name.trim().isEmpty()) {
+                        name = response.body().getUsername();
+                    }
+                    if (name != null && !name.trim().isEmpty()) {
+                        tvTeacherName.setText(name);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<UserAdmin> call, Throwable t) {
+                // Keep default label on failure.
+            }
+        });
     }
 
     private void setupMenuOptions() {
@@ -60,20 +95,12 @@ public class MenuTeacherActivity extends BaseTeacherActivity {
         teacherMenuListView.setAdapter(adapter);
 
         teacherMenuListView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
-            String selectedItem = (String) parent.getItemAtPosition(position);
-            
             switch (position) {
                 case 0: // Edit Profile
-                    startActivity(new Intent(this, EditInformationUserActivity.class));
+                    startActivity(new Intent(this, EditUserTeacherActivity.class));
                     break;
-                case 1: // View Profile
-                    startActivity(new Intent(this, ProfileUserActivity.class));
-                    break;
-                case 2: // Change Password
+                case 1: // Change Password
                     startActivity(new Intent(this, ChangePasswordActivity.class));
-                    break;
-                default:
-                    Toast.makeText(MenuTeacherActivity.this, selectedItem, Toast.LENGTH_SHORT).show();
                     break;
             }
         });
