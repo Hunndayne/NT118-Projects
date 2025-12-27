@@ -86,13 +86,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     private int getTypeColor(String type) {
-        switch (type) {
-            case "Event":
+        String normalizedType = type == null ? "" : type.trim().toLowerCase();
+        switch (normalizedType) {
+            case "event":
                 return ContextCompat.getColor(context, R.color.notification_event);
-            case "Remind":
+            case "remind":
                 return ContextCompat.getColor(context, R.color.notification_remind);
-            case "Warning":
+            case "warning":
                 return ContextCompat.getColor(context, R.color.notification_warning);
+            case "announcement":
+                return ContextCompat.getColor(context, R.color.notification_announcement);
             default:
                 return ContextCompat.getColor(context, R.color.text_secondary);
         }

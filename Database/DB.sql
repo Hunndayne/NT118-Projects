@@ -99,6 +99,16 @@ create table submissions (
     grade_at       timestamptz
 );
 
+-- ===== password_reset_tokens =====
+create table password_reset_tokens (
+    token_id    bigint generated always as identity primary key,
+    user_id     bigint references users(user_id),
+    otp_code    varchar(10) not null,
+    expires_at  timestamptz not null,
+    used_at     timestamptz,
+    created_at  timestamptz not null
+);
+
 -- ===== announcements_all =====
 create table announcements_all (
     announcement_id  bigint generated always as identity primary key,
@@ -126,6 +136,19 @@ create table announcements_classes (
     target_id        bigint references classes(class_id),
     created_by       bigint references users(user_id),
     created_at       timestamptz
+);
+
+-- ===== notifications =====
+create table notifications (
+    notification_id  bigint generated always as identity primary key,
+    type             varchar(32) not null,
+    title            varchar(255) not null,
+    content          text,
+    created_by       bigint references users(user_id),
+    target_user_id   bigint references users(user_id),
+    target_class_id  bigint references classes(class_id),
+    is_read          boolean not null default false,
+    created_at       timestamptz not null
 );
 
 -- ===== lesson_progess (giữ nguyên tên theo tài liệu) =====

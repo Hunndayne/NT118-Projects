@@ -89,40 +89,20 @@ public class NotificationUserActivity extends BaseUserActivity {
                     notificationList.addAll(response.body());
                     adapter.updateData(notificationList);
                 } else {
-                    // If API not implemented, show mock data
-                    loadMockNotifications();
+                    notificationList.clear();
+                    adapter.updateData(notificationList);
+                    Toast.makeText(NotificationUserActivity.this,
+                            "Load notifications failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Notification>> call, Throwable t) {
-                // If API fails, show mock data for demo
-                loadMockNotifications();
+                notificationList.clear();
+                adapter.updateData(notificationList);
+                Toast.makeText(NotificationUserActivity.this,
+                        "Cannot connect to server", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void loadMockNotifications() {
-        notificationList.clear();
-        
-        notificationList.add(new Notification(
-            1L, "Event", "20/11 - GỬI LỜI CHÚC, VẠN ĐIỀU HAY",
-            "Chào các bạn,\nNhân dịp 20/11, Trung tâm sẽ tổ chức sự kiện đặc biệt...",
-            "2 hours ago", false
-        ));
-        
-        notificationList.add(new Notification(
-            2L, "Remind", "[TA153GD] LỊCH THI GIỮA KHÓA",
-            "Trung tâm thông báo đến học viên lịch thi giữa khóa...",
-            "1 day ago", false
-        ));
-        
-        notificationList.add(new Notification(
-            3L, "Warning", "Học viên nghỉ quá 3 buổi",
-            "Chào bạn,\nBạn nhận được thông báo này do bạn đã nghỉ quá 3 buổi học...",
-            "3 days ago", true
-        ));
-        
-        adapter.updateData(notificationList);
     }
 }
