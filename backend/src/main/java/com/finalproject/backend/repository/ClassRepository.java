@@ -12,4 +12,5 @@ public interface ClassRepository extends JpaRepository<ClassEntity, Long> {
 	List<ClassEntity> findDistinctByCourse_IdIn(Iterable<Long> courseIds);
 	ClassEntity findFirstByCourse_Id(Long courseId);
 	boolean existsByIdAndTeachers_Id(Long classId, Long teacherId);
+	boolean existsByIdAndStudents_Id(Long classId, Long studentId);
 }

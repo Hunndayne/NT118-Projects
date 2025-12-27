@@ -40,6 +40,10 @@ import retrofit2.http.Path;
 public interface ApiService {
     @POST("auth/login")
     Call<LoginResponse> login(@Body LoginRequest request);
+    @POST("auth/forgot-password")
+    Call<MessageResponse> forgotPassword(@Body ForgotPasswordRequest request);
+    @POST("auth/reset-password")
+    Call<MessageResponse> resetPassword(@Body ResetPasswordRequest request);
 
     @GET("checklogin")
     Call<CheckLoginResponse> checkLogin(@Header("X-Auth-Token") String token);

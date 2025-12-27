@@ -28,5 +28,6 @@
     <color name="notification_event">#4CAF50</color>
     <color name="notification_remind">#FF9800</color>
     <color name="notification_warning">#F44336</color>
+    <color name="notification_announcement">#2196F3</color>
     <color name="notification_unread_bg">#E3F2FD</color>
 </resources>

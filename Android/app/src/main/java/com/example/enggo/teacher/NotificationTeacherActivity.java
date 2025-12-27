@@ -99,49 +99,21 @@ public class NotificationTeacherActivity extends BaseTeacherActivity {
                     notificationList.addAll(response.body());
                     adapter.updateData(notificationList);
                 } else {
-                    loadMockNotifications();
+                    notificationList.clear();
+                    adapter.updateData(notificationList);
+                    Toast.makeText(NotificationTeacherActivity.this,
+                            "Load notifications failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Notification>> call, Throwable t) {
-                loadMockNotifications();
+                notificationList.clear();
+                adapter.updateData(notificationList);
+                Toast.makeText(NotificationTeacherActivity.this,
+                        "Cannot connect to server", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void loadMockNotifications() {
-        notificationList.clear();
-        
-        Notification notif1 = new Notification();
-        notif1.setId(1L);
-        notif1.setType("Event");
-        notif1.setTitle("Welcome to EngGo!");
-        notif1.setContent("Start your English learning journey today with interactive lessons.");
-        notif1.setCreatedAt("2024-01-15 10:30:00");
-        notif1.setRead(false);
-        
-        Notification notif2 = new Notification();
-        notif2.setId(2L);
-        notif2.setType("Remind");
-        notif2.setTitle("Assignment Due Soon");
-        notif2.setContent("Your English Essay assignment is due in 2 days. Don't forget to submit!");
-        notif2.setCreatedAt("2024-01-14 14:20:00");
-        notif2.setRead(false);
-        
-        Notification notif3 = new Notification();
-        notif3.setId(3L);
-        notif3.setType("Warning");
-        notif3.setTitle("Account Security Alert");
-        notif3.setContent("We detected a login from a new device. If this wasn't you, please secure your account.");
-        notif3.setCreatedAt("2024-01-13 09:15:00");
-        notif3.setRead(true);
-        
-        notificationList.add(notif1);
-        notificationList.add(notif2);
-        notificationList.add(notif3);
-        
-        adapter.updateData(notificationList);
     }
 
     @Override

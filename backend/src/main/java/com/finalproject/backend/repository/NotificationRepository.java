@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
+	List<Notification> findAllByOrderByCreatedAtDesc();
 
     // Find all notifications for a specific user (broadcast + targeted)
     @Query("SELECT n FROM Notification n WHERE n.targetUser IS NULL OR n.targetUser.id = :userId ORDER BY n.createdAt DESC")
