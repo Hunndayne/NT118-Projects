@@ -114,6 +114,51 @@ public class FileService {
 
 				yield "lesson-resources/" + classId + "/" + lessonId + "/" + randomPart + "-" + safeFileName;
 			}
+			case ASSIGNMENT_ATTACHMENT -> {
+				Long assignmentId = request.getAssignmentId();
+				ClassEntity clazz;
+				Long classId;
+
+				if (assignmentId != null) {
+					Assignment assignment = assignmentRepository.findById(assignmentId)
+							.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assignment not found"));
+					clazz = assignment.getClazz();
+					if (clazz == null) {
+						throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Assignment is not linked to a class");
+					}
+					classId = clazz.getId();
+				} else {
+					Long classIdOrCourseId = request.getClassId();
+					if (classIdOrCourseId == null) {
+						throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "classId or assignmentId is required");
+					}
+					ClassEntity resolved = classRepository.findById(classIdOrCourseId).orElse(null);
+					if (resolved == null) {
+						resolved = classRepository.findFirstByCourse_Id(classIdOrCourseId);
+					}
+					if (resolved == null) {
+						throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found");
+					}
+					clazz = resolved;
+					classId = clazz.getId();
+				}
+
+				if (!role.isSuperAdmin()) {
+					if (!role.isTeacher()) {
+						throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only teacher can upload assignment attachment");
+					}
+					boolean isTeacherOfClass = classId != null && classRepository.existsByIdAndTeachers_Id(classId, user.getId());
+					Long courseId = clazz.getCourse() != null ? clazz.getCourse().getId() : null;
+					boolean isTeacherOfCourse = courseId != null
+							&& courseRepository.findByIdAndTeachers_Id(courseId, user.getId()).isPresent();
+					if (!isTeacherOfClass && !isTeacherOfCourse) {
+						throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed to upload attachment for this class");
+					}
+				}
+
+				String prefix = assignmentId != null ? String.valueOf(assignmentId) : String.valueOf(classId);
+				yield "assignment-attachments/" + prefix + "/" + randomPart + "-" + safeFileName;
+			}
 			case SUBMISSION -> {
 				Long assignmentId = request.getAssignmentId();
 				if (assignmentId == null) {
@@ -186,6 +231,7 @@ public class FileService {
 
 	private enum UploadPurpose {
 		AVATAR,
+		ASSIGNMENT_ATTACHMENT,
 		LESSON_RESOURCE,
 		SUBMISSION
 	}

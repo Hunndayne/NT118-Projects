@@ -145,6 +145,11 @@ public interface ApiService {
             @Header("X-Auth-Token") String token,
             @Part MultipartBody.Part file
     );
+    @POST("files/presign-upload")
+    Call<PresignUploadResponse> presignUpload(
+            @Header("X-Auth-Token") String token,
+            @Body PresignUploadRequest request
+    );
     @GET("classes/{classId}/assignments")
     Call<List<AssignmentResponse>> getAssignments(
             @Header("X-Auth-Token") String token,

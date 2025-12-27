@@ -25,7 +25,8 @@ import androidx.documentfile.provider.DocumentFile;
 import com.example.enggo.R;
 import com.example.enggo.api.ApiClient;
 import com.example.enggo.api.ApiService;
-import com.example.enggo.api.FileUploadResponse;
+import com.example.enggo.api.PresignUploadRequest;
+import com.example.enggo.api.PresignUploadResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,7 +38,8 @@ import java.util.List;
 import java.util.Locale;
 
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
 import okio.BufferedSink;
 import retrofit2.Call;
@@ -60,6 +62,10 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
     private ActivityResultLauncher<String[]> filePickerLauncher;
     private String selectedFileUri;
     private final List<LinkRow> linkRows = new ArrayList<>();
+    private String legacyAttachmentUrl;
+    private boolean legacyLinkAdded;
+    private boolean resourcesLoaded;
+    private final OkHttpClient httpClient = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +144,8 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
                     if (assignment.deadline != null) {
                         etDueTime.setText(formatDateTime(assignment.deadline));
                     }
+                    legacyAttachmentUrl = assignment.attachmentUrl;
+                    maybeAddLegacyLink();
                 }
             }
 
@@ -161,6 +169,8 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
             @Override
             public void onResponse(Call<List<AssignmentResourceResponse>> call, Response<List<AssignmentResourceResponse>> response) {
                 if (!response.isSuccessful() || response.body() == null) {
+                    resourcesLoaded = true;
+                    maybeAddLegacyLink();
                     return;
                 }
                 linkRows.clear();
@@ -174,11 +184,14 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
                         addFileRow(resource);
                     }
                 }
+                resourcesLoaded = true;
+                maybeAddLegacyLink();
             }
 
             @Override
             public void onFailure(Call<List<AssignmentResourceResponse>> call, Throwable t) {
-                // no-op
+                resourcesLoaded = true;
+                maybeAddLegacyLink();
             }
         });
     }
@@ -406,6 +419,39 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
         fileListContainer.addView(rowView);
     }
 
+    private void maybeAddLegacyLink() {
+        if (!resourcesLoaded || legacyLinkAdded) {
+            return;
+        }
+        String legacy = legacyAttachmentUrl == null ? "" : legacyAttachmentUrl.trim();
+        if (legacy.isEmpty()) {
+            legacyLinkAdded = true;
+            return;
+        }
+        if (hasLinkUrl(legacy)) {
+            legacyLinkAdded = true;
+            return;
+        }
+        addLinkRow(null, "Attachment Link", legacy);
+        legacyLinkAdded = true;
+    }
+
+    private boolean hasLinkUrl(String url) {
+        String normalized = url == null ? "" : url.trim();
+        if (normalized.isEmpty()) {
+            return false;
+        }
+        for (LinkRow row : linkRows) {
+            String existing = row.urlInput.getText() == null
+                    ? ""
+                    : row.urlInput.getText().toString().trim();
+            if (!existing.isEmpty() && existing.equalsIgnoreCase(normalized)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void deleteResource(Long resourceId, Runnable onSuccess) {
         String token = getTokenFromDb();
         if (token == null) {
@@ -428,79 +474,130 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
     }
 
     private void uploadAndAttachFile(ApiService apiService, String token, Uri fileUri) {
-        RequestBody requestBody = createRequestBody(fileUri);
-        if (requestBody == null) {
-            Toast.makeText(this, "Cannot read file for upload", Toast.LENGTH_SHORT).show();
-            return;
-        }
         String fileName = sanitizeFileName(getFileName(fileUri), fileUri);
+        String contentType = resolveContentType(fileUri);
         Log.d("EditAssignmentTeacher", "Uploading " + fileName + " to assignment " + assignmentId);
         Toast.makeText(this, "Uploading " + fileName, Toast.LENGTH_SHORT).show();
-        MultipartBody.Part part = MultipartBody.Part.createFormData("file", fileName, requestBody);
-        apiService.uploadFile(token, part).enqueue(new Callback<FileUploadResponse>() {
+
+        PresignUploadRequest presignRequest = new PresignUploadRequest(
+                "ASSIGNMENT_ATTACHMENT",
+                fileName,
+                contentType,
+                courseId,
+                null,
+                assignmentId
+        );
+        apiService.presignUpload(token, presignRequest).enqueue(new Callback<PresignUploadResponse>() {
             @Override
-            public void onResponse(Call<FileUploadResponse> call, Response<FileUploadResponse> response) {
-                if (!response.isSuccessful() || response.body() == null || response.body().fileUrl == null) {
+            public void onResponse(Call<PresignUploadResponse> call, Response<PresignUploadResponse> response) {
+                PresignUploadResponse presign = response.body();
+                if (!response.isSuccessful() || presign == null || presign.uploadUrl == null || presign.publicUrl == null) {
                     Toast.makeText(
                             EditAssignmentTeacherActivity.this,
-                            "Upload file failed (" + response.code() + ")",
+                            "Get upload URL failed (" + response.code() + ")",
                             Toast.LENGTH_SHORT
                     ).show();
                     return;
                 }
-                String title = response.body().originalName;
-                if (title == null || title.trim().isEmpty()) {
-                    title = fileName;
-                }
-                AssignmentResourceRequest fileRequest = new AssignmentResourceRequest(
-                        "FILE",
-                        title,
-                        null,
-                        null,
-                        response.body().fileUrl
-                );
-                apiService.addAssignmentResource(token, courseId, assignmentId, fileRequest)
-                        .enqueue(new Callback<AssignmentResourceResponse>() {
-                            @Override
-                            public void onResponse(Call<AssignmentResourceResponse> call, Response<AssignmentResourceResponse> response) {
-                                if (!response.isSuccessful()) {
+                uploadToPresignedUrl(presign.uploadUrl, contentType, fileUri, uploadSuccess -> {
+                    if (!uploadSuccess) {
+                        Toast.makeText(
+                                EditAssignmentTeacherActivity.this,
+                                "Upload file failed",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        return;
+                    }
+                    String title = fileName;
+                    AssignmentResourceRequest fileRequest = new AssignmentResourceRequest(
+                            "FILE",
+                            title,
+                            null,
+                            null,
+                            presign.publicUrl
+                    );
+                    apiService.addAssignmentResource(token, courseId, assignmentId, fileRequest)
+                            .enqueue(new Callback<AssignmentResourceResponse>() {
+                                @Override
+                                public void onResponse(Call<AssignmentResourceResponse> call, Response<AssignmentResourceResponse> response) {
+                                    if (!response.isSuccessful()) {
+                                        Toast.makeText(
+                                                EditAssignmentTeacherActivity.this,
+                                                "Attach file failed (" + response.code() + ")",
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+                                        return;
+                                    }
+                                    loadResources();
+                                }
+
+                                @Override
+                                public void onFailure(Call<AssignmentResourceResponse> call, Throwable t) {
                                     Toast.makeText(
                                             EditAssignmentTeacherActivity.this,
-                                            "Attach file failed (" + response.code() + ")",
+                                            "Attach file failed",
                                             Toast.LENGTH_SHORT
                                     ).show();
-                                    return;
                                 }
-                                loadResources();
-                            }
-
-                            @Override
-                            public void onFailure(Call<AssignmentResourceResponse> call, Throwable t) {
-                                Toast.makeText(
-                                        EditAssignmentTeacherActivity.this,
-                                        "Attach file failed",
-                                        Toast.LENGTH_SHORT
-                                ).show();
-                            }
-                        });
+                            });
+                });
             }
 
             @Override
-            public void onFailure(Call<FileUploadResponse> call, Throwable t) {
+            public void onFailure(Call<PresignUploadResponse> call, Throwable t) {
                 Toast.makeText(
                         EditAssignmentTeacherActivity.this,
-                        "Upload file failed",
+                        "Get upload URL failed",
                         Toast.LENGTH_SHORT
                 ).show();
             }
         });
     }
 
-    private RequestBody createRequestBody(Uri uri) {
+    private void uploadToPresignedUrl(String uploadUrl,
+                                      String contentType,
+                                      Uri fileUri,
+                                      UploadCallback callback) {
+        RequestBody requestBody = createRequestBody(fileUri, contentType);
+        if (requestBody == null) {
+            Toast.makeText(this, "Cannot read file for upload", Toast.LENGTH_SHORT).show();
+            callback.onComplete(false);
+            return;
+        }
+        Request request = new Request.Builder()
+                .url(uploadUrl)
+                .put(requestBody)
+                .addHeader("Content-Type", contentType)
+                .build();
+        httpClient.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+                runOnUiThread(() -> callback.onComplete(false));
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) {
+                boolean ok = response.isSuccessful();
+                response.close();
+                runOnUiThread(() -> callback.onComplete(ok));
+            }
+        });
+    }
+
+    private String resolveContentType(Uri uri) {
         String mimeType = getContentResolver().getType(uri);
-        MediaType mediaType = mimeType != null
-                ? MediaType.parse(mimeType)
-                : MediaType.parse("application/octet-stream");
+        if (mimeType == null || mimeType.trim().isEmpty()) {
+            return "application/octet-stream";
+        }
+        return mimeType;
+    }
+
+    private RequestBody createRequestBody(Uri uri, String contentType) {
+        String resolved = contentType;
+        if (resolved == null || resolved.trim().isEmpty()) {
+            resolved = resolveContentType(uri);
+        }
+        MediaType mediaType = MediaType.parse(resolved);
         return new RequestBody() {
             @Override
             public MediaType contentType() {
@@ -694,6 +791,10 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
             return link.substring(lastSlash + 1);
         }
         return link;
+    }
+
+    private interface UploadCallback {
+        void onComplete(boolean success);
     }
 
     private static class LinkRow {
