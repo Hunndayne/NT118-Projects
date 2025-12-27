@@ -1,10 +1,12 @@
 package com.finalproject.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.Instant;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "notifications")
@@ -15,72 +17,42 @@ import java.time.Instant;
 @Builder
 public class Notification {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "notification_id")
-	private Long id;
-
-	@Column(name = "type", length = 32, nullable = false)
-	private String type;
-
-	@Column(name = "title", length = 255, nullable = false)
-	private String title;
-
-	@Column(name = "content", columnDefinition = "text")
-	private String content;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "created_by")
-	private User createdBy;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "target_user_id")
-	private User targetUser;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "target_class_id")
-	private ClassEntity targetClass;
-
-	@Column(name = "is_read", nullable = false)
-	private boolean read;
-
-	@Column(name = "created_at", nullable = false)
-	private Instant createdAt;
-
-	@PrePersist
-	void onCreate() {
-		if (createdAt == null) {
-			createdAt = Instant.now();
-		}
-	}
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "notification_id")
     private Long id;
 
-    @Column(nullable = false)
-    private String type; // Event, Remind, Warning, Announcement
+    @Column(name = "type", length = 32, nullable = false)
+    private String type;
 
-    @Column(nullable = false, length = 500)
+    @Column(name = "title", length = 255, nullable = false)
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(name = "content", columnDefinition = "text")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_id")
-    private User sender;
+    @JoinColumn(name = "created_by")
+    private User createdBy;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "target_user_id")
-    private User targetUser; // null = broadcast to all
+    private User targetUser;
 
-    @Column(name = "target_class_id")
-    private Long targetClassId; // null = no class restriction
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "target_class_id")
+    private ClassEntity targetClass;
 
-    @Column(name = "is_read")
-    private boolean isRead = false;
+    @Column(name = "is_read", nullable = false)
+    private boolean read;
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false)
     private Instant createdAt;
+
+    @PrePersist
+    void onCreate() {
+        if (createdAt == null) {
+            createdAt = Instant.now();
+        }
+    }
 }
