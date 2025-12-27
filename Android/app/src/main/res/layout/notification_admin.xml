@@ -4,13 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_primary"
-    tools:context=".UserAccount_xoadcr">
+    android:background="@color/background_primary">
 
     <!-- Header -->
     <include
-        android:id="@id/headerStudent"
-        layout="@layout/header_student"
+        android:id="@id/headerAdmin"
+        layout="@layout/header_admin_teacher"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:paddingHorizontal="12dp"
@@ -25,8 +24,8 @@
 
     <!-- Footer -->
     <include
-        android:id="@id/footerStudent"
-        layout="@layout/footer_student"
+        android:id="@id/footerAdmin"
+        layout="@layout/footer_admin"
         android:layout_width="match_parent"
         android:layout_height="74dp"
         android:orientation="horizontal"
@@ -48,10 +47,10 @@
         android:paddingHorizontal="16dp"
         android:paddingTop="8dp"
         android:background="@color/background_secondary"
-        app:layout_constraintBottom_toTopOf="@id/footerStudent"
+        app:layout_constraintBottom_toTopOf="@id/footerAdmin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerStudent">
+        app:layout_constraintTop_toBottomOf="@id/headerAdmin">
 
         <!-- Nút Back -->
         <TextView
@@ -87,10 +86,7 @@
                 android:inputType="text"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/tvBack"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -103,6 +99,19 @@
             app:layout_constraintTop_toBottomOf="@id/searchLayout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Floating Action Button for Send Notification -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSendNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:contentDescription="Send Notification"
+            app:srcCompat="@drawable/ic_notification"
+            app:backgroundTint="@color/bluelogo"
+            app:tint="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.enggo.user;
+package com.example.enggo.teacher;
 
 import com.example.enggo.R;
 import com.example.enggo.adapter.NotificationAdapter;
@@ -6,6 +6,7 @@ import com.example.enggo.api.ApiClient;
 import com.example.enggo.api.ApiService;
 import com.example.enggo.model.Notification;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,20 +26,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NotificationUserActivity extends BaseUserActivity {
+public class NotificationTeacherActivity extends BaseTeacherActivity {
 
     private RecyclerView rvNotifications;
     private NotificationAdapter adapter;
     private EditText etSearch;
     private TextView tvBack;
+    private FloatingActionButton fabSendNotification;
     private List<Notification> notificationList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.notification);
-        setupHeader();
-        setupFooter();
+        setContentView(R.layout.notification_teacher);
+        setupTeacherHeader();
+        setupTeacherFooter();
 
         initViews();
         setupListeners();
@@ -47,6 +51,7 @@ public class NotificationUserActivity extends BaseUserActivity {
         tvBack = findViewById(R.id.tvBack);
         etSearch = findViewById(R.id.etSearchNotification);
         rvNotifications = findViewById(R.id.rvNotifications);
+        fabSendNotification = findViewById(R.id.fabSendNotification);
 
         rvNotifications.setLayoutManager(new LinearLayoutManager(this));
         notificationList = new ArrayList<>();
@@ -56,6 +61,11 @@ public class NotificationUserActivity extends BaseUserActivity {
 
     private void setupListeners() {
         tvBack.setOnClickListener(v -> finish());
+
+        fabSendNotification.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SendNotificationActivity.class);
+            startActivity(intent);
+        });
 
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -89,14 +99,12 @@ public class NotificationUserActivity extends BaseUserActivity {
                     notificationList.addAll(response.body());
                     adapter.updateData(notificationList);
                 } else {
-                    // If API not implemented, show mock data
                     loadMockNotifications();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Notification>> call, Throwable t) {
-                // If API fails, show mock data for demo
                 loadMockNotifications();
             }
         });
@@ -105,24 +113,40 @@ public class NotificationUserActivity extends BaseUserActivity {
     private void loadMockNotifications() {
         notificationList.clear();
         
-        notificationList.add(new Notification(
-            1L, "Event", "20/11 - GỬI LỜI CHÚC, VẠN ĐIỀU HAY",
-            "Chào các bạn,\nNhân dịp 20/11, Trung tâm sẽ tổ chức sự kiện đặc biệt...",
-            "2 hours ago", false
-        ));
+        Notification notif1 = new Notification();
+        notif1.setId(1L);
+        notif1.setType("Event");
+        notif1.setTitle("Welcome to EngGo!");
+        notif1.setContent("Start your English learning journey today with interactive lessons.");
+        notif1.setCreatedAt("2024-01-15 10:30:00");
+        notif1.setRead(false);
         
-        notificationList.add(new Notification(
-            2L, "Remind", "[TA153GD] LỊCH THI GIỮA KHÓA",
-            "Trung tâm thông báo đến học viên lịch thi giữa khóa...",
-            "1 day ago", false
-        ));
+        Notification notif2 = new Notification();
+        notif2.setId(2L);
+        notif2.setType("Remind");
+        notif2.setTitle("Assignment Due Soon");
+        notif2.setContent("Your English Essay assignment is due in 2 days. Don't forget to submit!");
+        notif2.setCreatedAt("2024-01-14 14:20:00");
+        notif2.setRead(false);
         
-        notificationList.add(new Notification(
-            3L, "Warning", "Học viên nghỉ quá 3 buổi",
-            "Chào bạn,\nBạn nhận được thông báo này do bạn đã nghỉ quá 3 buổi học...",
-            "3 days ago", true
-        ));
+        Notification notif3 = new Notification();
+        notif3.setId(3L);
+        notif3.setType("Warning");
+        notif3.setTitle("Account Security Alert");
+        notif3.setContent("We detected a login from a new device. If this wasn't you, please secure your account.");
+        notif3.setCreatedAt("2024-01-13 09:15:00");
+        notif3.setRead(true);
+        
+        notificationList.add(notif1);
+        notificationList.add(notif2);
+        notificationList.add(notif3);
         
         adapter.updateData(notificationList);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadNotifications();
     }
 }
