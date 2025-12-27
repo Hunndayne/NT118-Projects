@@ -61,13 +61,7 @@ public class NotificationResponse {
         return userId;
     }
 
-<<<<<<< HEAD
     public String getSenderName() {
         return senderName;
     }
-=======
-	public String getSenderName() {
-		return senderName;
-	}
->>>>>>> 15646fcd7e4282cf39290213b2b470e2c7dd21be
 }

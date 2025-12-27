@@ -42,6 +42,11 @@
 | `/assignments/{assignmentId}/submissions` | POST | STUDENT của khoá chứa lớp của assignment | Nộp bài: Body `{"content","fileUrl"}` | 200: `SubmissionResponse` |
 | `/assignments/{assignmentId}/submissions/{submissionId}` | GET | SUPER_ADMIN, TEACHER của lớp, hoặc chính STUDENT nộp bài | Xem bài nộp | 200: `SubmissionResponse` |
 | `/assignments/{assignmentId}/submissions/{submissionId}/grade` | PUT | SUPER_ADMIN hoặc TEACHER của lớp | Chấm điểm/feedback | Body `{"score","feedback","status"}` | 200: `SubmissionResponse` |
+| `/notifications` | GET | Đã đăng nhập | Danh sách thông báo (filter theo quyền/đích) | Header `X-Auth-Token` | 200: `NotificationResponse[]` |
+| `/notifications/{id}` | GET | Đã đăng nhập, có quyền xem | Xem chi tiết thông báo | Header `X-Auth-Token` | 200: `NotificationResponse` |
+| `/notifications` | POST | SUPER_ADMIN hoặc TEACHER | Tạo thông báo (broadcast/target user/target class) | Header `X-Auth-Token`; Body `{"type","title", optional: "content","targetUserId","targetClassId"}` | 200: `NotificationResponse` |
+| `/notifications/{id}/read` | PUT | Đã đăng nhập, có quyền xem | Đánh dấu đã đọc | Header `X-Auth-Token` | 200 empty |
+| `/notifications/{id}` | DELETE | SUPER_ADMIN hoặc người tạo | Xóa thông báo | Header `X-Auth-Token` | 200 empty |
 
 Ghi chú:
 - Context-path `/api`, ví dụ login: `POST /api/auth/login`.
