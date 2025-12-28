@@ -40,4 +40,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	List<User> findActiveUsersNotInCourse(@Param("courseId") Long courseId);
     @Query("SELECT u FROM User u WHERE u.admin = false AND u.active = true")
     List<User> findAllStudents();
+
+	@Query("SELECT COUNT(u) FROM User u WHERE u.active = true " +
+			"AND (u.role IS NULL OR u.role = com.finalproject.backend.entity.UserRole.STUDENT)")
+	long countActiveStudents();
 }
