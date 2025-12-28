@@ -75,7 +75,7 @@ public class ManageAccountAdminActivity extends BaseAdminActivity implements Use
         String token = getTokenFromDb(); // lấy từ SQLite
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
 
-        apiService.getAllStudents(token).enqueue(new Callback<List<UserAdmin>>() {
+        apiService.getAllUsers(token).enqueue(new Callback<List<UserAdmin>>() {
             @Override
             public void onResponse(Call<List<UserAdmin>> call,
                                    Response<List<UserAdmin>> response) {
