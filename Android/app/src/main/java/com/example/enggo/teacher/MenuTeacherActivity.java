@@ -40,6 +40,7 @@ public class MenuTeacherActivity extends BaseTeacherActivity {
             Intent intent = new Intent(this, EditUserTeacherActivity.class);
             startActivity(intent);
         });
+        loadAvatarInto(imTeacherAvatar);
         
         teacherInfoLayout.setOnClickListener(v -> {
             Intent intent = new Intent(this, EditUserTeacherActivity.class);
