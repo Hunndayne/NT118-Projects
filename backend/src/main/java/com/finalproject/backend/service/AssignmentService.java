@@ -252,7 +252,7 @@ public class AssignmentService {
 
 	private void createAssignmentNotification(Assignment assignment, User creator, ClassEntity clazz, OffsetDateTime startTime) {
 		String courseLabel = buildCourseLabel(clazz);
-		String notificationTitle = courseLabel + ": " + assignment.getTitle();
+		String notificationTitle = "New assignment: " + courseLabel + ": " + assignment.getTitle();
 		if (notificationTitle.length() > 255) {
 			notificationTitle = notificationTitle.substring(0, 252) + "...";
 		}
