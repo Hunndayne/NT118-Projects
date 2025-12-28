@@ -19,6 +19,7 @@ import com.example.enggo.teacher.LessonResourceResponse;
 import com.example.enggo.teacher.LessonUpdateRequest;
 import com.example.enggo.teacher.GradeSubmissionRequest;
 import com.example.enggo.teacher.SubmissionStatusResponse;
+import com.example.enggo.teacher.SubmissionSummaryResponse;
 import com.example.enggo.user.SubmissionRequest;
 import com.example.enggo.user.SubmissionResponse;
 
@@ -226,6 +227,10 @@ public interface ApiService {
             @Path("assignmentId") Long assignmentId,
             @Path("submissionId") Long submissionId,
             @Body GradeSubmissionRequest request
+    );
+    @GET("submissions/summary")
+    Call<SubmissionSummaryResponse> getSubmissionSummary(
+            @Header("X-Auth-Token") String token
     );
     @POST("classes/{classId}/lessons")
     Call<LessonResponse> createLesson(

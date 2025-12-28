@@ -227,6 +227,7 @@
                         android:layout_height="wrap_content"
                         android:text=""
                         tools:text="[TA153G0] Thông báo nghỉ học vào ngày 04/09/2025.\n[TA153G6] Lịch kiểm tra giữa khóa."
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp" />
 
                     <View
@@ -255,6 +256,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:text="1. Learning Guide: https://docs.google.com/...\n2. How to use Elearning: https://drive.google.com/...\n3. How to use SHub: https://drive.google.com/..."
+                        android:textColor="@color/text_primary"
                         android:textSize="14dp" />
 
                     <View
@@ -283,6 +285,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:text="1. Books https://drive.google.com/drive/folders/16ali...\n2. Vocabulary Book (sách khoá Cơ bản): https://drive..\n3. Audios LC books https://drive.google.com/drive/folde..."
+                        android:textColor="@color/text_primary"
                         android:textSize="14dp" />
 
                     <View
@@ -310,7 +313,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="1. Exam Postponement Guideline https://docs.google.com/document...\n2. Exam Retake Guideline https://docs.google.com/document/..."
+                        android:text="1. Exam Postponement Guideline https://docs.google.com/document...\n2. Exam Retake Guideline https://docs.google.com/document/...\n"
+                        android:textColor="@color/text_primary"
                         android:textSize="14dp" />
 
 

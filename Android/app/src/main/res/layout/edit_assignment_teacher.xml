@@ -27,7 +27,7 @@
         android:id="@+id/contentScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#FFFFFF"
+        android:background="@color/background_secondary"
         android:clipToPadding="false"
         android:paddingBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:text="Edit assignment"
                 android:fontFamily="@font/nunito_extra_bold"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -63,6 +63,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="Title"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp" />
 
                 <EditText
@@ -86,6 +87,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="Content"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp" />
 
                 <EditText
@@ -110,6 +112,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="Start time"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp" />
 
                 <EditText
@@ -134,6 +137,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="Due time"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp" />
 
                 <EditText
@@ -159,6 +163,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="Attachment Files"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp" />
 
                 <Button
@@ -166,9 +171,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Add file"
-                    android:textColor="@color/black"
+                    android:textColor="@color/button_secondary_text"
                     android:textSize="10sp"
-                    android:backgroundTint="@color/enggo_grey_100" />
+                    android:backgroundTint="@color/button_secondary_bg" />
 
                 <TextView
                     android:id="@+id/tvSelectedFileName"
@@ -200,6 +205,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_extra_bold"
                     android:text="Attachment Links"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp" />
 
                 <Button
@@ -207,9 +213,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="Add link"
-                    android:textColor="@color/black"
+                    android:textColor="@color/button_secondary_text"
                     android:textSize="10sp"
-                    android:backgroundTint="@color/enggo_grey_100" />
+                    android:backgroundTint="@color/button_secondary_bg" />
 
                 <LinearLayout
                     android:id="@+id/linkListContainer"
@@ -234,10 +240,10 @@
                     android:background="@drawable/button"
                     android:textAllCaps="false"
                     android:text="Cancel"
-                    android:textColor="@color/black"
+                    android:textColor="@color/button_secondary_text"
                     android:textSize="12sp"
                     android:layout_marginEnd="5dp"
-                    android:backgroundTint="@color/enggo_grey_300" />
+                    android:backgroundTint="@color/button_secondary_bg" />
 
                 <android.widget.Button
                     android:id="@+id/buttonSaveEditAssignment_admin"

@@ -124,41 +124,101 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        android:weightSum="2">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardNews1"
-                            style="@style/CourseCard"
-                            android:layout_width="0dp"
-                            android:layout_marginEnd="4dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
                             app:cardBackgroundColor="@color/background_secondary"
-                            app:strokeColor="@color/card_stroke">
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="8dp"
+                                android:gravity="center_vertical">
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
-                            <TextView
-                                style="@style/CourseCardText"
-                                android:text=""
-                                tools:text="[TA143GD] MID TERM"
-                                android:textSize="16sp" />
+                                    <TextView
+                                        android:id="@+id/tvNews1"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/text_primary"
+                                        android:maxLines="1"
+                                        android:ellipsize="end"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text=""
+                                        tools:text="20/11 - GỬI LỜI CHÚC" />
+
+                                    <TextView
+                                        android:id="@+id/tvNewsMeta1"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/text_secondary"
+                                        android:layout_marginTop="2dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text=""
+                                        tools:text="Event • 2 hours ago"/>
+                                </LinearLayout>
+
+
+                            </LinearLayout>
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardNews2"
-                            style="@style/CourseCard"
-                            android:layout_width="0dp"
-                            android:layout_marginStart="4dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
                             app:cardBackgroundColor="@color/background_secondary"
-                            app:strokeColor="@color/card_stroke">
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="8dp"
+                                android:gravity="center_vertical">
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
-                            <TextView
-                                style="@style/CourseCardText"
-                                android:text=""
-                                tools:text="TOEIC SPEAKING WRITING TB115"
-                                android:textSize="16sp" />
+                                    <TextView
+                                        android:id="@+id/tvNews2"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/text_primary"
+                                        android:maxLines="1"
+                                        android:ellipsize="end"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text=""
+                                        tools:text="LỊCH THI GIỮA KHÓA" />
+
+                                    <TextView
+                                        android:id="@+id/tvNewsMeta2"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/text_secondary"
+                                        android:layout_marginTop="2dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text=""
+                                        tools:text="Remind • 1 day ago"/>
+                                </LinearLayout>
+
+
+                            </LinearLayout>
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
                 </LinearLayout>
@@ -405,13 +465,13 @@
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     app:cardCornerRadius="20dp"
-                                    app:cardBackgroundColor="#E0F7FA"
+                                    app:cardBackgroundColor="@color/background_card"
                                     app:cardElevation="0dp">
                                     <TextView
                                         android:text="H"
                                         android:textSize="18sp"
                                         android:textStyle="bold"
-                                        android:textColor="#006064"
+                                        android:textColor="@color/text_primary"
                                         android:gravity="center"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"/>
@@ -478,13 +538,13 @@
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     app:cardCornerRadius="20dp"
-                                    app:cardBackgroundColor="#F3E5F5"
+                                    app:cardBackgroundColor="@color/background_card"
                                     app:cardElevation="0dp">
                                     <TextView
                                         android:text="Q"
                                         android:textSize="18sp"
                                         android:textStyle="bold"
-                                        android:textColor="#4A148C"
+                                        android:textColor="@color/text_primary"
                                         android:gravity="center"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"/>

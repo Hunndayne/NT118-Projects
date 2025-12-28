@@ -2,6 +2,7 @@ package com.example.enggo.admin;
 import com.example.enggo.R;
 import com.example.enggo.api.ApiClient;
 import com.example.enggo.api.ApiService;
+import com.example.enggo.model.Notification;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +25,12 @@ public class HomeAdminActivity extends BaseAdminActivity{
     ImageView btnEdit1, btnEdit2;
     private CardView cardCourse1;
     private CardView cardCourse2;
+    private CardView cardNews1;
+    private CardView cardNews2;
+    private TextView tvNews1;
+    private TextView tvNews2;
+    private TextView tvNewsMeta1;
+    private TextView tvNewsMeta2;
     private TextView tvCourseTitle1;
     private TextView tvCourseMeta1;
     private TextView tvCourseTitle2;
@@ -44,6 +51,14 @@ public class HomeAdminActivity extends BaseAdminActivity{
         LinearLayout layoutNewsList = findViewById(R.id.layoutAdmin_NewsList);
         ImageView imgArrowNews = findViewById(R.id.imgArrowAdmin_News);
         imgArrowNews.setOnClickListener(v -> toggleSection(layoutNewsList, imgArrowNews));
+        
+        // Initialize news cards
+        cardNews1 = findViewById(R.id.cardNews1);
+        cardNews2 = findViewById(R.id.cardNews2);
+        tvNews1 = findViewById(R.id.tvNews1);
+        tvNews2 = findViewById(R.id.tvNews2);
+        tvNewsMeta1 = findViewById(R.id.tvNewsMeta1);
+        tvNewsMeta2 = findViewById(R.id.tvNewsMeta2);
 
         // Setup Manage Courses section
         LinearLayout layoutManageCourses = findViewById(R.id.layoutAdmin_ManageCourses);
@@ -137,12 +152,89 @@ public class HomeAdminActivity extends BaseAdminActivity{
 
         loadDashboardCourses();
         loadDashboardAccounts();
+        loadDashboardNews();
     }
 
     private void toggleSection(View content, ImageView arrow) {
         boolean isVisible = content.getVisibility() == View.VISIBLE;
         content.setVisibility(isVisible ? View.GONE : View.VISIBLE);
         arrow.animate().rotation(isVisible ? 0f : 180f).setDuration(300).start();
+    }
+
+    private void loadDashboardNews() {
+        String token = getTokenFromDb();
+        if (token == null) {
+            return;
+        }
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.getNotifications(token).enqueue(new Callback<List<Notification>>() {
+            @Override
+            public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {
+                if (!response.isSuccessful() || response.body() == null) {
+                    return;
+                }
+                bindDashboardNews(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Notification>> call, Throwable t) {
+                // Silent fail for news
+            }
+        });
+    }
+
+    private void bindDashboardNews(List<Notification> notifications) {
+        if (notifications == null || notifications.isEmpty()) {
+            if (cardNews1 != null) cardNews1.setVisibility(View.GONE);
+            if (cardNews2 != null) cardNews2.setVisibility(View.GONE);
+            return;
+        }
+        
+        // Show first notification
+        if (cardNews1 != null) cardNews1.setVisibility(View.VISIBLE);
+        if (notifications.size() >= 1) {
+            Notification n1 = notifications.get(0);
+            if (tvNews1 != null) tvNews1.setText(n1.getTitle());
+            if (tvNewsMeta1 != null) {
+                String meta = n1.getType() + " • " + formatTime(n1.getCreatedAt());
+                tvNewsMeta1.setText(meta);
+            }
+        }
+        
+        // Show second notification
+        if (notifications.size() > 1) {
+            if (cardNews2 != null) cardNews2.setVisibility(View.VISIBLE);
+            Notification n2 = notifications.get(1);
+            if (tvNews2 != null) tvNews2.setText(n2.getTitle());
+            if (tvNewsMeta2 != null) {
+                String meta = n2.getType() + " • " + formatTime(n2.getCreatedAt());
+                tvNewsMeta2.setText(meta);
+            }
+        } else if (cardNews2 != null) {
+            cardNews2.setVisibility(View.GONE);
+        }
+    }
+
+    private String formatTime(String timestamp) {
+        if (timestamp == null || timestamp.isEmpty()) {
+            return "";
+        }
+        try {
+            // Parse ISO timestamp and return relative time
+            java.time.Instant instant = java.time.Instant.parse(timestamp);
+            java.time.Duration duration = java.time.Duration.between(instant, java.time.Instant.now());
+            long hours = duration.toHours();
+            if (hours < 1) {
+                return "Just now";
+            } else if (hours < 24) {
+                return hours + " hours ago";
+            } else {
+                long days = hours / 24;
+                return days + " days ago";
+            }
+        } catch (Exception e) {
+            return timestamp;
+        }
     }
 
     private void loadDashboardCourses() {

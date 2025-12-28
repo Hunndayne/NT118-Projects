@@ -5,7 +5,7 @@
     android:layout_width="160dp"
     android:layout_height="wrap_content"
     android:layout_marginEnd="8dp"
-    android:backgroundTint="#A7DAE7">
+    android:backgroundTint="@color/blue">
 
     <TextView
         android:id="@+id/tvCourseTitle"

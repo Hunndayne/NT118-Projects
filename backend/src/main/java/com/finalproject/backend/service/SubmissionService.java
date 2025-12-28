@@ -4,6 +4,7 @@ import com.finalproject.backend.dto.request.GradeRequest;
 import com.finalproject.backend.dto.request.SubmissionRequest;
 import com.finalproject.backend.dto.response.SubmissionResponse;
 import com.finalproject.backend.dto.response.SubmissionStatusResponse;
+import com.finalproject.backend.dto.response.SubmissionSummaryResponse;
 import com.finalproject.backend.entity.Assignment;
 import com.finalproject.backend.entity.ClassEntity;
 import com.finalproject.backend.entity.Course;
@@ -305,5 +306,70 @@ public class SubmissionService {
         }
         String trimmed = value.trim();
         return trimmed.isEmpty() ? null : trimmed;
+    }
+
+    @Transactional(readOnly = true)
+    public SubmissionSummaryResponse getSubmissionSummary(String token) {
+        User user = userService.getAuthenticatedUserEntity(token);
+        if (!user.isTeacher() && !user.isAdmin()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Teacher or admin required");
+        }
+
+        // Get submissions based on user role
+        List<Submission> submissions;
+        if (user.isAdmin()) {
+            // Admin can see all submissions
+            submissions = submissionRepository.findAll();
+        } else {
+            // Teacher can only see submissions from their assigned classes
+            submissions = submissionRepository.findByTeacherId(user.getId());
+        }
+        
+        // Count new submissions (SUBMITTED status, no score)
+        long newCount = submissions.stream()
+                .filter(s -> "SUBMITTED".equals(s.getStatus()) && s.getScore() == null)
+                .count();
+        
+        // Count pending review (has score but not finalized)
+        long pendingCount = submissions.stream()
+                .filter(s -> s.getScore() != null && !"GRADED".equals(s.getStatus()))
+                .count();
+
+        // Get latest submission info
+        String latestSubmissionInfo = submissions.stream()
+                .filter(s -> "SUBMITTED".equals(s.getStatus()) && s.getScore() == null)
+                .max((a, b) -> {
+                    if (a.getSubmittedAt() == null) return -1;
+                    if (b.getSubmittedAt() == null) return 1;
+                    return a.getSubmittedAt().compareTo(b.getSubmittedAt());
+                })
+                .map(s -> {
+                    String className = s.getAssignment() != null && s.getAssignment().getClazz() != null 
+                            ? s.getAssignment().getClazz().getName() : "";
+                    String assignmentTitle = s.getAssignment() != null 
+                            ? s.getAssignment().getTitle() : "";
+                    return className + " - " + assignmentTitle;
+                })
+                .orElse("");
+
+        // Get latest pending info
+        String latestPendingInfo = submissions.stream()
+                .filter(s -> s.getScore() != null && !"GRADED".equals(s.getStatus()))
+                .findFirst()
+                .map(s -> {
+                    String className = s.getAssignment() != null && s.getAssignment().getClazz() != null 
+                            ? s.getAssignment().getClazz().getName() : "";
+                    String assignmentTitle = s.getAssignment() != null 
+                            ? s.getAssignment().getTitle() : "";
+                    return className + " - " + assignmentTitle;
+                })
+                .orElse("");
+
+        return SubmissionSummaryResponse.builder()
+                .newSubmissions((int) newCount)
+                .pendingReview((int) pendingCount)
+                .latestSubmissionInfo(latestSubmissionInfo)
+                .latestPendingInfo(latestPendingInfo)
+                .build();
     }
 }
