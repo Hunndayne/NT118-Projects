@@ -9,11 +9,13 @@ import com.finalproject.backend.entity.Assignment;
 import com.finalproject.backend.entity.AssignmentResource;
 import com.finalproject.backend.entity.ClassEntity;
 import com.finalproject.backend.entity.Course;
+import com.finalproject.backend.entity.Notification;
 import com.finalproject.backend.entity.User;
 import com.finalproject.backend.repository.AssignmentRepository;
 import com.finalproject.backend.repository.AssignmentResourceRepository;
 import com.finalproject.backend.repository.ClassRepository;
 import com.finalproject.backend.repository.CourseRepository;
+import com.finalproject.backend.repository.NotificationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -51,6 +53,7 @@ public class AssignmentService {
 	private final AssignmentResourceRepository assignmentResourceRepository;
 	private final ClassRepository classRepository;
 	private final CourseRepository courseRepository;
+	private final NotificationRepository notificationRepository;
 	private final UserService userService;
 
 	@Transactional(readOnly = true)
@@ -110,6 +113,7 @@ public class AssignmentService {
 				.build();
 
 		Assignment saved = assignmentRepository.save(assignment);
+		createAssignmentNotification(saved, creator, clazz);
 		return toResponse(saved);
 	}
 
@@ -242,6 +246,22 @@ public class AssignmentService {
 				.createdAt(resource.getCreatedAt())
 				.updatedAt(resource.getUpdatedAt())
 				.build();
+	}
+
+	private void createAssignmentNotification(Assignment assignment, User creator, ClassEntity clazz) {
+		String notificationTitle = "New assignment: " + assignment.getTitle();
+		if (notificationTitle.length() > 255) {
+			notificationTitle = notificationTitle.substring(0, 252) + "...";
+		}
+		Notification notification = Notification.builder()
+				.type("Announcement")
+				.title(notificationTitle)
+				.content(trimToNull(assignment.getDescription()))
+				.createdBy(creator)
+				.targetClass(clazz)
+				.read(false)
+				.build();
+		notificationRepository.save(notification);
 	}
 
 	private Assignment ensureAssignmentExists(Long assignmentId, Long classId) {
