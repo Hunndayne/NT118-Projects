@@ -8,7 +8,6 @@
     android:background="@color/background_primary"
     tools:context=".teacher.ManageCoursesTeacherActivity">
 
-    <!-- ================= HEADER ================= -->
     <include
         android:id="@+id/headerTeacher"
         layout="@layout/header_admin_teacher"
@@ -21,7 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- ================= CONTENT ================= -->
     <ScrollView
         android:id="@+id/contentScrollView"
         android:layout_width="match_parent"
@@ -34,14 +32,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- ⚠️ ScrollView CHỈ CÓ 1 CHILD -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Back -->
             <TextView
                 android:id="@+id/tvBack"
                 android:layout_width="wrap_content"
@@ -51,7 +47,6 @@
                 android:textColor="@color/text_primary"
                 android:fontFamily="@font/nunito_extra_bold"/>
 
-            <!-- Title -->
             <TextView
                 android:id="@+id/tvScheduleTitle"
                 android:layout_width="wrap_content"
@@ -63,11 +58,10 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="12dp"/>
 
-            <!-- ================= TODAY OVERVIEW ================= -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="24dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
                 app:cardBackgroundColor="@color/background_card">
@@ -101,6 +95,7 @@
                             android:textColor="#757575"/>
 
                         <TextView
+                            android:id="@+id/tvTodayCount"
                             android:text=""
                             tools:text="2 classes scheduled"
                             android:textSize="16sp"
@@ -108,95 +103,6 @@
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
                             android:textColor="@color/text_primary"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- ================= CLASSES LIST ================= -->
-            <!-- (Demo card – sau này thay bằng RecyclerView) -->
-            <TextView
-                android:id="@+id/tvTodayClasses"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Classes on selected day"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary"
-                android:layout_marginBottom="8dp"/>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="@color/background_card">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <!-- ITEM -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <LinearLayout
-                            android:layout_width="60dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:gravity="center">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                tools:text="09:30"
-                                android:textStyle="bold"
-                                android:textSize="16sp"
-                                android:textColor="@color/text_primary"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="AM"
-                                android:textSize="12sp"
-                                android:textColor="#808080"/>
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="4dp"
-                            android:layout_height="40dp"
-                            android:layout_marginHorizontal="12dp"
-                            android:background="@color/accent_color"/>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                tools:text="[TB115] Basic Grammar"
-                                android:textStyle="bold"
-                                android:textSize="15sp"
-                                android:textColor="@color/text_primary"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                tools:text="Online via Zoom • 30 Students"
-                                android:textSize="13sp"
-                                android:textColor="#808080"/>
-                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -218,7 +124,7 @@
                 app:cardBackgroundColor="@color/background_card">
 
                 <include
-                    android:id="@id/calendar"
+                    android:id="@+id/calendar"
                     layout="@layout/calendar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -227,7 +133,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- ================= FOOTER ================= -->
     <include
         android:id="@+id/footerTeacher"
         layout="@layout/footer_teacher"
