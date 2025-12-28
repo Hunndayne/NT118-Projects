@@ -11,7 +11,6 @@ public class NotificationDetailActivity extends BaseUserActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notification_detail);
-        
         setupHeader();
         setupFooter();
 
