@@ -3,12 +3,14 @@ package com.example.enggo.user;
 import com.example.enggo.R;
 import com.example.enggo.api.ApiClient;
 import com.example.enggo.api.ApiService;
-import com.example.enggo.api.FileUploadResponse;
+import com.example.enggo.api.PresignUploadRequest;
+import com.example.enggo.api.PresignUploadResponse;
 import com.example.enggo.teacher.AssignmentResourceResponse;
 import com.example.enggo.teacher.AssignmentResponse;
 
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.documentfile.provider.DocumentFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,7 +36,6 @@ import java.util.List;
 import java.util.Locale;
 
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okio.BufferedSink;
 import retrofit2.Call;
@@ -226,50 +228,88 @@ public class SubmitHomeworkUserActivity extends BaseUserActivity {
     }
 
     private void uploadFileAndSubmit(String token, ApiService apiService, Uri fileUri) {
-        RequestBody requestBody = createRequestBody(fileUri);
+        long contentLength = resolveContentLength(fileUri);
+        if (contentLength <= 0) {
+            Toast.makeText(this, "Cannot determine file size for upload", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        RequestBody requestBody = createRequestBody(fileUri, contentLength);
         if (requestBody == null) {
             Toast.makeText(this, "Cannot read file for upload", Toast.LENGTH_SHORT).show();
             return;
         }
         String fileName = sanitizeFileName(selectedFileName, fileUri);
-        MultipartBody.Part part = MultipartBody.Part.createFormData("file", fileName, requestBody);
-        apiService.uploadFile(token, part).enqueue(new Callback<FileUploadResponse>() {
+        String contentType = resolveContentType(fileUri);
+        PresignUploadRequest presignRequest = new PresignUploadRequest(
+                "SUBMISSION",
+                fileName,
+                contentType,
+                null,
+                null,
+                assignmentId
+        );
+        apiService.presignUpload(token, presignRequest).enqueue(new Callback<PresignUploadResponse>() {
             @Override
-            public void onResponse(Call<FileUploadResponse> call, Response<FileUploadResponse> response) {
-                if (!response.isSuccessful() || response.body() == null || response.body().fileUrl == null) {
+            public void onResponse(Call<PresignUploadResponse> call, Response<PresignUploadResponse> response) {
+                PresignUploadResponse presign = response.body();
+                if (!response.isSuccessful() || presign == null || presign.uploadUrl == null || presign.publicUrl == null) {
                     Toast.makeText(
                             SubmitHomeworkUserActivity.this,
-                            "Upload file failed (" + response.code() + ")",
+                            "Get upload URL failed (" + response.code() + ")",
                             Toast.LENGTH_SHORT
                     ).show();
                     return;
                 }
-                SubmissionRequest request = new SubmissionRequest(null, response.body().fileUrl);
-                apiService.submitAssignment(token, assignmentId, request)
-                        .enqueue(new Callback<SubmissionResponse>() {
+                String uploadContentType = presign.contentType != null ? presign.contentType : contentType;
+                apiService.uploadToPresignedUrl(presign.uploadUrl, uploadContentType, contentLength, requestBody)
+                        .enqueue(new Callback<Void>() {
                             @Override
-                            public void onResponse(Call<SubmissionResponse> call, Response<SubmissionResponse> response) {
-                                if (response.isSuccessful()) {
-                                    selectedFileUri = null;
-                                    selectedFileName = null;
-                                    if (tvSelectedFileName != null) {
-                                        tvSelectedFileName.setText("No file selected");
-                                    }
-                                    bindSubmission(response.body());
-                                } else {
+                            public void onResponse(Call<Void> call, Response<Void> uploadResponse) {
+                                if (!uploadResponse.isSuccessful()) {
                                     Toast.makeText(
                                             SubmitHomeworkUserActivity.this,
-                                            "Save submission failed",
+                                            "Upload file failed (" + uploadResponse.code() + ")",
                                             Toast.LENGTH_SHORT
                                     ).show();
+                                    return;
                                 }
+                                SubmissionRequest request = new SubmissionRequest(null, presign.publicUrl);
+                                apiService.submitAssignment(token, assignmentId, request)
+                                        .enqueue(new Callback<SubmissionResponse>() {
+                                            @Override
+                                            public void onResponse(Call<SubmissionResponse> call, Response<SubmissionResponse> response) {
+                                                if (response.isSuccessful()) {
+                                                    selectedFileUri = null;
+                                                    selectedFileName = null;
+                                                    if (tvSelectedFileName != null) {
+                                                        tvSelectedFileName.setText("No file selected");
+                                                    }
+                                                    bindSubmission(response.body());
+                                                } else {
+                                                    Toast.makeText(
+                                                            SubmitHomeworkUserActivity.this,
+                                                            "Save submission failed",
+                                                            Toast.LENGTH_SHORT
+                                                    ).show();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<SubmissionResponse> call, Throwable t) {
+                                                Toast.makeText(
+                                                        SubmitHomeworkUserActivity.this,
+                                                        "Save submission failed",
+                                                        Toast.LENGTH_SHORT
+                                                ).show();
+                                            }
+                                        });
                             }
 
                             @Override
-                            public void onFailure(Call<SubmissionResponse> call, Throwable t) {
+                            public void onFailure(Call<Void> call, Throwable t) {
                                 Toast.makeText(
                                         SubmitHomeworkUserActivity.this,
-                                        "Save submission failed",
+                                        "Upload file failed",
                                         Toast.LENGTH_SHORT
                                 ).show();
                             }
@@ -277,8 +317,8 @@ public class SubmitHomeworkUserActivity extends BaseUserActivity {
             }
 
             @Override
-            public void onFailure(Call<FileUploadResponse> call, Throwable t) {
-                Toast.makeText(SubmitHomeworkUserActivity.this, "Upload file failed", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<PresignUploadResponse> call, Throwable t) {
+                Toast.makeText(SubmitHomeworkUserActivity.this, "Get upload URL failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -586,8 +626,65 @@ public class SubmitHomeworkUserActivity extends BaseUserActivity {
         return null;
     }
 
-    private RequestBody createRequestBody(Uri uri) {
+    private long resolveContentLength(Uri uri) {
+        long size = -1;
+        if ("content".equals(uri.getScheme())) {
+            try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
+                    if (sizeIndex >= 0) {
+                        size = cursor.getLong(sizeIndex);
+                    }
+                }
+            } catch (Exception ignored) {
+                // best effort
+            }
+        }
+        if (size <= 0) {
+            DocumentFile doc = DocumentFile.fromSingleUri(this, uri);
+            if (doc != null) {
+                long docSize = doc.length();
+                if (docSize > 0) {
+                    size = docSize;
+                }
+            }
+        }
+        if (size <= 0) {
+            try (AssetFileDescriptor afd = getContentResolver().openAssetFileDescriptor(uri, "r")) {
+                if (afd != null) {
+                    long afdSize = afd.getLength();
+                    if (afdSize > 0) {
+                        size = afdSize;
+                    }
+                }
+            } catch (Exception ignored) {
+                // best effort
+            }
+        }
+        return size;
+    }
+
+    private String resolveContentType(Uri uri) {
         String mimeType = getContentResolver().getType(uri);
+        if (mimeType != null) {
+            return mimeType;
+        }
+        String name = getFileName(uri);
+        if (name != null) {
+            int dot = name.lastIndexOf('.');
+            if (dot >= 0 && dot < name.length() - 1) {
+                String extension = name.substring(dot + 1).toLowerCase(Locale.ROOT);
+                String fromExt = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+                if (fromExt != null) {
+                    return fromExt;
+                }
+            }
+        }
+        return "application/octet-stream";
+    }
+
+    private RequestBody createRequestBody(Uri uri, long contentLength) {
+        String mimeType = resolveContentType(uri);
         MediaType mediaType = mimeType != null
                 ? MediaType.parse(mimeType)
                 : MediaType.parse("application/octet-stream");
@@ -595,6 +692,11 @@ public class SubmitHomeworkUserActivity extends BaseUserActivity {
             @Override
             public MediaType contentType() {
                 return mediaType;
+            }
+
+            @Override
+            public long contentLength() {
+                return contentLength;
             }
 
             @Override
