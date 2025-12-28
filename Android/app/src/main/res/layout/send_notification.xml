@@ -140,7 +140,7 @@
                         android:orientation="horizontal"
                         android:gravity="end">
 
-                        <Button
+                        <android.widget.Button
                             android:id="@+id/btnCancelNotification"
                             android:layout_width="wrap_content"
                             android:layout_height="44dp"
@@ -152,7 +152,7 @@
                             android:layout_marginEnd="8dp"
                             android:paddingHorizontal="20dp" />
 
-                        <Button
+                        <android.widget.Button
                             android:id="@+id/btnSendNotification"
                             android:layout_width="wrap_content"
                             android:layout_height="44dp"
