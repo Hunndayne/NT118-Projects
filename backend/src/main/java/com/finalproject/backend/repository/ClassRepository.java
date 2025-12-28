@@ -10,6 +10,7 @@ import java.util.List;
 public interface ClassRepository extends JpaRepository<ClassEntity, Long> {
 	List<ClassEntity> findDistinctByTeachers_Id(Long teacherId);
 	List<ClassEntity> findDistinctByCourse_IdIn(Iterable<Long> courseIds);
+	List<ClassEntity> findAllByCourse_Id(Long courseId);
 	ClassEntity findFirstByCourse_Id(Long courseId);
 	boolean existsByIdAndTeachers_Id(Long classId, Long teacherId);
 	boolean existsByIdAndStudents_Id(Long classId, Long studentId);

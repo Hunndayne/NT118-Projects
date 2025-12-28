@@ -12,4 +12,5 @@ public interface LessonResourceRepository extends JpaRepository<LessonResource, 
 	List<LessonResource> findByLesson_Id(Long lessonId);
 	Optional<LessonResource> findByIdAndLesson_Id(Long id, Long lessonId);
 	void deleteByLesson_Id(Long lessonId);
+	void deleteByLesson_IdIn(Iterable<Long> lessonIds);
 }

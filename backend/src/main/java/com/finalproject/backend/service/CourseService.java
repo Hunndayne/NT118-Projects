@@ -5,10 +5,19 @@ import com.finalproject.backend.dto.response.CourseResponse;
 import com.finalproject.backend.dto.response.CourseParticipantResponse;
 import com.finalproject.backend.dto.request.CourseUpdateRequest;
 import com.finalproject.backend.dto.request.CourseParticipantsRequest;
+import com.finalproject.backend.entity.Assignment;
+import com.finalproject.backend.entity.ClassEntity;
 import com.finalproject.backend.entity.Course;
+import com.finalproject.backend.entity.Lesson;
 import com.finalproject.backend.entity.User;
+import com.finalproject.backend.repository.AssignmentRepository;
+import com.finalproject.backend.repository.AssignmentResourceRepository;
+import com.finalproject.backend.repository.ClassRepository;
 import com.finalproject.backend.repository.CourseRepository;
 import com.finalproject.backend.repository.LessonRepository;
+import com.finalproject.backend.repository.LessonResourceRepository;
+import com.finalproject.backend.repository.NotificationRepository;
+import com.finalproject.backend.repository.SubmissionRepository;
 import com.finalproject.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,6 +37,12 @@ public class CourseService {
 
 	private final CourseRepository courseRepository;
 	private final LessonRepository lessonRepository;
+	private final LessonResourceRepository lessonResourceRepository;
+	private final AssignmentRepository assignmentRepository;
+	private final AssignmentResourceRepository assignmentResourceRepository;
+	private final SubmissionRepository submissionRepository;
+	private final ClassRepository classRepository;
+	private final NotificationRepository notificationRepository;
 	private final UserService userService;
 	private final UserRepository userRepository;
 
@@ -193,9 +208,45 @@ public class CourseService {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
 		}
 
-		Course course = loadCourse(courseId);
+		Course course = loadCourseWithParticipants(courseId);
+		List<ClassEntity> classes = classRepository.findAllByCourse_Id(courseId);
+		if (!classes.isEmpty()) {
+			List<Long> classIds = classes.stream()
+					.map(ClassEntity::getId)
+					.collect(Collectors.toList());
+
+			notificationRepository.deleteByTargetClass_IdIn(classIds);
+
+			List<Assignment> assignments = assignmentRepository.findByClazz_IdIn(classIds);
+			if (!assignments.isEmpty()) {
+				List<Long> assignmentIds = assignments.stream()
+						.map(Assignment::getId)
+						.collect(Collectors.toList());
+				submissionRepository.deleteByAssignment_IdIn(assignmentIds);
+				assignmentResourceRepository.deleteByAssignment_IdIn(assignmentIds);
+			}
+			assignmentRepository.deleteByClazz_IdIn(classIds);
+
+			List<Lesson> lessons = lessonRepository.findByClazz_IdIn(classIds);
+			if (!lessons.isEmpty()) {
+				List<Long> lessonIds = lessons.stream()
+						.map(Lesson::getId)
+						.collect(Collectors.toList());
+				lessonResourceRepository.deleteByLesson_IdIn(lessonIds);
+			}
+			lessonRepository.deleteByClazz_IdIn(classIds);
+
+			for (ClassEntity clazz : classes) {
+				clazz.getStudents().clear();
+				clazz.getTeachers().clear();
+			}
+			classRepository.deleteAll(classes);
+		}
+
+		course.getStudents().clear();
+		course.getTeachers().clear();
 		courseRepository.delete(course);
-	}
+	 }
 
 	@Transactional
 	public CourseResponse addParticipants(String rawToken, Long courseId, CourseParticipantsRequest request) {

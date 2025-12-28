@@ -10,4 +10,5 @@ public interface AssignmentResourceRepository extends JpaRepository<AssignmentRe
     List<AssignmentResource> findByAssignment_Id(Long assignmentId);
     Optional<AssignmentResource> findByIdAndAssignment_Id(Long resourceId, Long assignmentId);
     void deleteByAssignment_Id(Long assignmentId);
+    void deleteByAssignment_IdIn(Iterable<Long> assignmentIds);
 }
