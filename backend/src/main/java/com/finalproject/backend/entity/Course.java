@@ -3,7 +3,10 @@ package com.finalproject.backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.DayOfWeek;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,6 +40,22 @@ public class Course {
 	@Convert(converter = CourseStatusConverter.class)
 	@Builder.Default
 	private Boolean active = Boolean.TRUE;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "schedule_day_of_week", length = 16)
+	private DayOfWeek dayOfWeek;
+
+	@Column(name = "schedule_start_time")
+	private LocalTime startTime;
+
+	@Column(name = "schedule_end_time")
+	private LocalTime endTime;
+
+	@Column(name = "schedule_start_date")
+	private LocalDate startDate;
+
+	@Column(name = "schedule_end_date")
+	private LocalDate endDate;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "created_by")

@@ -1,6 +1,7 @@
 package com.example.enggo.teacher;
 
 import com.example.enggo.R;
+import com.example.enggo.admin.CourseAdmin;
 import com.example.enggo.api.ApiClient;
 import com.example.enggo.api.ApiService;
 import com.example.enggo.common.CalendarSetup;
@@ -13,6 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,6 +94,19 @@ public class ScheduleTeacherActivity extends BaseTeacherActivity {
         int generation = ++loadGeneration;
         events.clear();
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        final int[] pending = {2};
+        loadAssignmentsEvents(apiService, token, generation, () -> finishPending(pending));
+        loadCourseScheduleEvents(apiService, token, generation, () -> finishPending(pending));
+    }
+
+    private void finishPending(int[] pending) {
+        pending[0] -= 1;
+        if (pending[0] <= 0 && calendarSetup != null) {
+            calendarSetup.updateEvents(events);
+        }
+    }
+
+    private void loadAssignmentsEvents(ApiService apiService, String token, int generation, Runnable done) {
         apiService.getClasses(token).enqueue(new Callback<List<ClassResponse>>() {
             @Override
             public void onResponse(Call<List<ClassResponse>> call,
@@ -98,12 +115,12 @@ public class ScheduleTeacherActivity extends BaseTeacherActivity {
                     return;
                 }
                 if (!response.isSuccessful() || response.body() == null) {
-                    calendarSetup.updateEvents(events);
+                    done.run();
                     return;
                 }
                 List<ClassResponse> classes = response.body();
                 if (classes.isEmpty()) {
-                    calendarSetup.updateEvents(events);
+                    done.run();
                     return;
                 }
                 final int[] pending = {classes.size()};
@@ -138,7 +155,7 @@ public class ScheduleTeacherActivity extends BaseTeacherActivity {
                         private void finishPending() {
                             pending[0] -= 1;
                             if (pending[0] <= 0) {
-                                calendarSetup.updateEvents(events);
+                                done.run();
                             }
                         }
                     });
@@ -150,7 +167,38 @@ public class ScheduleTeacherActivity extends BaseTeacherActivity {
                 if (generation != loadGeneration) {
                     return;
                 }
-                calendarSetup.updateEvents(events);
+                done.run();
+            }
+        });
+    }
+
+    private void loadCourseScheduleEvents(ApiService apiService, String token, int generation, Runnable done) {
+        apiService.getAllCourses(token).enqueue(new Callback<List<CourseAdmin>>() {
+            @Override
+            public void onResponse(Call<List<CourseAdmin>> call, Response<List<CourseAdmin>> response) {
+                if (generation != loadGeneration) {
+                    return;
+                }
+                if (!response.isSuccessful() || response.body() == null) {
+                    done.run();
+                    return;
+                }
+                YearMonth current = YearMonth.now();
+                LocalDate rangeStart = current.minusMonths(10).atDay(1);
+                LocalDate rangeEnd = current.plusMonths(10).atEndOfMonth();
+
+                for (CourseAdmin course : response.body()) {
+                    addCourseSchedule(course, rangeStart, rangeEnd);
+                }
+                done.run();
+            }
+
+            @Override
+            public void onFailure(Call<List<CourseAdmin>> call, Throwable t) {
+                if (generation != loadGeneration) {
+                    return;
+                }
+                done.run();
             }
         });
     }
@@ -175,6 +223,32 @@ public class ScheduleTeacherActivity extends BaseTeacherActivity {
         }
     }
 
+    private DayOfWeek parseDayOfWeek(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return null;
+        }
+        try {
+            return DayOfWeek.valueOf(value.trim().toUpperCase());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private LocalTime parseTime(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return null;
+        }
+        String normalized = value.trim();
+        if (normalized.length() > 5) {
+            normalized = normalized.substring(0, 5);
+        }
+        try {
+            return LocalTime.parse(normalized, DateTimeFormatter.ofPattern("HH:mm"));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private void addEvent(LocalDate date, String eventLabel) {
         if (!events.containsKey(date)) {
             events.put(date, new ArrayList<>());
@@ -186,5 +260,35 @@ public class ScheduleTeacherActivity extends BaseTeacherActivity {
         String className = clazz.name != null ? clazz.name : ("Class " + clazz.id);
         String title = assignment.title != null ? assignment.title : "Assignment";
         return "[" + className + "] " + title;
+    }
+
+    private void addCourseSchedule(CourseAdmin course, LocalDate rangeStart, LocalDate rangeEnd) {
+        DayOfWeek dayOfWeek = parseDayOfWeek(course.getDayOfWeek());
+        LocalDate startDate = parseDate(course.getStartDate());
+        LocalDate endDate = parseDate(course.getEndDate());
+        if (dayOfWeek == null || startDate == null || endDate == null) {
+            return;
+        }
+        LocalDate effectiveStart = startDate.isAfter(rangeStart) ? startDate : rangeStart;
+        LocalDate effectiveEnd = endDate.isBefore(rangeEnd) ? endDate : rangeEnd;
+        if (effectiveEnd.isBefore(effectiveStart)) {
+            return;
+        }
+        String label = formatCourseScheduleLabel(course);
+        for (LocalDate date = effectiveStart; !date.isAfter(effectiveEnd); date = date.plusDays(1)) {
+            if (date.getDayOfWeek() == dayOfWeek) {
+                addEvent(date, label);
+            }
+        }
+    }
+
+    private String formatCourseScheduleLabel(CourseAdmin course) {
+        String name = course.getName() != null ? course.getName() : "Course";
+        LocalTime start = parseTime(course.getStartTime());
+        LocalTime end = parseTime(course.getEndTime());
+        if (start != null && end != null) {
+            return "[" + name + "] Teaching " + start + "-" + end;
+        }
+        return "[" + name + "] Teaching";
     }
 }
