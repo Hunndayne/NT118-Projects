@@ -4,6 +4,7 @@ import com.example.enggo.admin.CourseAdmin;
 import com.example.enggo.admin.CourseParticipant;
 import com.example.enggo.admin.CourseParticipantsRequest;
 import com.example.enggo.admin.CreateCourseRequest;
+import com.example.enggo.admin.ReportOverviewResponse;
 import com.example.enggo.admin.UpdateCourseRequest;
 import com.example.enggo.admin.UserAdmin;
 import com.example.enggo.teacher.AssignmentCreateRequest;
@@ -354,5 +355,10 @@ public interface ApiService {
     Call<Void> deleteNotification(
             @Header("X-Auth-Token") String token,
             @Path("id") Long notificationId
+    );
+
+    @GET("reports/overview")
+    Call<com.example.enggo.api.ReportOverviewResponse> getReportOverview(
+            @Header("X-Auth-Token") String token
     );
 }
