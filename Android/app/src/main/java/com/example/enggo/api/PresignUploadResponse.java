@@ -4,6 +4,8 @@ public class PresignUploadResponse {
     public String key;
     public String uploadUrl;
     public String publicUrl;
-    public String contentType;
     public String expiresAt;
+    public String contentType;
+   // public String contentType;
+    //public String expiresAt;
 }

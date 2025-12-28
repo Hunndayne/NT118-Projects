@@ -250,6 +250,7 @@ public class FileService {
 
 	private enum UploadPurpose {
 		AVATAR,
+		ASSIGNMENT_ATTACHMENT,
 		LESSON_RESOURCE,
 		ASSIGNMENT_RESOURCE,
 		SUBMISSION

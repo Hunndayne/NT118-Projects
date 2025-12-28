@@ -39,6 +39,8 @@ import java.util.List;
 import java.util.Locale;
 
 import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
 import okio.BufferedSink;
 import retrofit2.Call;
@@ -63,6 +65,10 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
     private ActivityResultLauncher<String[]> filePickerLauncher;
     private String selectedFileUri;
     private final List<LinkRow> linkRows = new ArrayList<>();
+    private String legacyAttachmentUrl;
+    private boolean legacyLinkAdded;
+    private boolean resourcesLoaded;
+    private final OkHttpClient httpClient = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +151,8 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
                     if (assignment.deadline != null) {
                         etDueTime.setText(formatDateTime(assignment.deadline));
                     }
+                    legacyAttachmentUrl = assignment.attachmentUrl;
+                    maybeAddLegacyLink();
                 }
             }
 
@@ -168,6 +176,8 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
             @Override
             public void onResponse(Call<List<AssignmentResourceResponse>> call, Response<List<AssignmentResourceResponse>> response) {
                 if (!response.isSuccessful() || response.body() == null) {
+                    resourcesLoaded = true;
+                    maybeAddLegacyLink();
                     return;
                 }
                 linkRows.clear();
@@ -181,11 +191,14 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
                         addFileRow(resource);
                     }
                 }
+                resourcesLoaded = true;
+                maybeAddLegacyLink();
             }
 
             @Override
             public void onFailure(Call<List<AssignmentResourceResponse>> call, Throwable t) {
-                // no-op
+                resourcesLoaded = true;
+                maybeAddLegacyLink();
             }
         });
     }
@@ -417,6 +430,39 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
         fileListContainer.addView(rowView);
     }
 
+    private void maybeAddLegacyLink() {
+        if (!resourcesLoaded || legacyLinkAdded) {
+            return;
+        }
+        String legacy = legacyAttachmentUrl == null ? "" : legacyAttachmentUrl.trim();
+        if (legacy.isEmpty()) {
+            legacyLinkAdded = true;
+            return;
+        }
+        if (hasLinkUrl(legacy)) {
+            legacyLinkAdded = true;
+            return;
+        }
+        addLinkRow(null, "Attachment Link", legacy);
+        legacyLinkAdded = true;
+    }
+
+    private boolean hasLinkUrl(String url) {
+        String normalized = url == null ? "" : url.trim();
+        if (normalized.isEmpty()) {
+            return false;
+        }
+        for (LinkRow row : linkRows) {
+            String existing = row.urlInput.getText() == null
+                    ? ""
+                    : row.urlInput.getText().toString().trim();
+            if (!existing.isEmpty() && existing.equalsIgnoreCase(normalized)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void deleteResource(Long resourceId, Runnable onSuccess) {
         String token = getTokenFromDb();
         if (token == null) {
@@ -478,7 +524,7 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
                     Log.e("EditAssignmentTeacher", "Presign failed code=" + response.code() + " body=" + errorBody);
                     Toast.makeText(
                             EditAssignmentTeacherActivity.this,
-                            "Upload file failed (" + response.code() + ")",
+                            "Get upload URL failed (" + response.code() + ")",
                             Toast.LENGTH_SHORT
                     ).show();
                     return;
@@ -497,7 +543,6 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
                                             "Upload file failed (" + uploadResponse.code() + ")",
                                             Toast.LENGTH_SHORT
                                     ).show();
-                                    return;
                                 }
 
                                 AssignmentResourceRequest fileRequest = new AssignmentResourceRequest(
@@ -552,7 +597,7 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
             public void onFailure(Call<PresignUploadResponse> call, Throwable t) {
                 Toast.makeText(
                         EditAssignmentTeacherActivity.this,
-                        "Upload file failed",
+                        "Get upload URL failed",
                         Toast.LENGTH_SHORT
                 ).show();
             }
@@ -818,6 +863,10 @@ public class EditAssignmentTeacherActivity extends BaseTeacherActivity {
             return link.substring(lastSlash + 1);
         }
         return link;
+    }
+
+    private interface UploadCallback {
+        void onComplete(boolean success);
     }
 
     private static class LinkRow {

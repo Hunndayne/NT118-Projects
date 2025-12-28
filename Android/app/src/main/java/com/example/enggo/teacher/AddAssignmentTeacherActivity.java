@@ -37,6 +37,8 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
 import okio.BufferedSink;
 import retrofit2.Call;
@@ -86,7 +88,7 @@ public class AddAssignmentTeacherActivity extends BaseTeacherActivity {
 
     private void setupListeners() {
         if (btnAddAttachment != null) {
-            btnAddAttachment.setOnClickListener(v -> filePickerLauncher.launch("*/*"));
+            btnAddAttachment.setOnClickListener(v -> filePickerLauncher.launch(new String[]{"*/*"}));
         }
 
         if (btnCancel != null) {
@@ -108,7 +110,7 @@ public class AddAssignmentTeacherActivity extends BaseTeacherActivity {
 
     private void setupFilePicker() {
         filePickerLauncher = registerForActivityResult(
-                new ActivityResultContracts.GetContent(),
+                new ActivityResultContracts.OpenDocument(),
                 this::handleFilePicked
         );
     }
@@ -134,6 +136,9 @@ public class AddAssignmentTeacherActivity extends BaseTeacherActivity {
     }
 
     private void createAssignment() {
+        if (isSaving) {
+            return;
+        }
         if (courseId == null || courseId == -1) {
             Toast.makeText(this, "Missing course id", Toast.LENGTH_SHORT).show();
             return;
@@ -151,6 +156,11 @@ public class AddAssignmentTeacherActivity extends BaseTeacherActivity {
         }
 
         String token = getTokenFromDb();
+        if (token == null) {
+            Toast.makeText(this, "Missing token", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        setSaving(true);
         Log.d("AddAssignment", "Creating assignment for courseId: " + courseId + ", title: " + title + ", dueTime: " + dueTime);
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         AssignmentCreateRequest request = new AssignmentCreateRequest(
@@ -190,6 +200,7 @@ public class AddAssignmentTeacherActivity extends BaseTeacherActivity {
                                     "Create assignment failed: " + response.code(),
                                     Toast.LENGTH_SHORT
                             ).show();
+                            setSaving(false);
                         }
                     }
 
@@ -201,6 +212,7 @@ public class AddAssignmentTeacherActivity extends BaseTeacherActivity {
                                 "Cannot connect to server: " + t.getMessage(),
                                 Toast.LENGTH_SHORT
                         ).show();
+                        setSaving(false);
                     }
                 });
     }
