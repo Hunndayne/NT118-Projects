@@ -70,15 +70,15 @@ public class HomeTeacherActivity extends BaseTeacherActivity {
         tvPendingReviewCount = findViewById(R.id.tvPendingReviewCount);
         tvPendingReviewInfo = findViewById(R.id.tvPendingReviewInfo);
         
-        cardGradingNew.setOnClickListener(v -> {
-            Intent intent = new Intent(this, SubmissionListActivity.class);
-            startActivity(intent);
-        });
-        
-        cardGradingPending.setOnClickListener(v -> {
-            Intent intent = new Intent(this, SubmissionListActivity.class);
-            startActivity(intent);
-        });
+//        cardGradingNew.setOnClickListener(v -> {
+//            Intent intent = new Intent(this, SubmissionListActivity.class);
+//            startActivity(intent);
+//        });
+//
+//        cardGradingPending.setOnClickListener(v -> {
+//            Intent intent = new Intent(this, SubmissionListActivity.class);
+//            startActivity(intent);
+//        });
         
         loadGradingSummary();
     }
