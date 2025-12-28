@@ -1,7 +1,14 @@
 package com.finalproject.backend.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class CourseCreationRequest {
 
@@ -19,6 +26,25 @@ public class CourseCreationRequest {
 	private String description;
 
 	private Boolean active;
+
+	@NotNull(message = "dayOfWeek must not be null")
+	private DayOfWeek dayOfWeek;
+
+	@NotNull(message = "startTime must not be null")
+	@JsonFormat(pattern = "HH:mm")
+	private LocalTime startTime;
+
+	@NotNull(message = "endTime must not be null")
+	@JsonFormat(pattern = "HH:mm")
+	private LocalTime endTime;
+
+	@NotNull(message = "startDate must not be null")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate startDate;
+
+	@NotNull(message = "endDate must not be null")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate endDate;
 
 	public String getCode() {
 		return code;
@@ -38,5 +64,25 @@ public class CourseCreationRequest {
 
 	public Boolean getActive() {
 		return active;
+	}
+
+	public DayOfWeek getDayOfWeek() {
+		return dayOfWeek;
+	}
+
+	public LocalTime getStartTime() {
+		return startTime;
+	}
+
+	public LocalTime getEndTime() {
+		return endTime;
+	}
+
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public LocalDate getEndDate() {
+		return endDate;
 	}
 }

@@ -1,6 +1,9 @@
 package com.finalproject.backend.dto.response;
 
+import java.time.DayOfWeek;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class CourseResponse {
 
@@ -13,6 +16,11 @@ public class CourseResponse {
 	private final Long createdBy;
 	private final Instant createdAt;
 	private final int lessonCount;
+	private final DayOfWeek dayOfWeek;
+	private final LocalTime startTime;
+	private final LocalTime endTime;
+	private final LocalDate startDate;
+	private final LocalDate endDate;
 
 	public CourseResponse(Long id,
 	                      String code,
@@ -22,7 +30,12 @@ public class CourseResponse {
 	                      Boolean active,
 	                      Long createdBy,
 	                      Instant createdAt,
-	                      int lessonCount) {
+	                      int lessonCount,
+	                      DayOfWeek dayOfWeek,
+	                      LocalTime startTime,
+	                      LocalTime endTime,
+	                      LocalDate startDate,
+	                      LocalDate endDate) {
 		this.id = id;
 		this.code = code;
 		this.name = name;
@@ -32,6 +45,11 @@ public class CourseResponse {
 		this.createdBy = createdBy;
 		this.createdAt = createdAt;
 		this.lessonCount = lessonCount;
+		this.dayOfWeek = dayOfWeek;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 
 	public Long getId() {
@@ -68,5 +86,25 @@ public class CourseResponse {
 
 	public int getLessonCount() {
 		return lessonCount;
+	}
+
+	public DayOfWeek getDayOfWeek() {
+		return dayOfWeek;
+	}
+
+	public LocalTime getStartTime() {
+		return startTime;
+	}
+
+	public LocalTime getEndTime() {
+		return endTime;
+	}
+
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public LocalDate getEndDate() {
+		return endDate;
 	}
 }

@@ -1,6 +1,12 @@
 package com.finalproject.backend.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.validation.constraints.Size;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class CourseUpdateRequest {
 
@@ -16,6 +22,20 @@ public class CourseUpdateRequest {
 	private String description;
 
 	private Boolean active;
+
+	private DayOfWeek dayOfWeek;
+
+	@JsonFormat(pattern = "HH:mm")
+	private LocalTime startTime;
+
+	@JsonFormat(pattern = "HH:mm")
+	private LocalTime endTime;
+
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate startDate;
+
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate endDate;
 
 	public String getCode() {
 		return code;
@@ -35,5 +55,25 @@ public class CourseUpdateRequest {
 
 	public Boolean getActive() {
 		return active;
+	}
+
+	public DayOfWeek getDayOfWeek() {
+		return dayOfWeek;
+	}
+
+	public LocalTime getStartTime() {
+		return startTime;
+	}
+
+	public LocalTime getEndTime() {
+		return endTime;
+	}
+
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public LocalDate getEndDate() {
+		return endDate;
 	}
 }

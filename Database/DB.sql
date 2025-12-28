@@ -28,6 +28,11 @@ create table courses (
     level       varchar(64),
     description text,
     status      varchar(32),
+    schedule_day_of_week varchar(16),
+    schedule_start_time  time,
+    schedule_end_time    time,
+    schedule_start_date  date,
+    schedule_end_date    date,
     created_by  bigint references users(user_id),
     created_at  timestamptz
 );

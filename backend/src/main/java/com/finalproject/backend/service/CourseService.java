@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -44,6 +46,11 @@ public class CourseService {
 			active = Boolean.TRUE;
 		}
 		String description = trimToNull(request.getDescription());
+		LocalDate startDate = request.getStartDate();
+		LocalDate endDate = request.getEndDate();
+		LocalTime startTime = request.getStartTime();
+		LocalTime endTime = request.getEndTime();
+		validateSchedule(startDate, endDate, startTime, endTime);
 
 		if (courseRepository.existsByCodeIgnoreCase(code)) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "Course code already exists");
@@ -55,6 +62,11 @@ public class CourseService {
 				.level(level)
 				.active(active)
 				.description(description)
+				.dayOfWeek(request.getDayOfWeek())
+				.startTime(startTime)
+				.endTime(endTime)
+				.startDate(startDate)
+				.endDate(endDate)
 				.createdBy(creator)
 				.build();
 
@@ -151,6 +163,24 @@ public class CourseService {
 		if (request.getActive() != null) {
 			course.setActive(request.getActive());
 		}
+
+		if (request.getDayOfWeek() != null) {
+			course.setDayOfWeek(request.getDayOfWeek());
+		}
+		if (request.getStartTime() != null) {
+			course.setStartTime(request.getStartTime());
+		}
+		if (request.getEndTime() != null) {
+			course.setEndTime(request.getEndTime());
+		}
+		if (request.getStartDate() != null) {
+			course.setStartDate(request.getStartDate());
+		}
+		if (request.getEndDate() != null) {
+			course.setEndDate(request.getEndDate());
+		}
+		validateSchedule(course.getStartDate(), course.getEndDate(),
+				course.getStartTime(), course.getEndTime());
 
 		Course saved = courseRepository.save(course);
 		return toResponse(saved);
@@ -253,7 +283,12 @@ public class CourseService {
 				course.getActive(),
 				creatorId,
 				course.getCreatedAt(),
-				lessonCount
+				lessonCount,
+				course.getDayOfWeek(),
+				course.getStartTime(),
+				course.getEndTime(),
+				course.getStartDate(),
+				course.getEndDate()
 		);
 	}
 
@@ -270,6 +305,15 @@ public class CourseService {
 	private Course loadCourse(Long courseId) {
 		return courseRepository.findById(courseId)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found"));
+	}
+
+	private void validateSchedule(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime) {
+		if (startDate != null && endDate != null && endDate.isBefore(startDate)) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "endDate must be after startDate");
+		}
+		if (startTime != null && endTime != null && !endTime.isAfter(startTime)) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "endTime must be after startTime");
+		}
 	}
 
 	private Course loadCourseWithStudents(Long courseId) {
