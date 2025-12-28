@@ -7,11 +7,18 @@ import com.example.enggo.api.UserUpdateRequest;
 import com.example.enggo.common.ChangeAvatarActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,6 +27,7 @@ import retrofit2.Response;
 public class EditProfileAdminActivity extends BaseAdminActivity {
     private TextView tvBack;
     private TextView tvUserName;
+    private ImageView imAvatar;
     private EditText etFirstName;
     private EditText etLastName;
     private EditText etEmail;
@@ -49,6 +57,7 @@ public class EditProfileAdminActivity extends BaseAdminActivity {
 
     private void initViews() {
         tvUserName = findViewById(R.id.tvUserName);
+        imAvatar = findViewById(R.id.imAvatar);
         etFirstName = findViewById(R.id.etFirstName);
         etLastName = findViewById(R.id.etLastName);
         etEmail = findViewById(R.id.etEmail);
@@ -98,6 +107,7 @@ public class EditProfileAdminActivity extends BaseAdminActivity {
                 setText(etDescription, user.getDescription());
                 setText(etInterests, user.getInterest());
                 setText(etPhoneNumber, user.getPhoneNumber());
+                loadAvatar(user.getAvatarUrl());
             }
 
             @Override
@@ -174,5 +184,35 @@ public class EditProfileAdminActivity extends BaseAdminActivity {
         }
         String value = input.getText() == null ? "" : input.getText().toString().trim();
         return value.isEmpty() ? null : value;
+    }
+
+    private void loadAvatar(String avatarUrl) {
+        if (avatarUrl == null || avatarUrl.trim().isEmpty() || imAvatar == null) {
+            return;
+        }
+        new Thread(() -> {
+            HttpURLConnection connection = null;
+            try {
+                URL imageUrl = new URL(avatarUrl);
+                connection = (HttpURLConnection) imageUrl.openConnection();
+                connection.setConnectTimeout(5000);
+                connection.setReadTimeout(5000);
+                connection.connect();
+                try (InputStream inputStream = connection.getInputStream()) {
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    runOnUiThread(() -> {
+                        imAvatar.setImageTintList(null);
+                        imAvatar.clearColorFilter();
+                        imAvatar.setImageBitmap(bitmap);
+                    });
+                }
+            } catch (Exception ignored) {
+                // no-op
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            }
+        }).start();
     }
 }

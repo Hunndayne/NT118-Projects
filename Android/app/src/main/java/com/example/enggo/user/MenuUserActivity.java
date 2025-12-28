@@ -66,6 +66,7 @@ public class MenuUserActivity extends BaseUserActivity {
             Intent intent = new Intent(MenuUserActivity.this, ChangeAvatarActivity.class);
             startActivity(intent);
         });
+        loadAvatarInto(imAvatar);
         LinearLayout userInfoLayout = findViewById(R.id.userInfoLayout);
         userInfoLayout.setOnClickListener(v -> {
             Intent intent = new Intent(MenuUserActivity.this, ProfileUserActivity.class);
