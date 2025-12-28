@@ -48,6 +48,8 @@ public class AssignmentService {
 			DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
 	};
 	private static final ZoneId DEFAULT_ZONE = ZoneId.of("Asia/Ho_Chi_Minh");
+	private static final DateTimeFormatter DISPLAY_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	private static final DateTimeFormatter DISPLAY_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
 	private final AssignmentRepository assignmentRepository;
 	private final AssignmentResourceRepository assignmentResourceRepository;
@@ -113,7 +115,7 @@ public class AssignmentService {
 				.build();
 
 		Assignment saved = assignmentRepository.save(assignment);
-		createAssignmentNotification(saved, creator, clazz);
+		createAssignmentNotification(saved, creator, clazz, startTime);
 		return toResponse(saved);
 	}
 
@@ -248,13 +250,26 @@ public class AssignmentService {
 				.build();
 	}
 
-	private void createAssignmentNotification(Assignment assignment, User creator, ClassEntity clazz) {
-		String notificationTitle = "New assignment: " + assignment.getTitle();
+	private void createAssignmentNotification(Assignment assignment, User creator, ClassEntity clazz, OffsetDateTime startTime) {
+		String courseLabel = buildCourseLabel(clazz);
+		String notificationTitle = courseLabel + ": " + assignment.getTitle();
 		if (notificationTitle.length() > 255) {
 			notificationTitle = notificationTitle.substring(0, 252) + "...";
 		}
 		String content = trimToNull(assignment.getDescription());
-		if (content == null) {
+		String deadlineLine = formatDeadlineLine(startTime, assignment.getDeadline());
+		StringBuilder contentBuilder = new StringBuilder();
+		if (deadlineLine != null) {
+			contentBuilder.append(deadlineLine);
+		}
+		if (content != null) {
+			if (contentBuilder.length() > 0) {
+				contentBuilder.append("\n\n");
+			}
+			contentBuilder.append(content);
+		}
+		content = contentBuilder.toString();
+		if (content.isEmpty()) {
 			content = "";
 		}
 		Notification notification = Notification.builder()
@@ -266,6 +281,45 @@ public class AssignmentService {
 				.read(false)
 				.build();
 		notificationRepository.save(notification);
+	}
+
+	private String buildCourseLabel(ClassEntity clazz) {
+		Course course = clazz != null ? clazz.getCourse() : null;
+		String code = course != null ? trimToNull(course.getCode()) : null;
+		String name = course != null ? trimToNull(course.getName()) : null;
+		if (code != null && name != null) {
+			return code + " - " + name;
+		}
+		if (code != null) {
+			return code;
+		}
+		if (name != null) {
+			return name;
+		}
+		return "Course";
+	}
+
+	private String formatDeadlineLine(OffsetDateTime startTime, OffsetDateTime deadline) {
+		String startFormatted = formatDateForNotification(startTime);
+		String deadlineFormatted = formatDateForNotification(deadline);
+		if (startFormatted == null && deadlineFormatted == null) {
+			return null;
+		}
+		if (startFormatted != null && deadlineFormatted != null) {
+			return startFormatted + " - " + deadlineFormatted;
+		}
+		return startFormatted != null ? startFormatted : deadlineFormatted;
+	}
+
+	private String formatDateForNotification(OffsetDateTime value) {
+		if (value == null) {
+			return null;
+		}
+		OffsetDateTime localized = value.atZoneSameInstant(DEFAULT_ZONE).toOffsetDateTime();
+		boolean hasTime = !localized.toLocalTime().equals(java.time.LocalTime.MIDNIGHT);
+		return hasTime
+				? localized.format(DISPLAY_DATE_TIME_FORMATTER)
+				: localized.format(DISPLAY_DATE_FORMATTER);
 	}
 
 	private Assignment ensureAssignmentExists(Long assignmentId, Long classId) {
