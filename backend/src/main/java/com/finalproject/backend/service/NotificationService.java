@@ -60,6 +60,9 @@ public class NotificationService {
 		String type = normalizeType(request.getType());
 		String title = trimRequired(request.getTitle(), "title");
 		String content = trimToNull(request.getContent());
+		if (content == null) {
+			content = "";
+		}
 
 		User targetUser = null;
 		if (request.getTargetUserId() != null) {

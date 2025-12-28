@@ -253,10 +253,14 @@ public class AssignmentService {
 		if (notificationTitle.length() > 255) {
 			notificationTitle = notificationTitle.substring(0, 252) + "...";
 		}
+		String content = trimToNull(assignment.getDescription());
+		if (content == null) {
+			content = "";
+		}
 		Notification notification = Notification.builder()
 				.type("Announcement")
 				.title(notificationTitle)
-				.content(trimToNull(assignment.getDescription()))
+				.content(content)
 				.createdBy(creator)
 				.targetClass(clazz)
 				.read(false)
