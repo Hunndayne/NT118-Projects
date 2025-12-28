@@ -30,4 +30,15 @@
     <color name="notification_warning">#F44336</color>
     <color name="notification_announcement">#2196F3</color>
     <color name="notification_unread_bg">#E3F2FD</color>
+
+    <!-- Status colors -->
+    <color name="success_background">#E8F5E9</color>
+    <color name="success_text">#2E7D32</color>
+    <color name="warning_background">#FFF3E0</color>
+    <color name="warning_text">#EF6C00</color>
+    <color name="accent_color">#FFA726</color>
+
+    <!-- Button colors -->
+    <color name="button_secondary_bg">#E0E0E0</color>
+    <color name="button_secondary_text">#424242</color>
 </resources>

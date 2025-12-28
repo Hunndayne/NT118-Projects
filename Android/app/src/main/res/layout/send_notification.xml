@@ -145,9 +145,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="44dp"
                             android:text="Cancel"
-                            android:textColor="@color/text_primary"
+                            android:textColor="@color/button_secondary_text"
                             android:background="@drawable/button"
-                            android:backgroundTint="@color/enggo_grey_300"
+                            android:backgroundTint="@color/button_secondary_bg"
                             android:textAllCaps="false"
                             android:layout_marginEnd="8dp"
                             android:paddingHorizontal="20dp" />

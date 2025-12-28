@@ -9,4 +9,18 @@
     <color name="divider_color">#3C3C3C</color>
     <color name="icon_tint">#E0E0E0</color>
     <color name="card_stroke">#404040</color>
+
+    <!-- Status colors for dark mode -->
+    <color name="success_background">#1B5E20</color>
+    <color name="success_text">#81C784</color>
+    <color name="warning_background">#E65100</color>
+    <color name="warning_text">#FFB74D</color>
+    <color name="accent_color">#FF9800</color>
+
+    <!-- Button colors for dark mode -->
+    <color name="button_secondary_bg">#424242</color>
+    <color name="button_secondary_text">#FFFFFF</color>
+
+    <!-- Notification colors for dark mode -->
+    <color name="notification_unread_bg">#1A3A4A</color>
 </resources>

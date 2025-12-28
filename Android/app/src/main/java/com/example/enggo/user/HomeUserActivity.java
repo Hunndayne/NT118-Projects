@@ -4,6 +4,7 @@ import com.example.enggo.admin.CourseAdmin;
 import com.example.enggo.api.ApiClient;
 import com.example.enggo.api.ApiService;
 import com.example.enggo.common.ImageSliderAdapter;
+import com.example.enggo.model.Notification;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,6 +43,10 @@ public class HomeUserActivity extends BaseUserActivity {
     private RecyclerView recyclerCourses;
     private CourseHomeAdapter courseAdapter;
     private List<CourseAdmin> courses;
+
+    // Notification TextViews
+    private TextView tvFolder, tvTitle1, tvFile1, tvFileTitle1, tvFile2, tvFileTitle2;
+    private View divider1, divider2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +99,21 @@ public class HomeUserActivity extends BaseUserActivity {
         layoutNotificationList.setVisibility(View.VISIBLE);
         imgArrowNotification.setRotation(180f);
 
+        // Initialize notification TextViews
+        tvFolder = findViewById(R.id.tvFolder);
+        tvTitle1 = findViewById(R.id.tvTitle1);
+        tvFile1 = findViewById(R.id.tvFile1);
+        tvFileTitle1 = findViewById(R.id.tvFileTitle1);
+        tvFile2 = findViewById(R.id.tvFile2);
+        tvFileTitle2 = findViewById(R.id.tvFileTitle2);
+        divider1 = findViewById(R.id.divider1);
+        divider2 = findViewById(R.id.divider2);
+
         viewPager.setBackgroundResource(R.drawable.round_frame_background);
         viewPager.setClipToOutline(true);
 
         loadCourses();
+        loadNotifications();
     }
 
     private void toggleSection(View content, ImageView arrow) {
@@ -171,5 +188,70 @@ public class HomeUserActivity extends BaseUserActivity {
                 ).show();
             }
         });
+    }
+
+    private void loadNotifications() {
+        String token = getTokenFromDb();
+        if (token == null) {
+            return;
+        }
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.getNotifications(token).enqueue(new Callback<List<Notification>>() {
+            @Override
+            public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Notification> notifications = response.body();
+                    updateNotificationViews(notifications);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Notification>> call, Throwable t) {
+                // Silent fail for home notifications
+            }
+        });
+    }
+
+    private void updateNotificationViews(List<Notification> notifications) {
+        // Hide all notification items first
+        tvFolder.setVisibility(View.GONE);
+        tvTitle1.setVisibility(View.GONE);
+        divider1.setVisibility(View.GONE);
+        tvFile1.setVisibility(View.GONE);
+        tvFileTitle1.setVisibility(View.GONE);
+        divider2.setVisibility(View.GONE);
+        tvFile2.setVisibility(View.GONE);
+        tvFileTitle2.setVisibility(View.GONE);
+
+        if (notifications.isEmpty()) {
+            return;
+        }
+
+        // Show up to 3 notifications
+        if (notifications.size() >= 1) {
+            Notification n1 = notifications.get(0);
+            tvFolder.setText(n1.getType());
+            tvTitle1.setText(n1.getTitle());
+            tvFolder.setVisibility(View.VISIBLE);
+            tvTitle1.setVisibility(View.VISIBLE);
+        }
+
+        if (notifications.size() >= 2) {
+            Notification n2 = notifications.get(1);
+            tvFile1.setText(n2.getType());
+            tvFileTitle1.setText(n2.getTitle());
+            divider1.setVisibility(View.VISIBLE);
+            tvFile1.setVisibility(View.VISIBLE);
+            tvFileTitle1.setVisibility(View.VISIBLE);
+        }
+
+        if (notifications.size() >= 3) {
+            Notification n3 = notifications.get(2);
+            tvFile2.setText(n3.getType());
+            tvFileTitle2.setText(n3.getTitle());
+            divider2.setVisibility(View.VISIBLE);
+            tvFile2.setVisibility(View.VISIBLE);
+            tvFileTitle2.setVisibility(View.VISIBLE);
+        }
     }
 }

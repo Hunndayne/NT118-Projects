@@ -4,6 +4,7 @@ import com.finalproject.backend.dto.request.GradeRequest;
 import com.finalproject.backend.dto.request.SubmissionRequest;
 import com.finalproject.backend.dto.response.SubmissionResponse;
 import com.finalproject.backend.dto.response.SubmissionStatusResponse;
+import com.finalproject.backend.dto.response.SubmissionSummaryResponse;
 import com.finalproject.backend.service.SubmissionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -63,5 +64,10 @@ public class SubmissionController {
                                     @PathVariable("submissionId") Long submissionId,
                                     @Valid @RequestBody GradeRequest request) {
         return submissionService.gradeSubmission(token, assignmentId, submissionId, request);
+    }
+
+    @GetMapping("/submissions/summary")
+    public SubmissionSummaryResponse getSubmissionSummary(@RequestHeader("X-Auth-Token") String token) {
+        return submissionService.getSubmissionSummary(token);
     }
 }

@@ -126,6 +126,7 @@
                         android:padding="12dp">
 
                         <TextView
+                            android:id="@+id/tvNewSubmissionCount"
                             android:text=""
                             tools:text="12"
                             android:textSize="24sp"
@@ -141,11 +142,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
+                            android:id="@+id/tvNewSubmissionInfo"
                             android:text=""
                             tools:text="TA143GD - HW 1.1"
                             android:textSize="11sp"
                             android:textStyle="bold"
-                            android:textColor="#424242"
+                            android:textColor="@color/text_secondary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
@@ -182,16 +184,17 @@
                         <TextView
                             android:text="Pending Review"
                             android:textSize="12sp"
-                            android:textColor="#757575"
+                            android:textColor="@color/text_secondary"
                             android:layout_marginBottom="4dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
+                            android:id="@+id/tvPendingReviewInfo"
                             android:text=""
                             tools:text="TB115 - Quiz 2"
                             android:textSize="11sp"
                             android:textStyle="bold"
-                            android:textColor="#424242"
+                            android:textColor="@color/text_secondary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>

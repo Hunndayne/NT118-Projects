@@ -85,7 +85,7 @@ public class CalendarSetup {
                     container.dayText.setVisibility(View.VISIBLE);
                     LocalDate date = day.getDate();
                     if (events.containsKey(date)) {
-                        container.dayText.setTextColor(ContextCompat.getColor(context, R.color.black));
+                        container.dayText.setTextColor(ContextCompat.getColor(context, R.color.text_primary));
                         container.dayText.setTypeface(null, Typeface.BOLD);
                         container.dotView.setVisibility(View.VISIBLE);
                     } else {
@@ -96,7 +96,7 @@ public class CalendarSetup {
                         if (dayOfWeek == DayOfWeek.TUESDAY || dayOfWeek == DayOfWeek.THURSDAY || dayOfWeek == DayOfWeek.SATURDAY) {
                             container.dayText.setTextColor(ContextCompat.getColor(context, R.color.blueslogan));
                         } else {
-                            container.dayText.setTextColor(ContextCompat.getColor(context, R.color.black));
+                            container.dayText.setTextColor(ContextCompat.getColor(context, R.color.text_primary));
                         }
                     }
                 } else {

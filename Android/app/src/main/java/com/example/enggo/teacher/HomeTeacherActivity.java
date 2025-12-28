@@ -8,6 +8,7 @@ import com.example.enggo.api.ApiService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
@@ -27,6 +28,10 @@ public class HomeTeacherActivity extends BaseTeacherActivity {
     private RecyclerView recyclerView;
     private CourseTeacherAdapter adapter;
     private List<CourseTeacher> courses;
+    
+    // Grading TextViews
+    private TextView tvNewSubmissionCount, tvNewSubmissionInfo;
+    private TextView tvPendingReviewCount, tvPendingReviewInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,7 @@ public class HomeTeacherActivity extends BaseTeacherActivity {
     protected void onResume() {
         super.onResume();
         loadTeacherCourses();
+        loadGradingSummary();
     }
 
     private void setupScheduleItems() {
@@ -58,6 +64,12 @@ public class HomeTeacherActivity extends BaseTeacherActivity {
         MaterialCardView cardGradingNew = findViewById(R.id.cardGradingNew_teacher);
         MaterialCardView cardGradingPending = findViewById(R.id.cardGradingPending_teacher);
         
+        // Initialize TextViews
+        tvNewSubmissionCount = findViewById(R.id.tvNewSubmissionCount);
+        tvNewSubmissionInfo = findViewById(R.id.tvNewSubmissionInfo);
+        tvPendingReviewCount = findViewById(R.id.tvPendingReviewCount);
+        tvPendingReviewInfo = findViewById(R.id.tvPendingReviewInfo);
+        
         cardGradingNew.setOnClickListener(v -> {
             Intent intent = new Intent(this, SubmissionListActivity.class);
             startActivity(intent);
@@ -66,6 +78,43 @@ public class HomeTeacherActivity extends BaseTeacherActivity {
         cardGradingPending.setOnClickListener(v -> {
             Intent intent = new Intent(this, SubmissionListActivity.class);
             startActivity(intent);
+        });
+        
+        loadGradingSummary();
+    }
+
+    private void loadGradingSummary() {
+        String token = getTokenFromDb();
+        if (token == null) {
+            return;
+        }
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.getSubmissionSummary(token).enqueue(new Callback<SubmissionSummaryResponse>() {
+            @Override
+            public void onResponse(Call<SubmissionSummaryResponse> call, Response<SubmissionSummaryResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    SubmissionSummaryResponse summary = response.body();
+                    tvNewSubmissionCount.setText(String.valueOf(summary.newSubmissions));
+                    tvPendingReviewCount.setText(String.valueOf(summary.pendingReview));
+                    
+                    if (summary.latestSubmissionInfo != null && !summary.latestSubmissionInfo.isEmpty()) {
+                        tvNewSubmissionInfo.setText(summary.latestSubmissionInfo);
+                    } else {
+                        tvNewSubmissionInfo.setText("No new submissions");
+                    }
+                    
+                    if (summary.latestPendingInfo != null && !summary.latestPendingInfo.isEmpty()) {
+                        tvPendingReviewInfo.setText(summary.latestPendingInfo);
+                    } else {
+                        tvPendingReviewInfo.setText("No pending reviews");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SubmissionSummaryResponse> call, Throwable t) {
+                // Silent fail
+            }
         });
     }
 
