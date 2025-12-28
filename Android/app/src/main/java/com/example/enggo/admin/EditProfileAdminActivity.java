@@ -8,6 +8,7 @@ import com.example.enggo.common.ChangeAvatarActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import retrofit2.Response;
 public class EditProfileAdminActivity extends BaseAdminActivity {
     private TextView tvBack;
     private TextView tvUserName;
+    private ImageView imAvatar;
     private EditText etFirstName;
     private EditText etLastName;
     private EditText etEmail;
@@ -49,6 +51,7 @@ public class EditProfileAdminActivity extends BaseAdminActivity {
 
     private void initViews() {
         tvUserName = findViewById(R.id.tvUserName);
+        imAvatar = findViewById(R.id.imAvatar);
         etFirstName = findViewById(R.id.etFirstName);
         etLastName = findViewById(R.id.etLastName);
         etEmail = findViewById(R.id.etEmail);
@@ -98,6 +101,12 @@ public class EditProfileAdminActivity extends BaseAdminActivity {
                 setText(etDescription, user.getDescription());
                 setText(etInterests, user.getInterest());
                 setText(etPhoneNumber, user.getPhoneNumber());
+                if (imAvatar != null) {
+                    String avatarUrl = user.getAvatarUrl();
+                    if (avatarUrl != null && !avatarUrl.trim().isEmpty()) {
+                        loadImageFromUrl(avatarUrl, imAvatar);
+                    }
+                }
             }
 
             @Override

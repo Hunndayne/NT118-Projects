@@ -172,7 +172,7 @@ public abstract class BaseUserActivity extends AppCompatActivity {
         });
     }
 
-    private void loadImageFromUrl(String url, ImageView imageView) {
+    protected void loadImageFromUrl(String url, ImageView imageView) {
         if (url == null || url.trim().isEmpty() || imageView == null) {
             return;
         }
