@@ -12,6 +12,8 @@ import com.finalproject.backend.entity.User;
 import com.finalproject.backend.entity.UserProfile;
 import com.finalproject.backend.entity.UserRole;
 import com.finalproject.backend.repository.AuthTokenRepository;
+import com.finalproject.backend.repository.DeviceTokenRepository;
+import com.finalproject.backend.repository.PasswordResetTokenRepository;
 import com.finalproject.backend.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -45,6 +47,8 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final AuthTokenRepository authTokenRepository;
+	private final PasswordResetTokenRepository passwordResetTokenRepository;
+	private final DeviceTokenRepository deviceTokenRepository;
 	private final PasswordEncoder passwordEncoder;
 
 	@PersistenceContext
@@ -140,7 +144,7 @@ public class UserService {
     }
 
     public User loadUserEntity(Long userId) {
-        User user = userRepository.findById(userId)
+        User user = userRepository.findByIdAndDeletedAtIsNull(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
         effectiveRole(user);
         return user;
@@ -230,7 +234,7 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
         }
 
-        return userRepository.findAll()
+        return userRepository.findAllNotDeleted()
                 .stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
@@ -240,7 +244,7 @@ public class UserService {
      * ✅ ADMIN: Delete user
      * - Requires super admin
      * - Prevent deleting admin
-     * - Revoke tokens before delete (recommended)
+     * - Soft delete via deleted_at
      */
     @Transactional
     public void deleteUser(String rawToken, Long userId) {
@@ -256,10 +260,12 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot delete admin user");
         }
 
-        // optional but recommended: remove tokens to avoid FK constraint issues
+        // revoke tokens before soft delete to avoid FK constraint issues
         authTokenRepository.deleteAllByUser(target);
-
-        userRepository.delete(target);
+		passwordResetTokenRepository.deleteAllByUser(target);
+		deviceTokenRepository.deleteAllByUser_Id(target.getId());
+		target.setDeletedAt(Instant.now());
+		userRepository.save(target);
     }
 
 	private UserResponse applyUserUpdates(User actingUser, User targetUser, UserUpdateRequest request) {
@@ -408,6 +414,8 @@ public class UserService {
         User user = userRepository.findByUsernameIgnoreCase(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
 
+		ensureNotDeleted(user);
+
         if (!user.isActive()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User account is inactive");
         }
@@ -448,6 +456,8 @@ public class UserService {
     public TokenStatusResponse checkToken(String rawToken) {
         AuthToken authToken = resolveActiveToken(rawToken);
         User user = authToken.getUser();
+
+		ensureNotDeleted(user);
 
         if (!user.isActive()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User account is inactive");
@@ -552,6 +562,8 @@ public class UserService {
         AuthToken authToken = resolveActiveToken(rawToken);
         User user = authToken.getUser();
 
+		ensureNotDeleted(user);
+
         if (!user.isActive()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User account is inactive");
         }
@@ -575,6 +587,12 @@ public class UserService {
         user.setRole(derived);
         return derived;
     }
+
+	private void ensureNotDeleted(User user) {
+		if (user.isDeleted()) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User account is deleted");
+		}
+	}
 
     private AuthToken resolveActiveToken(String rawToken) {
         if (rawToken == null || rawToken.isBlank()) {

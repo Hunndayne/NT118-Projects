@@ -50,7 +50,15 @@ public class UserAdapterAdmin extends RecyclerView.Adapter<UserAdapterAdmin.User
             Log.e("EDIT_TEST", "EDIT CLICKED: " + user.getId());
             listener.onEditClick(user);
         });
-        holder.btnDelete.setOnClickListener(v -> listener.onDeleteClick(user));
+        boolean canDelete = !user.isAdmin()
+                && (user.getRole() == null || !user.getRole().equalsIgnoreCase("SUPER_ADMIN"));
+        holder.btnDelete.setEnabled(canDelete);
+        holder.btnDelete.setAlpha(canDelete ? 1f : 0.4f);
+        holder.btnDelete.setOnClickListener(v -> {
+            if (canDelete) {
+                listener.onDeleteClick(user);
+            }
+        });
         holder.btnLock.setOnClickListener(v -> listener.onLockClick(user));
         holder.tvUserStatus.setText(user.isActive() ? "Active" : "Locked");
         holder.btnLock.setText(user.isActive() ? "Lock" : "Unlock");

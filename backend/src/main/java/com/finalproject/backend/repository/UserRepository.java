@@ -28,20 +28,25 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("SELECT u FROM User u WHERE LOWER(u.email) = LOWER(:email)")
 	Optional<User> findByEmailIgnoreCase(@Param("email") String email);
 
-	@Query("SELECT u FROM User u LEFT JOIN FETCH u.profile WHERE u.id = :id")
+	@Query("SELECT u FROM User u LEFT JOIN FETCH u.profile WHERE u.id = :id AND u.deletedAt IS NULL")
 	Optional<User> findWithProfileById(@Param("id") Long id);
 
-	@Query("SELECT u FROM User u LEFT JOIN FETCH u.profile WHERE u.legacyUserId = :legacyId")
+	@Query("SELECT u FROM User u LEFT JOIN FETCH u.profile WHERE u.legacyUserId = :legacyId AND u.deletedAt IS NULL")
 	Optional<User> findWithProfileByLegacyUserId(@Param("legacyId") Long legacyId);
 
-	@Query("SELECT u FROM User u WHERE u.active = true " +
+	@Query("SELECT u FROM User u WHERE u.active = true AND u.deletedAt IS NULL " +
 			"AND u.id NOT IN (SELECT s.id FROM Course c JOIN c.students s WHERE c.id = :courseId) " +
 			"AND u.id NOT IN (SELECT t.id FROM Course c JOIN c.teachers t WHERE c.id = :courseId)")
 	List<User> findActiveUsersNotInCourse(@Param("courseId") Long courseId);
-    @Query("SELECT u FROM User u WHERE u.admin = false AND u.active = true")
+    @Query("SELECT u FROM User u WHERE u.admin = false AND u.active = true AND u.deletedAt IS NULL")
     List<User> findAllStudents();
 
-	@Query("SELECT COUNT(u) FROM User u WHERE u.active = true " +
+	@Query("SELECT COUNT(u) FROM User u WHERE u.active = true AND u.deletedAt IS NULL " +
 			"AND (u.role IS NULL OR u.role = com.finalproject.backend.entity.UserRole.STUDENT)")
 	long countActiveStudents();
+
+	Optional<User> findByIdAndDeletedAtIsNull(Long id);
+
+	@Query("SELECT u FROM User u WHERE u.deletedAt IS NULL")
+	List<User> findAllNotDeleted();
 }

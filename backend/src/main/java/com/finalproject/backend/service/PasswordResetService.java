@@ -50,7 +50,7 @@ public class PasswordResetService {
     public MessageResponse requestPasswordReset(ForgotPasswordRequest request) {
         String email = trimRequired(request.getEmail(), "email");
         Optional<User> userOpt = userRepository.findByEmailIgnoreCase(email);
-        if (userOpt.isEmpty()) {
+        if (userOpt.isEmpty() || userOpt.get().isDeleted()) {
             return new MessageResponse("If the email exists, an OTP has been sent.");
         }
 
@@ -75,6 +75,7 @@ public class PasswordResetService {
         String newPassword = trimRequired(request.getNewPassword(), "newPassword");
 
         User user = userRepository.findByEmailIgnoreCase(email)
+                .filter(candidate -> !candidate.isDeleted())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Email not found"));
 
         PasswordResetToken token = passwordResetTokenRepository

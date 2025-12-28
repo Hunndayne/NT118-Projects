@@ -129,6 +129,19 @@ public class ManageAccountAdminActivity extends BaseAdminActivity implements Use
                                                 "User deleted",
                                                 Toast.LENGTH_SHORT
                                         ).show();
+                                    } else {
+                                        String errorMessage = "Delete failed: " + response.code();
+                                        try {
+                                            if (response.errorBody() != null) {
+                                                errorMessage = errorMessage + " - " + response.errorBody().string();
+                                            }
+                                        } catch (Exception ignored) {
+                                        }
+                                        Toast.makeText(
+                                                ManageAccountAdminActivity.this,
+                                                errorMessage,
+                                                Toast.LENGTH_SHORT
+                                        ).show();
                                     }
                                 }
 

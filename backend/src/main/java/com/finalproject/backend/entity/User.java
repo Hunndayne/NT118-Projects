@@ -82,6 +82,9 @@ public class User {
 	@Column(name = "last_login_at")
 	private Instant lastLoginAt;
 
+	@Column(name = "deleted_at")
+	private Instant deletedAt;
+
 	@Column(name = "phone_number")
 	private String phoneNumber;
 
@@ -117,6 +120,10 @@ public class User {
 
 	public boolean isStudent() {
 		return role != null && role.isStudent();
+	}
+
+	public boolean isDeleted() {
+		return deletedAt != null;
 	}
 
 	@PrePersist

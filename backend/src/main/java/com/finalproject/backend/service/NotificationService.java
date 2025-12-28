@@ -67,7 +67,7 @@ public class NotificationService {
 
 		User targetUser = null;
 		if (request.getTargetUserId() != null) {
-			targetUser = userRepository.findById(request.getTargetUserId())
+			targetUser = userRepository.findByIdAndDeletedAtIsNull(request.getTargetUserId())
 					.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Target user not found"));
 		}
 
