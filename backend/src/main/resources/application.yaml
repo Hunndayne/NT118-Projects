@@ -38,3 +38,8 @@ app:
     from: ${APP_MAIL_FROM:no-reply@enggo.local}
   reset:
     otp-exp-min: ${APP_RESET_OTP_EXP_MIN:10}
+
+fcm:
+  project-id: ${FCM_PROJECT_ID:}
+  service-account-path: ${FCM_SERVICE_ACCOUNT_PATH:}
+  service-account-json: ${FCM_SERVICE_ACCOUNT_JSON:}

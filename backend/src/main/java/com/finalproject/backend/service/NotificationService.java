@@ -29,6 +29,7 @@ public class NotificationService {
 	private final ClassRepository classRepository;
 	private final CourseRepository courseRepository;
 	private final UserService userService;
+	private final PushService pushService;
 
 	@Transactional(readOnly = true)
 	public List<NotificationResponse> getNotifications(String rawToken) {
@@ -87,6 +88,11 @@ public class NotificationService {
 				.build();
 
 		Notification saved = notificationRepository.save(notification);
+		try {
+			pushService.dispatchNotification(saved);
+		} catch (Exception ignored) {
+			// Push failures should not block API response
+		}
 		return toResponse(saved);
 	}
 

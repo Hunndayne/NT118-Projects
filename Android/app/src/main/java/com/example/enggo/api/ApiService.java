@@ -52,6 +52,11 @@ public interface ApiService {
     Call<CheckLoginResponse> checkLogin(@Header("X-Auth-Token") String token);
     @POST("auth/logout")
     Call<Void> logout(@Header("X-Auth-Token") String token);
+    @POST("device-tokens")
+    Call<Void> registerDeviceToken(
+            @Header("X-Auth-Token") String token,
+            @Body DeviceTokenRequest request
+    );
     @GET("admin/students")
     Call<List<UserAdmin>> getAllStudents(
             @Header("X-Auth-Token") String token

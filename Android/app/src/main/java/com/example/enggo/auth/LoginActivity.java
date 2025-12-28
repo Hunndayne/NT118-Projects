@@ -20,6 +20,7 @@ import com.example.enggo.api.LoginRequest;
 import com.example.enggo.api.LoginResponse;
 import com.example.enggo.database.Database;
 import com.example.enggo.user.HomeUserActivity;
+import com.example.enggo.push.PushTokenManager;
 
 import java.util.Date;
 import java.util.Locale;
@@ -114,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
         newItem.role = getStoredRole(loginResponse.role, loginResponse.admin);
         dao.insert(newItem);
 
+        PushTokenManager.syncToken(LoginActivity.this);
         // Route by role from backend
         routeByRole(loginResponse.role, loginResponse.admin);
     }
