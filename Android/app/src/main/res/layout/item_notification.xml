@@ -22,7 +22,7 @@
             tools:text="Event"
             android:textColor="@color/notification_event"
             android:textSize="12sp"
-            android:fontFamily="@font/nunito_bold"
+            app:fontFamily="@font/nunito_extra_bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -46,7 +46,7 @@
             tools:text="20/11 - GỬI LỜI CHÚC, VẠN ĐIỀU HAY"
             android:textColor="@color/text_primary"
             android:textSize="14sp"
-            android:fontFamily="@font/nunito_bold"
+            app:fontFamily="@font/nunito_extra_bold"
             android:maxLines="2"
             android:ellipsize="end"
             app:layout_constraintTop_toBottomOf="@id/tvNotificationType"

@@ -80,7 +80,7 @@
                             tools:text="Event"
                             android:textColor="@color/notification_event"
                             android:textSize="13sp"
-                            android:fontFamily="@font/nunito_bold"
+                            app:fontFamily="@font/nunito_extra_bold"
                             android:layout_weight="1" />
 
                         <TextView

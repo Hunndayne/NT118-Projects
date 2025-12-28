@@ -60,6 +60,7 @@
             android:drawablePadding="4dp"
             android:gravity="center_vertical"
             android:text="@string/back_text"
+            app:fontFamily="@font/nunito_extra_bold"
             android:textColor="@color/text_primary"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="parent"
