@@ -55,11 +55,17 @@ public class PushService {
 		if (notification == null) {
 			return;
 		}
-		Set<Long> targetUserIds = resolveTargetUserIds(notification);
-		if (targetUserIds.isEmpty()) {
-			return;
+		boolean hasExplicitTarget = notification.getTargetUser() != null || notification.getTargetClass() != null;
+		List<DeviceToken> tokens;
+		if (hasExplicitTarget) {
+			Set<Long> targetUserIds = resolveTargetUserIds(notification);
+			if (targetUserIds.isEmpty()) {
+				return;
+			}
+			tokens = deviceTokenRepository.findAllByUser_IdInAndActiveTrue(targetUserIds);
+		} else {
+			tokens = deviceTokenRepository.findAllByActiveTrue();
 		}
-		List<DeviceToken> tokens = deviceTokenRepository.findAllByUser_IdInAndActiveTrue(targetUserIds);
 		if (tokens.isEmpty()) {
 			return;
 		}
