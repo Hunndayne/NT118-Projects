@@ -6,6 +6,7 @@
 | --- | --- | --- | --- | --- | --- |
 | `/auth/login` | POST | Public | Đăng nhập, lấy access token | Body `{"username": "...", "password": "..."}` | 200: `{"token","tokenType","expiresAt","admin","role"}` |
 | `/auth/logout` | POST | Đã đăng nhập | Đăng xuất, revoke token hiện tại | Header `X-Auth-Token` | 204 No Content |
+| `/device-tokens` | POST | Da dang nhap | Dang ky FCM device token cho user | Header `X-Auth-Token`; Body `{"token","platform", optional: "deviceId"}` | 200 empty |
 | `/checklogin` | GET | Đã đăng nhập | Kiểm tra token còn hạn | Header `X-Auth-Token` | 200: `{"loggedIn","admin","expiresAt","role"}` |
 | `/files/presign-upload` | POST | Đã đăng nhập | Lấy pre-signed PUT URL để upload file lên Cloudflare R2 (bucket public) | Header `X-Auth-Token`; Body `{"purpose":"AVATAR|LESSON_RESOURCE|SUBMISSION|ASSIGNMENT_ATTACHMENT","fileName","contentType", optional: "classId","lessonId","assignmentId"}` | 200: `{"key","uploadUrl","publicUrl","expiresAt","contentType"}` |
 | `/users` | POST | Public | Đăng ký người dùng mới (mặc định role STUDENT) | Body `{"username","password","emailAddress","firstName","lastName","phoneNumber", optional: emailVisibility, city, country, timezone, description, interest, avatarUrl}` | 200: `UserResponse` |
@@ -53,6 +54,7 @@ Ghi chú:
 - Header `X-Auth-Token` chứa raw token trả từ login.
 - Upload file (Cloudflare R2 public): gọi `POST /api/files/presign-upload` để lấy `uploadUrl/publicUrl`, PUT file lên `uploadUrl` với header `Content-Type` đúng, rồi lưu `publicUrl` vào `avatarUrl`/`attachmentUrl`/`fileUrl`/`url`/`filePath` tùy chức năng.
 - Cấu hình R2 (gợi ý): `r2.account-id`, `r2.access-key-id`, `r2.secret-access-key`, `r2.bucket`, `r2.public-base-url` (mặc định `https://{bucket}.{accountId}.r2.dev`), `r2.presign-duration` (vd `10m`).
+- Push notification (FCM): goi `POST /api/device-tokens` de dang ky token; backend gui push khi tao notification/assignment. Env: `FCM_PROJECT_ID`, `FCM_SERVICE_ACCOUNT_PATH` (hoac `FCM_SERVICE_ACCOUNT_JSON`).
 - `UserResponse` trường: `id, username, firstName, lastName, fullName, emailAddress, emailVisibility, city, country, timezone, description, interest, phoneNumber, avatarUrl, active, admin, role, createdAt, lastLoginAt`.
 - `CourseResponse` trường: `id, code, name, level, description, active, createdBy, createdAt`. Trường `active` map cột `status` trong DB: “active”/“inactive”.
 - Roles: `role` một trong `SUPER_ADMIN`, `TEACHER`, `STUDENT`. Chỉ super_admin được tạo/sửa/xoá khoá học, đổi role người dùng, xem user theo id, thêm/xoá học viên.

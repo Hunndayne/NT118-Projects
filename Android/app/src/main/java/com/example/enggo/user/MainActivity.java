@@ -3,7 +3,12 @@ package com.example.enggo.user;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.enggo.R;
@@ -14,6 +19,7 @@ import com.example.enggo.api.ApiClient;
 import com.example.enggo.api.ApiService;
 import com.example.enggo.api.CheckLoginResponse;
 import com.example.enggo.database.Database;
+import com.example.enggo.push.PushTokenManager;
 
 import java.util.List;
 import java.util.Locale;
@@ -31,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dao = new Database.Dao(this);
+        requestNotificationPermission();
         checkToken();
     }
 
@@ -65,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     newItem.role = getStoredRole(response.body().role, response.body().admin);
                     dao.insert(newItem);
 
+                    PushTokenManager.syncToken(MainActivity.this);
                     routeByRole(response.body().role, response.body().admin);
                 } else {
                     // token invalid/expired
@@ -82,6 +90,19 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            return;
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                == PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                1001);
     }
 
     private String getStoredRole(String role, boolean adminFlag) {

@@ -56,6 +56,7 @@ public class AssignmentService {
 	private final ClassRepository classRepository;
 	private final CourseRepository courseRepository;
 	private final NotificationRepository notificationRepository;
+	private final PushService pushService;
 	private final UserService userService;
 
 	@Transactional(readOnly = true)
@@ -280,7 +281,12 @@ public class AssignmentService {
 				.targetClass(clazz)
 				.read(false)
 				.build();
-		notificationRepository.save(notification);
+		Notification saved = notificationRepository.save(notification);
+		try {
+			pushService.dispatchNotification(saved);
+		} catch (Exception ignored) {
+			// Push failures should not block assignment creation
+		}
 	}
 
 	private String buildCourseLabel(ClassEntity clazz) {
