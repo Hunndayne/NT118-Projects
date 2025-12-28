@@ -33,6 +33,7 @@ public class EditCourseAdminActivity extends BaseAdminActivity {
     private EditText etStartDate;
     private EditText etEndDate;
     private Long courseId;
+    private String originalCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +92,7 @@ public class EditCourseAdminActivity extends BaseAdminActivity {
                             CourseAdmin course = response.body();
                             etName.setText(course.getName());
                             etCode.setText(course.getClassCode());
+                            originalCode = course.getClassCode();
                             setDayOfWeekSelection(course.getDayOfWeek());
                             setTimeText(etStartTime, course.getStartTime());
                             setTimeText(etEndTime, course.getEndTime());
@@ -135,8 +137,16 @@ public class EditCourseAdminActivity extends BaseAdminActivity {
             return;
         }
 
-        UpdateCourseRequest request =
-                new UpdateCourseRequest(name, code, dayOfWeek, startTime, endTime, startDate, endDate);
+        UpdateCourseRequest request = new UpdateCourseRequest();
+        request.name = name;
+        if (originalCode == null || !code.equalsIgnoreCase(originalCode)) {
+            request.code = code;
+        }
+        request.dayOfWeek = dayOfWeek;
+        request.startTime = startTime;
+        request.endTime = endTime;
+        request.startDate = startDate;
+        request.endDate = endDate;
 
         String token = getTokenFromDb();
         ApiService api = ApiClient.getClient().create(ApiService.class);

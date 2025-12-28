@@ -297,7 +297,7 @@ public interface ApiService {
             @Header("X-Auth-Token") String token,
             @Body CreateCourseRequest request
     );
-    @GET("/api/admin/courses/{id}")
+    @GET("/api/courses/{id}")
     Call<CourseAdmin> getCourseById(
             @Header("X-Auth-Token") String token,
             @Path("id") Long id
