@@ -184,6 +184,10 @@
             android:exported="false" />
         <activity android:name=".admin.EditProfileAdminActivity"
             android:exported="false" />
+        <activity android:name=".admin.ProfileAdminActivity"
+            android:exported="false" />
+        <activity android:name=".teacher.ProfileTeacherActivity"
+            android:exported="false" />
         <activity
             android:name="com.example.enggo.user.MainActivity"
             android:exported="true">

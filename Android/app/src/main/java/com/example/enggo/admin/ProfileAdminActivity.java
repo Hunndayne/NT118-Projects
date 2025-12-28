@@ -1,18 +1,17 @@
-package com.example.enggo.user;
+package com.example.enggo.admin;
 
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.enggo.R;
-import com.example.enggo.admin.UserAdmin;
 import com.example.enggo.api.ApiClient;
 import com.example.enggo.api.ApiService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProfileUserActivity extends BaseUserActivity {
+public class ProfileAdminActivity extends BaseAdminActivity {
 
     private TextView tvFullName, tvUsername, tvEmail, tvPhone, tvCity, tvCountry, tvDescription, tvLastLogin;
     private ImageView imAvatar;
@@ -20,15 +19,15 @@ public class ProfileUserActivity extends BaseUserActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile_student); // Layout student đã update
+        setContentView(R.layout.profile_admin);
 
-        setupHeader();
-        setupFooter();
+        setupAdminHeader();
+        setupAdminFooter();
 
         TextView tvBack = findViewById(R.id.tvBack);
         tvBack.setOnClickListener(v -> finish());
 
-        // Đảm bảo ID trong profile.xml khớp với các ID này
+        // Ánh xạ views
         tvFullName = findViewById(R.id.tvFullName);
         tvUsername = findViewById(R.id.tvUsername);
         tvEmail = findViewById(R.id.tvEmail);
@@ -42,7 +41,6 @@ public class ProfileUserActivity extends BaseUserActivity {
         loadProfileData();
     }
 
-    // Copy logic loadProfileData() tương tự như trên
     private void loadProfileData() {
         String token = getTokenFromDb();
         if (token == null) return;
@@ -55,7 +53,7 @@ public class ProfileUserActivity extends BaseUserActivity {
                     UserAdmin user = response.body();
 
                     tvFullName.setText(user.getFullName() != null ? user.getFullName() : "N/A");
-                    tvUsername.setText("@" + user.getUsername() + " (STUDENT)");
+                    tvUsername.setText("@" + user.getUsername() + " (" + (user.getRole() != null ? user.getRole() : "ADMIN") + ")");
 
                     setTextOrPlaceholder(tvEmail, user.getEmailAddress());
                     setTextOrPlaceholder(tvPhone, user.getPhoneNumber());
@@ -68,15 +66,23 @@ public class ProfileUserActivity extends BaseUserActivity {
                     } else {
                         tvLastLogin.setText("Never");
                     }
+
                     loadAvatarInto(imAvatar);
+                } else {
+                    Toast.makeText(ProfileAdminActivity.this, "Failed to load profile", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
-            public void onFailure(Call<UserAdmin> call, Throwable t) { }
+            public void onFailure(Call<UserAdmin> call, Throwable t) {
+                Toast.makeText(ProfileAdminActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
     private void setTextOrPlaceholder(TextView view, String text) {
-        if (view != null) view.setText((text != null && !text.trim().isEmpty()) ? text : "--");
+        if (view != null) {
+            view.setText((text != null && !text.trim().isEmpty()) ? text : "--");
+        }
     }
 }

@@ -34,17 +34,14 @@ public class MenuTeacherActivity extends BaseTeacherActivity {
 
         // Setup avatar and info onclick
         ImageView imTeacherAvatar = findViewById(R.id.imTeacherAvatar);
-        LinearLayout teacherInfoLayout = findViewById(R.id.teacherInfoLayout);
-        
-        imTeacherAvatar.setOnClickListener(v -> {
-            Intent intent = new Intent(this, EditUserTeacherActivity.class);
-            startActivity(intent);
-        });
         loadAvatarInto(imTeacherAvatar);
-        
+        imTeacherAvatar.setOnClickListener(v -> {
+            startActivity(new Intent(MenuTeacherActivity.this, ProfileTeacherActivity.class));
+        });
+
+        LinearLayout teacherInfoLayout = findViewById(R.id.teacherInfoLayout);
         teacherInfoLayout.setOnClickListener(v -> {
-            Intent intent = new Intent(this, EditUserTeacherActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(MenuTeacherActivity.this, ProfileTeacherActivity.class));
         });
 
         // Setup menu list
