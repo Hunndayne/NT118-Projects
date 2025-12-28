@@ -57,6 +57,7 @@ public class MenuAdminActivity extends BaseAdminActivity {
             Intent intent = new Intent(MenuAdminActivity.this, EditProfileAdminActivity.class);
             startActivity(intent);
         });
+        loadAvatarInto(imAdminAvatar);
 
         LinearLayout adminInfoLayout = findViewById(R.id.adminInfoLayout);
         adminInfoLayout.setOnClickListener(v -> {

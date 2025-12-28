@@ -7,6 +7,8 @@ import com.example.enggo.admin.UserAdmin;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageButton; // Hoặc Button, tùy vào view của bạn
@@ -18,6 +20,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -106,6 +111,7 @@ public abstract class BaseUserActivity extends AppCompatActivity {
         if (tvStudentName != null) {
             loadStudentName(tvStudentName);
         }
+        loadAvatarInto(imgAvatar);
     }
 
     protected void loadStudentName(TextView tvStudentName) {
@@ -138,6 +144,65 @@ public abstract class BaseUserActivity extends AppCompatActivity {
                 // no-op
             }
         });
+    }
+
+    protected void loadAvatarInto(ImageView imgAvatar) {
+        if (imgAvatar == null) {
+            return;
+        }
+        String token = getTokenFromDb();
+        if (token == null) {
+            return;
+        }
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.getCurrentUser(token).enqueue(new Callback<UserAdmin>() {
+            @Override
+            public void onResponse(Call<UserAdmin> call, Response<UserAdmin> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String avatarUrl = response.body().getAvatarUrl();
+                    if (avatarUrl != null && !avatarUrl.trim().isEmpty()) {
+                        loadImageFromUrl(avatarUrl, imgAvatar);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserAdmin> call, Throwable t) {
+                // no-op
+            }
+        });
+    }
+
+    private void loadImageFromUrl(String url, ImageView imageView) {
+        if (url == null || url.trim().isEmpty() || imageView == null) {
+            return;
+        }
+        new Thread(() -> {
+            HttpURLConnection connection = null;
+            try {
+                URL imageUrl = new URL(url);
+                connection = (HttpURLConnection) imageUrl.openConnection();
+                connection.setConnectTimeout(5000);
+                connection.setReadTimeout(5000);
+                connection.connect();
+                try (InputStream inputStream = connection.getInputStream()) {
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    if (bitmap != null) {
+                        runOnUiThread(() -> {
+                            imageView.setImageTintList(null);
+                            imageView.clearColorFilter();
+                            imageView.setImageBitmap(bitmap);
+                        });
+                    }
+                }
+            } catch (Exception ignored) {
+                // no-op
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            }
+        }).start();
     }
 
     // ========================================================
