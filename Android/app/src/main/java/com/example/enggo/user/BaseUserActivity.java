@@ -70,7 +70,7 @@ public abstract class BaseUserActivity extends AppCompatActivity {
         });
 
         btnNotification.setOnClickListener(v -> {
-            if (!(this instanceof MenuUserActivity)) {
+            if (!(this instanceof NotificationUserActivity)) {
                 Intent intent = new Intent(this, NotificationUserActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
