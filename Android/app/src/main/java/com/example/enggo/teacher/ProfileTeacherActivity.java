@@ -1,4 +1,4 @@
-package com.example.enggo.user;
+package com.example.enggo.teacher;
 
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -12,7 +12,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProfileUserActivity extends BaseUserActivity {
+public class ProfileTeacherActivity extends BaseTeacherActivity {
 
     private TextView tvFullName, tvUsername, tvEmail, tvPhone, tvCity, tvCountry, tvDescription, tvLastLogin;
     private ImageView imAvatar;
@@ -20,15 +20,14 @@ public class ProfileUserActivity extends BaseUserActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile_student); // Layout student đã update
+        setContentView(R.layout.profile_teacher); // Layout teacher
 
-        setupHeader();
-        setupFooter();
+        setupTeacherHeader();
+        setupTeacherFooter();
 
         TextView tvBack = findViewById(R.id.tvBack);
         tvBack.setOnClickListener(v -> finish());
 
-        // Đảm bảo ID trong profile.xml khớp với các ID này
         tvFullName = findViewById(R.id.tvFullName);
         tvUsername = findViewById(R.id.tvUsername);
         tvEmail = findViewById(R.id.tvEmail);
@@ -42,7 +41,7 @@ public class ProfileUserActivity extends BaseUserActivity {
         loadProfileData();
     }
 
-    // Copy logic loadProfileData() tương tự như trên
+    // Copy hàm loadProfileData() và setTextOrPlaceholder() từ ProfileAdminActivity sang đây
     private void loadProfileData() {
         String token = getTokenFromDb();
         if (token == null) return;
@@ -55,7 +54,7 @@ public class ProfileUserActivity extends BaseUserActivity {
                     UserAdmin user = response.body();
 
                     tvFullName.setText(user.getFullName() != null ? user.getFullName() : "N/A");
-                    tvUsername.setText("@" + user.getUsername() + " (STUDENT)");
+                    tvUsername.setText("@" + user.getUsername() + " (TEACHER)");
 
                     setTextOrPlaceholder(tvEmail, user.getEmailAddress());
                     setTextOrPlaceholder(tvPhone, user.getPhoneNumber());

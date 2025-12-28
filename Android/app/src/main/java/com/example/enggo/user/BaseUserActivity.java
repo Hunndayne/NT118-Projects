@@ -29,7 +29,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public abstract class BaseUserActivity extends AppCompatActivity {
-
     protected String getTokenFromDb() {
         Database.Dao dao = new Database.Dao(this);
         if (dao.getAll().isEmpty()) {

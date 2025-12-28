@@ -53,16 +53,13 @@ public class MenuAdminActivity extends BaseAdminActivity {
         });
 
         ImageView imAdminAvatar = findViewById(R.id.imAdminAvatar);
-        imAdminAvatar.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuAdminActivity.this, EditProfileAdminActivity.class);
-            startActivity(intent);
-        });
         loadAvatarInto(imAdminAvatar);
-
+        imAdminAvatar.setOnClickListener(v -> {
+            startActivity(new Intent(MenuAdminActivity.this, ProfileAdminActivity.class));
+        });
         LinearLayout adminInfoLayout = findViewById(R.id.adminInfoLayout);
         adminInfoLayout.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuAdminActivity.this, EditProfileAdminActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(MenuAdminActivity.this, ProfileAdminActivity.class));
         });
 
         TextView tvAdminName = findViewById(R.id.tvAdminName);
