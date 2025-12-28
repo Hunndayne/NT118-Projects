@@ -151,6 +151,31 @@ public class SubmissionListActivity extends BaseTeacherActivity {
     }
 
     private void openSubmissionDetail(SubmissionStatusResponse submission) {
+        int index = submissions.indexOf(submission);
+        if (index < 0) {
+            index = 0;
+        }
+
+        int size = submissions.size();
+        long[] submissionIds = new long[size];
+        String[] studentNames = new String[size];
+        boolean[] submittedFlags = new boolean[size];
+        String[] submittedAts = new String[size];
+        String[] fileUrls = new String[size];
+        String[] deadlines = new String[size];
+        double[] scores = new double[size];
+
+        for (int i = 0; i < size; i++) {
+            SubmissionStatusResponse item = submissions.get(i);
+            submissionIds[i] = item.submissionId != null ? item.submissionId : -1L;
+            studentNames[i] = item.getDisplayName();
+            submittedFlags[i] = item.submitted;
+            submittedAts[i] = item.submittedAt;
+            fileUrls[i] = item.fileUrl;
+            deadlines[i] = item.deadline;
+            scores[i] = item.score != null ? item.score : Double.NaN;
+        }
+
         boolean isSubmitted = submission.submitted;
         String statusLabel;
         if (!isSubmitted) {
@@ -180,6 +205,14 @@ public class SubmissionListActivity extends BaseTeacherActivity {
         if (submission.score != null) {
             intent.putExtra("score_value", submission.score);
         }
+        intent.putExtra(GradingSubmissionActivity.EXTRA_SUBMISSION_INDEX, index);
+        intent.putExtra(GradingSubmissionActivity.EXTRA_SUBMISSION_IDS, submissionIds);
+        intent.putExtra(GradingSubmissionActivity.EXTRA_STUDENT_NAMES, studentNames);
+        intent.putExtra(GradingSubmissionActivity.EXTRA_SUBMITTED_FLAGS, submittedFlags);
+        intent.putExtra(GradingSubmissionActivity.EXTRA_SUBMITTED_ATS, submittedAts);
+        intent.putExtra(GradingSubmissionActivity.EXTRA_FILE_URLS, fileUrls);
+        intent.putExtra(GradingSubmissionActivity.EXTRA_DEADLINES, deadlines);
+        intent.putExtra(GradingSubmissionActivity.EXTRA_SCORES, scores);
         startActivityForResult(intent, REQ_GRADE);
     }
 
