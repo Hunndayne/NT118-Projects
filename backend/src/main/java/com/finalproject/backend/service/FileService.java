@@ -5,6 +5,7 @@ import com.finalproject.backend.dto.request.PresignUploadRequest;
 import com.finalproject.backend.dto.response.PresignUploadResponse;
 import com.finalproject.backend.entity.Assignment;
 import com.finalproject.backend.entity.ClassEntity;
+import com.finalproject.backend.entity.Course;
 import com.finalproject.backend.entity.User;
 import com.finalproject.backend.entity.UserRole;
 import com.finalproject.backend.repository.AssignmentRepository;
@@ -94,71 +95,56 @@ public class FileService {
 		return switch (purpose) {
 			case AVATAR -> "avatars/" + user.getId() + "/" + randomPart + "-" + safeFileName;
 			case LESSON_RESOURCE -> {
-				Long classId = request.getClassId();
+				Long classIdOrCourseId = request.getClassId();
 				Long lessonId = request.getLessonId();
-				if (classId == null || lessonId == null) {
+				if (classIdOrCourseId == null || lessonId == null) {
 					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "classId and lessonId are required");
 				}
 
+				ClassEntity clazz = resolveClass(classIdOrCourseId);
+				Long resolvedClassId = clazz.getId();
+
 				if (!role.isSuperAdmin()) {
-					boolean isTeacherOfClass = role.isTeacher() && classRepository.existsByIdAndTeachers_Id(classId, user.getId());
+					boolean isTeacherOfClass = role.isTeacher()
+							&& classRepository.existsByIdAndTeachers_Id(resolvedClassId, user.getId());
 					if (!isTeacherOfClass) {
 						throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed to upload resources for this class");
 					}
 				}
 
-				boolean lessonBelongsToClass = lessonRepository.findByIdAndClazz_Id(lessonId, classId).isPresent();
+				boolean lessonBelongsToClass = lessonRepository.findByIdAndClazz_Id(lessonId, resolvedClassId).isPresent();
 				if (!lessonBelongsToClass) {
 					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "lessonId does not belong to classId");
 				}
 
-				yield "lesson-resources/" + classId + "/" + lessonId + "/" + randomPart + "-" + safeFileName;
+				yield "lesson-resources/" + resolvedClassId + "/" + lessonId + "/" + randomPart + "-" + safeFileName;
 			}
-			case ASSIGNMENT_ATTACHMENT -> {
+			case ASSIGNMENT_RESOURCE -> {
+				Long classIdOrCourseId = request.getClassId();
 				Long assignmentId = request.getAssignmentId();
-				ClassEntity clazz;
-				Long classId;
-
-				if (assignmentId != null) {
-					Assignment assignment = assignmentRepository.findById(assignmentId)
-							.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assignment not found"));
-					clazz = assignment.getClazz();
-					if (clazz == null) {
-						throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Assignment is not linked to a class");
-					}
-					classId = clazz.getId();
-				} else {
-					Long classIdOrCourseId = request.getClassId();
-					if (classIdOrCourseId == null) {
-						throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "classId or assignmentId is required");
-					}
-					ClassEntity resolved = classRepository.findById(classIdOrCourseId).orElse(null);
-					if (resolved == null) {
-						resolved = classRepository.findFirstByCourse_Id(classIdOrCourseId);
-					}
-					if (resolved == null) {
-						throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found");
-					}
-					clazz = resolved;
-					classId = clazz.getId();
+				if (classIdOrCourseId == null || assignmentId == null) {
+					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "classId and assignmentId are required");
 				}
+
+				ClassEntity clazz = resolveClass(classIdOrCourseId);
+				Long resolvedClassId = clazz.getId();
 
 				if (!role.isSuperAdmin()) {
-					if (!role.isTeacher()) {
-						throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only teacher can upload assignment attachment");
-					}
-					boolean isTeacherOfClass = classId != null && classRepository.existsByIdAndTeachers_Id(classId, user.getId());
-					Long courseId = clazz.getCourse() != null ? clazz.getCourse().getId() : null;
-					boolean isTeacherOfCourse = courseId != null
-							&& courseRepository.findByIdAndTeachers_Id(courseId, user.getId()).isPresent();
-					if (!isTeacherOfClass && !isTeacherOfCourse) {
-						throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed to upload attachment for this class");
+					boolean isTeacherOfClass = role.isTeacher()
+							&& classRepository.existsByIdAndTeachers_Id(resolvedClassId, user.getId());
+					if (!isTeacherOfClass) {
+						throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed to upload resources for this class");
 					}
 				}
 
-				String prefix = assignmentId != null ? String.valueOf(assignmentId) : String.valueOf(classId);
-				yield "assignment-attachments/" + prefix + "/" + randomPart + "-" + safeFileName;
+				boolean assignmentBelongsToClass = assignmentRepository.findByIdAndClazz_Id(assignmentId, resolvedClassId).isPresent();
+				if (!assignmentBelongsToClass) {
+					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "assignmentId does not belong to classId");
+				}
+
+				yield "assignment-resources/" + resolvedClassId + "/" + assignmentId + "/" + randomPart + "-" + safeFileName;
 			}
+
 			case SUBMISSION -> {
 				Long assignmentId = request.getAssignmentId();
 				if (assignmentId == null) {
@@ -188,6 +174,39 @@ public class FileService {
 				yield "submissions/" + assignmentId + "/" + user.getId() + "/" + randomPart + "-" + safeFileName;
 			}
 		};
+	}
+
+	private ClassEntity resolveClass(Long classIdOrCourseId) {
+		ClassEntity clazz = classRepository.findById(classIdOrCourseId)
+				.orElseGet(() -> classRepository.findFirstByCourse_Id(classIdOrCourseId));
+		if (clazz == null) {
+			Course course = courseRepository.findById(classIdOrCourseId)
+					.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found"));
+			if (course.getTeachers() != null) {
+				course.getTeachers().size();
+			}
+			if (course.getStudents() != null) {
+				course.getStudents().size();
+			}
+			clazz = ClassEntity.builder()
+					.name(course.getName())
+					.description(course.getDescription())
+					.active(course.getActive())
+					.course(course)
+					.createdBy(course.getCreatedBy())
+					.teachers(course.getTeachers() != null
+							? new java.util.HashSet<>(course.getTeachers())
+							: new java.util.HashSet<>())
+					.students(course.getStudents() != null
+							? new java.util.HashSet<>(course.getStudents())
+							: new java.util.HashSet<>())
+					.build();
+			clazz = classRepository.save(clazz);
+		}
+		if (clazz.getTeachers() != null) {
+			clazz.getTeachers().size();
+		}
+		return clazz;
 	}
 
 	private UploadPurpose parsePurpose(String value) {
@@ -233,6 +252,7 @@ public class FileService {
 		AVATAR,
 		ASSIGNMENT_ATTACHMENT,
 		LESSON_RESOURCE,
+		ASSIGNMENT_RESOURCE,
 		SUBMISSION
 	}
 }

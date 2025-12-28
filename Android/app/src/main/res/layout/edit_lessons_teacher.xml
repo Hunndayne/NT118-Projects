@@ -125,6 +125,16 @@
                     android:textSize="10sp"
                     android:backgroundTint="@color/enggo_grey_100" />
 
+                <TextView
+                    android:id="@+id/tvSelectedFileName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text=""
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
                 <LinearLayout
                     android:id="@+id/fileListContainer"
                     android:layout_width="match_parent"

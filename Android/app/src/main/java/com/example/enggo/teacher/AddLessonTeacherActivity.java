@@ -11,6 +11,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -19,15 +20,16 @@ import androidx.documentfile.provider.DocumentFile;
 import com.example.enggo.R;
 import com.example.enggo.api.ApiClient;
 import com.example.enggo.api.ApiService;
-import com.example.enggo.api.FileUploadResponse;
+import com.example.enggo.api.PresignUploadRequest;
+import com.example.enggo.api.PresignUploadResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okio.BufferedSink;
 import retrofit2.Call;
@@ -41,6 +43,7 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
     private Button btnCancel;
     private Button btnCreate;
     private Button btnUpload;
+    private TextView tvSelectedFileName;
     private Long courseId;
     private ActivityResultLauncher<String[]> filePickerLauncher;
     private String selectedFileUri;
@@ -66,6 +69,7 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
         btnCancel = findViewById(R.id.buttonCancelUpLesson_Admin);
         btnCreate = findViewById(R.id.buttonUpLesson_Admin);
         btnUpload = findViewById(R.id.buttonUploadAttachmentAdmin);
+        tvSelectedFileName = findViewById(R.id.tvSelectedFileName);
     }
 
     private void setupFilePicker() {
@@ -106,8 +110,9 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
         }
         selectedFileUri = uri.toString();
         String fileName = getFileName(uri);
-        if (btnUpload != null) {
-            btnUpload.setText(fileName);
+        if (tvSelectedFileName != null) {
+            tvSelectedFileName.setText(fileName);
+            tvSelectedFileName.setVisibility(android.view.View.VISIBLE);
         }
         Log.d("AddLessonTeacher", "Selected file: " + selectedFileUri + " name=" + fileName);
     }
@@ -205,20 +210,34 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
     }
 
     private void uploadAndAttachFile(ApiService apiService, String token, Long lessonId, Uri fileUri) {
-        RequestBody requestBody = createRequestBody(fileUri);
+        long contentLength = resolveContentLength(fileUri);
+        if (contentLength <= 0) {
+            Toast.makeText(this, "Cannot determine file size for upload", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        RequestBody requestBody = createRequestBody(fileUri, contentLength);
         if (requestBody == null) {
             Toast.makeText(this, "Cannot read file for upload", Toast.LENGTH_SHORT).show();
             return;
         }
         String fileName = sanitizeFileName(getFileName(fileUri), fileUri);
-        Log.d("AddLessonTeacher", "Uploading " + fileName + " to lesson " + lessonId);
-        Toast.makeText(this, "Uploading " + fileName, Toast.LENGTH_SHORT).show();
-        MultipartBody.Part part = MultipartBody.Part.createFormData("file", fileName, requestBody);
-        apiService.uploadFile(token, part).enqueue(new Callback<FileUploadResponse>() {
+        String contentType = resolveContentType(fileUri);
+        Log.d("AddLessonTeacher", "Presign upload for " + fileName + " to lesson " + lessonId);
+
+        PresignUploadRequest presignRequest = new PresignUploadRequest(
+                "LESSON_RESOURCE",
+                fileName,
+                contentType,
+                courseId,
+                lessonId,
+                null
+        );
+
+        apiService.presignUpload(token, presignRequest).enqueue(new Callback<PresignUploadResponse>() {
             @Override
-            public void onResponse(Call<FileUploadResponse> call, Response<FileUploadResponse> response) {
-                if (!response.isSuccessful() || response.body() == null || response.body().fileUrl == null) {
-                    Log.e("AddLessonTeacher", "Upload failed code=" + response.code());
+            public void onResponse(Call<PresignUploadResponse> call, Response<PresignUploadResponse> response) {
+                if (!response.isSuccessful() || response.body() == null || response.body().uploadUrl == null) {
+                    Log.e("AddLessonTeacher", "Presign failed code=" + response.code());
                     Toast.makeText(
                             AddLessonTeacherActivity.this,
                             "Upload file failed (" + response.code() + ")",
@@ -226,47 +245,74 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
                     ).show();
                     return;
                 }
-                Log.d("AddLessonTeacher", "Upload success url=" + response.body().fileUrl);
-                Toast.makeText(AddLessonTeacherActivity.this, "Upload success", Toast.LENGTH_SHORT).show();
-                String title = response.body().originalName;
-                if (title == null || title.trim().isEmpty()) {
-                    title = fileName;
-                }
-                LessonResourceRequest fileRequest = new LessonResourceRequest(
-                        "FILE",
-                        title,
-                        null,
-                        null,
-                        response.body().fileUrl
-                );
-                apiService.addLessonResource(token, courseId, lessonId, fileRequest).enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (!response.isSuccessful()) {
-                            Log.e("AddLessonTeacher", "Attach failed code=" + response.code());
-                            Toast.makeText(
-                                    AddLessonTeacherActivity.this,
-                                    "Attach file failed (" + response.code() + ")",
-                                    Toast.LENGTH_SHORT
-                            ).show();
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Log.e("AddLessonTeacher", "Attach failed", t);
-                        Toast.makeText(
-                                AddLessonTeacherActivity.this,
-                                "Attach file failed",
-                                Toast.LENGTH_SHORT
-                        ).show();
-                    }
-                });
+                PresignUploadResponse presign = response.body();
+                String uploadContentType = presign.contentType != null ? presign.contentType : contentType;
+                Log.d("AddLessonTeacher", "Uploading to presigned url");
+
+                apiService.uploadToPresignedUrl(presign.uploadUrl, uploadContentType, contentLength, requestBody)
+                        .enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> uploadResponse) {
+                                if (!uploadResponse.isSuccessful()) {
+                                    Log.e("AddLessonTeacher", "Upload failed code=" + uploadResponse.code());
+                                    Toast.makeText(
+                                            AddLessonTeacherActivity.this,
+                                            "Upload file failed (" + uploadResponse.code() + ")",
+                                            Toast.LENGTH_SHORT
+                                    ).show();
+                                    return;
+                                }
+
+                                String title = fileName;
+                                LessonResourceRequest fileRequest = new LessonResourceRequest(
+                                        "FILE",
+                                        title,
+                                        null,
+                                        null,
+                                        presign.publicUrl
+                                );
+                                apiService.addLessonResource(token, courseId, lessonId, fileRequest)
+                                        .enqueue(new Callback<Void>() {
+                                            @Override
+                                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                                if (!response.isSuccessful()) {
+                                                    Log.e("AddLessonTeacher", "Attach failed code=" + response.code());
+                                                    Toast.makeText(
+                                                            AddLessonTeacherActivity.this,
+                                                            "Attach file failed (" + response.code() + ")",
+                                                            Toast.LENGTH_SHORT
+                                                    ).show();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Void> call, Throwable t) {
+                                                Log.e("AddLessonTeacher", "Attach failed", t);
+                                                Toast.makeText(
+                                                        AddLessonTeacherActivity.this,
+                                                        "Attach file failed",
+                                                        Toast.LENGTH_SHORT
+                                                ).show();
+                                            }
+                                        });
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Log.e("AddLessonTeacher", "Upload failed", t);
+                                Toast.makeText(
+                                        AddLessonTeacherActivity.this,
+                                        "Upload file failed",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+                            }
+                        });
             }
 
             @Override
-            public void onFailure(Call<FileUploadResponse> call, Throwable t) {
-                Log.e("AddLessonTeacher", "Upload failed", t);
+            public void onFailure(Call<PresignUploadResponse> call, Throwable t) {
+                Log.e("AddLessonTeacher", "Presign failed", t);
                 Toast.makeText(
                         AddLessonTeacherActivity.this,
                         "Upload file failed",
@@ -276,7 +322,63 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
         });
     }
 
-    private RequestBody createRequestBody(Uri uri) {
+    private long resolveContentLength(Uri uri) {
+        long size = -1;
+        if ("content".equals(uri.getScheme())) {
+            try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
+                    if (sizeIndex >= 0) {
+                        size = cursor.getLong(sizeIndex);
+                    }
+                }
+            } catch (Exception ignored) {
+                // best effort
+            }
+        }
+        if (size <= 0) {
+            DocumentFile doc = DocumentFile.fromSingleUri(this, uri);
+            if (doc != null) {
+                long docSize = doc.length();
+                if (docSize > 0) {
+                    size = docSize;
+                }
+            }
+        }
+        if (size <= 0) {
+            try (AssetFileDescriptor afd = getContentResolver().openAssetFileDescriptor(uri, "r")) {
+                if (afd != null) {
+                    long afdSize = afd.getLength();
+                    if (afdSize > 0) {
+                        size = afdSize;
+                    }
+                }
+            } catch (Exception ignored) {
+                // best effort
+            }
+        }
+        return size;
+    }
+
+    private String resolveContentType(Uri uri) {
+        String mimeType = getContentResolver().getType(uri);
+        if (mimeType != null) {
+            return mimeType;
+        }
+        String name = getFileName(uri);
+        if (name != null) {
+            int dot = name.lastIndexOf('.');
+            if (dot >= 0 && dot < name.length() - 1) {
+                String extension = name.substring(dot + 1).toLowerCase(Locale.ROOT);
+                String fromExt = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+                if (fromExt != null) {
+                    return fromExt;
+                }
+            }
+        }
+        return "application/octet-stream";
+    }
+    private RequestBody createRequestBody(Uri uri, long contentLength) {
         String mimeType = getContentResolver().getType(uri);
         MediaType mediaType = mimeType != null
                 ? MediaType.parse(mimeType)
@@ -285,6 +387,11 @@ public class AddLessonTeacherActivity extends BaseTeacherActivity {
             @Override
             public MediaType contentType() {
                 return mediaType;
+            }
+
+            @Override
+            public long contentLength() {
+                return contentLength;
             }
 
             @Override
