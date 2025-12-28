@@ -11,8 +11,9 @@
         android:layout_height="wrap_content"
         android:text="Title"
         android:textColor="@color/text_primary"
+
         android:textSize="15sp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/nunito_extra_bold" />
 
     <TextView
         android:id="@+id/tvDescription"

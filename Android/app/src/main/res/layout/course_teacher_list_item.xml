@@ -23,25 +23,25 @@
             android:id="@+id/tvCourseName_teacheritem"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text=""
             tools:text="Introduction of Vietnamese"
             android:textColor="@color/text_primary"
             android:textSize="18sp"
-            android:fontFamily="@font/nunito_bold"
+            app:fontFamily="@font/nunito_extra_bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/tvClassCode_teacheritem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="6sp"
             android:text=""
             tools:text="VIE01"
             android:textColor="@color/text_secondary"
             android:textSize="14sp"
-            android:fontFamily="@font/nunito_regular"
+            app:fontFamily="@font/nunito_extra_bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCourseName_teacheritem" />
 
@@ -54,7 +54,7 @@
             tools:text="2 lessons"
             android:textColor="@color/text_secondary"
             android:textSize="14sp"
-            android:fontFamily="@font/nunito_regular"
+            app:fontFamily="@font/nunito_extra_bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvClassCode_teacheritem" />
 
